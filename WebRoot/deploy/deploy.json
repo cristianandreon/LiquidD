@@ -1,0 +1,30 @@
+{ 
+ "schema":""
+,"table":""
+,"primaryKey":"id"
+,"columns":[
+ { "name":"id", "label":"ID", "width":"50", "readonly":true, "visible":false }
+,{ "name":"deployCfgId", "label":"CFG_ID", "width":"50", "readonly":true, "visible":false }
+,{ "name":"cfg", "required":true, 
+    "lookup":"deploysCfg","options":{ "lookupField":"name", "idColumn":"deployCfgId", "navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200"}
+    }
+,{ "name":"file", "required":true, "link":true }
+]
+,"mode":"formX"
+,"navVisible":false
+,"autoInsert":false
+,"documents":[ ]
+,"layouts":[
+     {"name":"deployFormX", "title":"Deploy formX", "tooltip":"deploy formX", "icon":"", "source":"url(deployFormX.jsp)", "nRows":1, "overflow":"overlay" }
+]
+,"actions":[
+     {"name":"cancel", "img":"cancel.png", "size":20, "text":"Annulla", "client":"Liquid.close"  }
+    ,{"name":"ok", "img":"add.png", "size":20, "text":"OK", "server":"deploy", "client":[], "onDownloading":"deployDownloading" }
+    ]
+,"listTabVisible":false
+,"layoutsTabVisible":false
+,"owner":"app.liquidx.deploy.deployManager"
+,"events":[
+     { "name":"onInserted", "server":"onInsertedRow", "params":[], "client":"", "comment":"Evento di test"}
+    ]
+}
