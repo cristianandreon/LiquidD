@@ -16,7 +16,7 @@ public class connection {
     static String driver = "postgres";
     static String host = "localhost";
 
-    static String database = "Liquid";
+    static String database = "LiquidX";
     static String user = "liquid";
     static String password = "liquid";
     static Class driverClass = null;

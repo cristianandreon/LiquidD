@@ -14,6 +14,8 @@ import com.liquid.db;
 import com.liquid.utility;
 import com.liquid.workspace;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -34,7 +36,8 @@ public class deployManager implements SftpProgressMonitor {
     
     long uploadingTotal = 0;
     long uploadingCurrent = 0;
-        
+
+    
     static public Object deploy (Object tbl_wrk, Object params, Object clientData, Object requestParam ) throws JSONException, InterruptedException, Exception {
         if(params != null) {
             // {"params":[{"formX":[{"1":"","2":"","3":""}]},{"name":"deploy"}]}
@@ -44,8 +47,8 @@ public class deployManager implements SftpProgressMonitor {
             String cfgId = rowData.getString("2");
             String cfgName = rowData.getString("3");
             String file = rowData.getString("4");
-            String fileName = rowData.getString("file.filesName");
-            String fileSize = rowData.getString("file.filesSize");
+            String fileName = null; try { rowData.getString("file.filesName"); } catch(Exception e) {}
+            String fileSize = null; try { fileSize = rowData.getString("file.filesSize"); } catch(Exception e) {}
             String controlId = "deploysCfg";
 
             // Lettura del bean di configurazione
@@ -53,9 +56,10 @@ public class deployManager implements SftpProgressMonitor {
                 // Object deplpoyBean = db.get_bean(requestParam, controlId, id, null, "*", null, 1);
                 Object deplpoyBean = db.load_bean( (HttpServletRequest) requestParam, "LiquidX.liquidx.deploysCfg", "*", cfgId);
                 if(deplpoyBean != null) {
-                    String ip = (String) utility.get(deplpoyBean, "ip");
+                    String host = (String) utility.get(deplpoyBean, "host");
                     String user = (String) utility.get(deplpoyBean, "user");
                     String password = (String) utility.get(deplpoyBean, "password");
+                    String sourceFile = (String) utility.get(deplpoyBean, "sourceFile");
                     String deployFolder = (String) utility.get(deplpoyBean, "deployFolder");
                     String copyFolder = (String) utility.get(deplpoyBean, "copyFolder");
                     String backupFolder = (String) utility.get(deplpoyBean, "backupFolder");
@@ -77,12 +81,38 @@ public class deployManager implements SftpProgressMonitor {
                     boolean uploadFileOk = false;
                     String uploadFileError = "";
                     
-                    int index = file.indexOf("base64,");
-                    if(index < 0) {
+                    boolean bDataDecoded = false;
+                    InputStream sourceFileIS = null;
+                    
+                    if(sourceFile != null && !sourceFile.isEmpty()) {
+                    	// direct acess local file
+                        sourceFileIS = new FileInputStream(new File(sourceFile));
+                        bDataDecoded = true;
                     } else {
-                        InputStream sourceFileIS = new ByteArrayInputStream(file.substring((int) index).getBytes(StandardCharsets.UTF_8));
+                    	// uploaded from a form
+                    	if(file != null && !file.isEmpty()) {
+		                    int index = file.indexOf("binaryData,");
+		                    if(index < 0) {
+		                    	bDataDecoded = true;
+		                        int index2 = file.indexOf(":");
+		                    	String ContentSize = file.substring(0, index2);
+		                    	int contentSize = Integer.parseInt(ContentSize);
+		                    	file = file.substring(index2+1);
+		                        sourceFileIS = new ByteArrayInputStream(file.getBytes(StandardCharsets.UTF_8));
+		                    } else {                    
+		                    	index = file.indexOf("base64,");
+		                    	if(index < 0) {
+		                    		Callback.send("Deploy of "+cfgName+" failed <span style=\"color:red\">invalid file format<span>");
+		                    	} else {
+		                    		file = utility.base64Decode(file.substring(7));
+		                            sourceFileIS = new ByteArrayInputStream(file.getBytes(StandardCharsets.UTF_8));
+		                    	}
+		                    }
+                    	}
+                    }
+                    if(bDataDecoded) {
                         try {
-                            long retVal = onUpload( ip, user, password, sourceFileIS, copyFolder+"/"+(webAppWAR) );
+                            long retVal = onUpload( host, user, password, sourceFileIS, copyFolder+"/"+(webAppWAR) );
                             if(retVal > 0) {
                                 if(fileSize != null && !fileSize.isEmpty()) {
                                     if(Long.parseLong(fileSize) == retVal) {
@@ -114,7 +144,7 @@ public class deployManager implements SftpProgressMonitor {
                             //
                             Callback.send("Open ssh session ...");
                             sshManager ssh = new sshManager();
-                            ssh.connect(ip, user, password);
+                            ssh.connect(host, user, password);
 
 
                             // Adattamento webAppName
@@ -253,13 +283,16 @@ public class deployManager implements SftpProgressMonitor {
                     }
                     
                 } else {
-                    Callback.send("Deploy of "+cfgName+" <span style=\"color:red\">read bean error<span>");
+                    Callback.send("Deploy of "+cfgName+"failed, <span style=\"color:red\">read bean error<span>");
                     return (Object)"{ \"result\":-2, \"error\":\""+utility.base64Encode("read bean error") + "\" }";                
                 }
             } else {
-                Callback.send("Deploy of "+cfgName+" <span style=\"color:red\">primaryKey not found<span>");
+                Callback.send("Deploy of "+cfgName+" failed, <span style=\"color:red\">primaryKey not found<span>");
                 return (Object)"{ \"result\":-1, \"error\":\""+utility.base64Encode("primaryKey not found") + "\" }";                
             }
+        } else {
+            Callback.send("Deploy failed, <span style=\"color:red\">params not defined<span>");
+            return (Object)"{ \"result\":-1, \"error\":\""+utility.base64Encode("primaryKey not found") + "\" }";                
         }
         return null;
     }

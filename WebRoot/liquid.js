@@ -4968,14 +4968,28 @@ var Liquid = {
                 var file = queue.files[queue.iFile];
                 if(file) {
                     var reader = new FileReader();
-                    reader.readAsDataURL(file);
+                    // reader.readAsDataURL(file);
+                    reader.readAsBinaryString(file);
                     reader.onload = function(evt) {
                         try { 
                             if(queue.linkToFile === true) { 
                                 // For security reason canno get file path... only update file content
                             }
                             if(queue.files.length === 1) {
-                                queue.propValue = evt.target.result;
+                                // var comp = LZW.compress();
+                            	// var my_lzma = new LZMA("./lzma_worker.js");                            	
+                                // queue.propValue = JSONC.pack( evt.target.result, true );
+                            	var s1 = evt.target.result.length;
+                            	var t1 = performance.now();
+                            	var zipped = gzip.zip(evt.target.result);
+                            	var s2 = zipped.length;
+                            	// queue.propValue = "base64,"+Base64.encode(zipped);
+                            	// queue.propValue = "binaryData,"+zipped.length+":"+zipped;
+                            	// queue.propValue = "base64,"+btoa(zipped);
+                            	queue.propValue = "base64,"+btoa(evt.target.result);                            	
+                            	var t2 = performance.now();
+                            	var s3 = queue.propValue.length;
+                            	console.log("ZIP time:"+(t2-t1)/1000.0 + " sec, size:"+s1 / 1024 +" / "+s2/1024+" / "+s3/1024 + " Kb, ratio:"+(s3/s1 * 100.0)+"%")
                             } else {
                                 if(!queue.propValue) queue.propValue = [];
                                 queue.propValue.push(evt.target.result); 
@@ -4999,7 +5013,17 @@ var Liquid = {
                     if(validateResult !== null) {
                         if(validateResult[0] >= 0) {
                             queue.propValue = validateResult[1];
-                            Liquid.registerFieldChange(queue.liquid, null, queue.targetRow[ queue.liquid.tableJson.primaryKeyField ? queue.liquid.tableJson.primaryKeyField : "1" ], queue.targetCol.field, null, queue.propValue);
+                            // NO : hude file can be pronlematic here
+                            // Liquid.registerFieldChange(queue.liquid, null, queue.targetRow[ queue.liquid.tableJson.primaryKeyField ? queue.liquid.tableJson.primaryKeyField : "1" ], queue.targetCol.field, null, queue.propValue);
+                            var rowId = queue.targetRow[ queue.liquid.tableJson.primaryKeyField ? queue.liquid.tableJson.primaryKeyField : "1" ];
+                            if(rowId === '' || rowId === null) {
+                                if(queue.liquid.addingNode) {
+                                	queue.liquid.addingNode.data[queue.targetCol.field] = queue.propValue;
+                                }
+                                if(queue.liquid.addingRow) {
+                                	queue.liquid.addingRow[queue.targetCol.field] = queue.propValue;
+                                }
+                            }
                             Liquid.updateDependencies(queue.liquid, queue.targetCol, null, null);
                         }
                     }
@@ -5286,7 +5310,7 @@ var Liquid = {
         var command = liquidCommandParams.command;
         var params = liquidCommandParams.params;
         var retVal = true;
-
+        
         if(command.server) {
             Liquid.registerOnUnloadPage();
             if(!liquid.xhr)
@@ -5376,6 +5400,7 @@ var Liquid = {
                             retVal = Liquid.onCommandDone(liquidCommandParams);
                         }
                     };
+                    
                     liquid.xhr.send("{\"params\":" + (params ? JSON.stringify(params) : "[]") + "}");
                     
                 } catch (e) {
@@ -12527,4 +12552,84 @@ Array.prototype.contains = function(searchElement) { 'use strict';
     for(var i=0; i<this.length; i++) 
         if(searchElement === this[i])return true;
     return false;
+};
+
+
+//LZW Compression/Decompression for Strings
+var LZW = {
+    compress: function (uncompressed) {
+        "use strict";
+        // Build the dictionary.
+        var i,
+            dictionary = {},
+            c,
+            wc,
+            w = "",
+            result = [],
+            dictSize = 256;
+        for (i = 0; i < 256; i += 1) {
+            dictionary[String.fromCharCode(i)] = i;
+        }
+ 
+        for (i = 0; i < uncompressed.length; i += 1) {
+            c = uncompressed.charAt(i);
+            wc = w + c;
+            //Do not use dictionary[wc] because javascript arrays 
+            //will return values for array['pop'], array['push'] etc
+           // if (dictionary[wc]) {
+            if (dictionary.hasOwnProperty(wc)) {
+                w = wc;
+            } else {
+                result.push(dictionary[w]);
+                // Add wc to the dictionary.
+                dictionary[wc] = dictSize++;
+                w = String(c);
+            }
+        }
+ 
+        // Output the code for w.
+        if (w !== "") {
+            result.push(dictionary[w]);
+        }
+        return result;
+    },
+ 
+ 
+    decompress: function (compressed) {
+        "use strict";
+        // Build the dictionary.
+        var i,
+            dictionary = [],
+            w,
+            result,
+            k,
+            entry = "",
+            dictSize = 256;
+        for (i = 0; i < 256; i += 1) {
+            dictionary[i] = String.fromCharCode(i);
+        }
+ 
+        w = String.fromCharCode(compressed[0]);
+        result = w;
+        for (i = 1; i < compressed.length; i += 1) {
+            k = compressed[i];
+            if (dictionary[k]) {
+                entry = dictionary[k];
+            } else {
+                if (k === dictSize) {
+                    entry = w + w.charAt(0);
+                } else {
+                    return null;
+                }
+            }
+ 
+            result += entry;
+ 
+            // Add w+entry[0] to the dictionary.
+            dictionary[dictSize++] = w + entry.charAt(0);
+ 
+            w = entry;
+        }
+        return result;
+    }
 };

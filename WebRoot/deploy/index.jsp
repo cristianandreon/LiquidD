@@ -110,8 +110,13 @@
                 document.getElementById("outDiv").innerHTML = ""+data;
             }                
 
-
         </script>
+		<script language="javascript" src="./../JSONc.js"></script>		
+		<script language="javascript" src="./../base64.js"></script>
+		<script language="javascript" src="./../crc32.js"></script>
+		<script language="javascript" src="./../gzip.js"></script>
+		<script language="javascript" src="./../rawdeflate.js"></script>
+		<script language="javascript" src="./../rawinflate.js"></script>
         
     </head>
     
