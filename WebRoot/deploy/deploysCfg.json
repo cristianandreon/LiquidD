@@ -5,18 +5,18 @@
 ,"primaryKey":"id"
 ,"columns":[
      { "visible":false,"nullable":false,"typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"deploysCfg_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"name":"id","width":"50","digits":0}
-    ,{"size":256,"nullable":true,"autoIncString":false,"name":"name","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":256,"nullable":true,"autoIncString":false,"name":"host","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":256,"nullable":true,"autoIncString":false,"name":"user","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"visible":false,"size":256,"nullable":true,"autoIncString":false,"name":"password","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":512,"nullable":true,"autoIncString":false,"name":"sourceFile","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":512,"nullable":true,"autoIncString":false,"name":"deployFolder","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":512,"nullable":true,"autoIncString":false,"name":"copyFolder","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":512,"nullable":true,"autoIncString":false,"name":"backupFolder","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":256,"nullable":true,"autoIncString":false,"name":"webAppWAR","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":256,"nullable":true,"autoIncString":false,"name":"webAppURL","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":10,"nullable":true,"autoIncString":false,"name":"deployWaitTime","typeName":"int4","digits":0,"type":"4"}
-    ,{"size":10,"nullable":true,"autoIncString":false,"name":"checkWaitTime","typeName":"int4","digits":0,"type":"4"}
+    ,{"size":256,"nullable":true,"name":"name","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":256,"nullable":true,"name":"host","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":256,"nullable":true,"name":"user","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"visible":false,"size":256,"nullable":true,"name":"password","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":512,"nullable":true,"name":"sourceFile","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":512,"nullable":true,"name":"deployFolder","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":512,"nullable":true,"name":"copyFolder","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":512,"nullable":true,"name":"backupFolder","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":256,"nullable":true,"name":"webAppWAR","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":256,"nullable":true,"name":"webAppURL","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":10,"nullable":true,"name":"deployWaitTime","typeName":"int4","digits":0,"type":"4"}
+    ,{"size":10,"nullable":true,"name":"checkWaitTime","typeName":"int4","digits":0,"type":"4"}
 ]
 ,"createTableIfMissing":true
 ,"navVisible":false
@@ -27,4 +27,11 @@
 ,"events":[
      { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
     ]
+,"commands":[
+ 	 { "name":"insert"}
+	,{ "name":"update"}
+	,{ "name":"delete"}
+	,{ "name":"next"}
+	,{ "name":"previous"}
+]
 }

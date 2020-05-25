@@ -2275,7 +2275,6 @@ var Liquid = {
                 if(bShowMessageToStatusBar) {
                     if(outDiv)
                         outDiv.innerHTML = this_response;
-                    console.log(this_response);
                 }
                 this_response = next_response;
             }
@@ -10125,7 +10124,8 @@ var Liquid = {
                     } else {
                         for(var i=0; i<glLiquids.length; i++) { // by json in other control
                             if(glLiquids[i].controlId === json) {
-                                lookupJson = JSON.parse(JSON.stringify(glLiquids[i].tableJson));
+                                // lookupJson = JSON.parse(JSON.stringify(glLiquids[i].tableJson));
+                                lookupJson = deepClone(glLiquids[i].tableJson);
                                 registerControlId = glLiquids[i].controlId;
                                 break;
                             }
@@ -10136,7 +10136,7 @@ var Liquid = {
                                 if(typeof lookupObj.dataset !== 'undefined' && typeof lookupObj.dataset.liquid !== 'undefined') { // by other liquid control
                                     for(var i=0; i<glLiquids.length; i++) {
                                         if(glLiquids[i].controlId === lookupObj.dataset.liquid) {
-                                            lookupJson = glLiquids[i].tableJson;
+                                            lookupJson = deepClone(glLiquids[i].tableJson);
                                             registerControlId = glLiquids[i].controlId;
                                             break;
                                         }
@@ -12633,3 +12633,24 @@ var LZW = {
         return result;
     }
 };
+
+function deepClone(obj, hash = new WeakMap()) {
+    // Do not try to clone primitives or functions
+    if (Object(obj) !== obj || obj instanceof Function) return obj;
+    if (hash.has(obj)) return hash.get(obj); // Cyclic reference
+    try { // Try to run constructor (without arguments, as we don't know them)
+        var result = new obj.constructor();
+    } catch(e) { // Constructor failed, create object without running the constructor
+        result = Object.create(Object.getPrototypeOf(obj));
+    }
+    // Optional: support for some standard constructors (extend as desired)
+    if (obj instanceof Map)
+        Array.from(obj, ([key, val]) => result.set(deepClone(key, hash), 
+                                                   deepClone(val, hash)) );
+    else if (obj instanceof Set)
+        Array.from(obj, (key) => result.add(deepClone(key, hash)) );
+    // Register in hash    
+    hash.set(obj, result);
+    // Clone and assign enumerable own properties recursively
+	return Object.assign(result, ...Object.keys(obj).map (key => ( { [key]: ( key === 'linkedLabelObj' || key === 'linkedObj' || key === 'linkedCmd' ? null : deepClone(obj[key], hash)) }) ));
+}
