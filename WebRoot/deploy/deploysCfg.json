@@ -15,7 +15,7 @@
     ,{"size":512,"nullable":true,"name":"backupFolder","typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"size":256,"nullable":true,"name":"webAppWAR","typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"size":256,"nullable":true,"name":"webAppURL","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":10,"nullable":true,"name":"deployWaitTime","typeName":"int4","digits":0,"type":"4"}
+    ,{"size":10,"nullable":true,"name":"undeployWaitTime","typeName":"int4","digits":0,"type":"4"}
     ,{"size":10,"nullable":true,"name":"checkWaitTime","typeName":"int4","digits":0,"type":"4"}
 ]
 ,"createTableIfMissing":true

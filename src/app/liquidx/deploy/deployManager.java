@@ -86,7 +86,7 @@ public class deployManager {
 	                    String backupFolder = (String) utility.get(deplpoyBean, "backupFolder");
 	                    String webAppWAR = (String) utility.get(deplpoyBean, "webAppWAR");
 	                    String webAppURL = (String) utility.get(deplpoyBean, "webAppURL");
-	                    int deployWaitTime = (int) utility.get(deplpoyBean, "deployWaitTime");
+	                    int undeployWaitTime = (int) utility.get(deplpoyBean, "undeployWaitTime");
 	                    int checkWaitTime = (int) utility.get(deplpoyBean, "checkWaitTime");
 	                    String mailingList = (String) utility.get(deplpoyBean, "mailingList");
 	
@@ -265,8 +265,8 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 	                            // Attesa errore 404
 	                            //
 	                            Callback.send("3&deg; - Waiting for application server...");
-	                            if(deployWaitTime > 0) {
-	                                Thread.sleep(deployWaitTime);
+	                            if(undeployWaitTime > 0) {
+	                                Thread.sleep(undeployWaitTime);
 	                            } else {
 	                                Thread.sleep(7000);
 	                            }
