@@ -50,6 +50,8 @@ import sun.security.provider.SecureRandom;
  *
  * @author root
  */
+
+
 public class deployManager {
     
     static String glSourceFile = "";
@@ -186,8 +188,11 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 	
 	                        // 1° upload
 	                        sftpManager sftp = new sftpManager();
+	                        boolean doBackup = true;
 	                        try {
-	                            long retVal = sftp.upload( host, user, password, glSourceFile, sourceFileIS, copyFolder+"/"+(webAppWAR) );
+	                        	Object [] result = sftp.upload( host, user, password, glSourceFile, sourceFileIS, copyFolder+"/"+(webAppWAR) );
+	                            long retVal = (long)result[0];
+	                            doBackup = (boolean)result[1]; 
 	                            if(retVal > 0) {
 	                                if(fileSize != null && !fileSize.isEmpty()) {
 	                                    if(Long.parseLong(fileSize) == retVal) {
@@ -231,23 +236,28 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 	                            String cmd = "su -";
 	                            ssh.cmd(cmd, password);
 	
+	                            
 		                        // 2° backup
 	                            //
 	                            // Backup file attualmente in prod
 	                            //
-	                            Callback.send("2&deg; - Backup file...");
-	                            cmd = "mkdir -p "+backupFolder;
-	                            ssh.cmd(cmd);
-	                            cmd = "cp "+deployFolder+"/"+webAppWAR+ " " + backupFolder;
-	                            ssh.cmd(cmd);
-	
-	                            //
-	                            // Verifica file copiato
-	                            //
-	                            Callback.send("2&deg; - Checking backup file in "+backupFolder+"...");
-	                            cmd = "ls "+backupFolder+"/"+webAppWAR+" -al";
-	                            ssh.cmd(cmd);
-	                            
+	                            if(doBackup) {
+		                            Callback.send("2&deg; - Backup file (only if missing or older)...");
+		                            cmd = "mkdir -p "+backupFolder;
+		                            ssh.cmd(cmd);
+		                            cmd = "cp "+deployFolder+"/"+webAppWAR+ " " + backupFolder + " -u";
+		                            ssh.cmd(cmd);
+		
+		                            //
+		                            // Verifica file copiato
+		                            //
+		                            Callback.send("2&deg; - Checking backup file in "+backupFolder+"...");
+		                            cmd = "ls "+backupFolder+"/"+webAppWAR+" -al";
+		                            ssh.cmd(cmd);
+	                            } else {
+		                            Callback.send("2&deg; - Backup skipped, remote file is up to date...");
+		                            Thread.sleep(3000);
+	                            }
 	                            
 	                            
 		                        // 3° remove current war
@@ -255,8 +265,8 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 	                            // Rimozione file produzione
 	                            //
 	                            Callback.send("3&deg; - Removing current file from "+deployFolder+"...");
-	                            cmd = "rm "+deployFolder+"/"+webAppWAR;
-	                            ssh.cmd(cmd);
+	                            cmd = "sudo rm "+deployFolder+"/"+webAppWAR;
+	                            ssh.cmd(cmd, password);
 	
 	                            
 
@@ -307,8 +317,8 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 	                            } else {
 	                                Callback.send("4&deg; - Copying new app to application server (without Web App URL check)...");                            
 	                            }
-	                            cmd = "cp "+copyFolder+"/"+webAppWAR+" "+deployFolder+"/"+webAppWAR+"";
-	                            ssh.cmd(cmd);
+	                            cmd = "sudo cp "+copyFolder+"/"+webAppWAR+" "+deployFolder+"/"+webAppWAR+"";
+	                            ssh.cmd(cmd, password);
 	
 	
 	                            //

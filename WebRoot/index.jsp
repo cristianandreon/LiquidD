@@ -160,11 +160,11 @@
             <br/>            
 			Phases :</br></br>
 			<ul> 
-				<li>1° upload</li>
-				<li>2° backup</li>
-				<li>3° remove current war</li>
-		   		<li>4° deploy new war</li>
-		   		<li>5° check web app</li>
+				<li>1° <b>upload</b> (if local file is newer or remote is missing)</li>
+				<li>2° <b>backup</b> (only if remote file was uploaded and existing backup newer of missing)</li>
+				<li>3° <b>remove</b> current .war</li>
+		   		<li>4° <b>deploy</b> new .war</li>
+		   		<li>5° <b>check</b> web app (http status 200)</li>
 	   		</ul>
             <br/>
             <br/>            
