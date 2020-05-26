@@ -2291,6 +2291,7 @@ var Liquid = {
         var runningImg = "<img src=\""+Liquid.getImagePath("red.png")+"\" width=\"16\" height=\"16\"/>";
         if(outDiv) outDiv.innerHTML = runningImg+"[ "+liquid.controlId+" ] " + handlerName + " " + Liquid.getCommandOrEventName(commandOrEvent) + "...";
         liquid.lastResponseLen = null;
+        liquid.stackDownloading = null;
         if(typeof liquid.stackDownloading === 'undefined') liquid.stackDownloading = null;
         if(typeof userCallback !== 'undefined' && userCallback) {
             var userCallbackFunc = Liquid.getProperty(userCallback);
@@ -2311,14 +2312,14 @@ var Liquid = {
                 outDiv.innerHTML = runningImg+"[ "+liquid.controlId+" ] " + handlerName + " " + Liquid.getCommandOrEventName(commandOrEvent)+" downloading...";
             }
         }
-        if(typeof liquid.stackDownloading !== 'undefined') {
+        if(typeof liquid.stackDownloading !== 'undefined' && liquid.stackDownloading) {
             if(liquid.stackDownloading) {
-                if(liquid.stackDownloading.lastResponseLen === liquid.lastResponseLen) {
+                if(liquid.stackDownloading.lastResponseLen === liquid.lastResponseLen && liquid.stackDownloading.responseLen === event.currentTarget.response.length) {
                     // duplicate callback
                     return;
                 }
             }
-            liquid.stackDownloading = { lastResponseLen:liquid.lastResponseLen, loaded:event.loaded, total:event.total, timeStamp:event.timeStamp, eventPhase:event.eventPhase };
+            liquid.stackDownloading = { lastResponseLen:liquid.lastResponseLen, responseLen:event.currentTarget.response.length, loaded:event.loaded, total:event.total, timeStamp:event.timeStamp, eventPhase:event.eventPhase };
         }
         liquid.lastResponseLen = Liquid.onTransferDownloadingProgress(event, liquid, liquid.lastResponseLen, outDiv, commandOrEvent, userCallback, userCallbackParam);
     },    
@@ -2380,7 +2381,6 @@ var Liquid = {
                 if(typeof col.validate !== 'undefined' && col.validate) {
                     var command = col.validate;                    
                     var liquidCommandParams = Liquid.buildCommandParams(liquid, command);
-
                     if(command.client) {
                         if(command.clientAfter !== true || command.clientBefore === true) {
                             validateResult = Liquid.executeClientSide(liquid, "validate:" + command.name, command.client, liquidCommandParams, command.isNative);
@@ -5061,7 +5061,8 @@ var Liquid = {
                         var event = events[ievt];
                         if(event) {
                             if(Liquid.isSystemEvent(event)) { // system event take care of the syncronous chain
-                                res = systemResult = Liquid.onEventProcess(liquid, event, obj, eventName, eventData, callback, callbackParams, defaultRetval);
+                            	var eventParams = Liquid.buildCommandParams(liquid, event);
+                                res = systemResult = Liquid.onEventProcess(liquid, event, obj, eventName, eventParams.params, eventData, callback, callbackParams, defaultRetval);
                                 systemEventCounter++;
                                 eventCounter++;
                             }
@@ -5072,7 +5073,8 @@ var Liquid = {
                             var event = events[ievt];
                             if(event) {
                                 if(!Liquid.isSystemEvent(event)) {
-                                    res = Liquid.onEventProcess(liquid, event, obj, eventName, eventData, null, null, defaultRetval);
+                                	var eventParams = Liquid.buildCommandParams(liquid, event);
+                                    res = Liquid.onEventProcess(liquid, event, obj, eventName, eventParams.params, eventData, null, null, defaultRetval);
                                     result = res;
                                     eventCounter++;
                                 }
@@ -5089,7 +5091,7 @@ var Liquid = {
         }
         return {result: result ? result : defaultRetval, systemResult: systemResult, nEvents: eventCounter, nSystemEvents: systemEventCounter};
     },
-    onEventProcess:function(liquid, event, obj, eventName, eventData, callback, callbackParams, defaultRetval) {
+    onEventProcess:function(liquid, event, obj, eventName, eventParams, eventData, callback, callbackParams, defaultRetval) {
         if(event) {
             var retVal = null;
             
@@ -5254,7 +5256,7 @@ var Liquid = {
                             }
                         }
                     };
-                    var params = (event.params ? JSON.parse(JSON.stringify(event.params)) : [] );
+                    var params = (typeof eventParams != 'undefined' && eventParams ? JSON.parse(JSON.stringify(eventParams)) : [] );
                     if(eventData) params.push( { data: eventData } );
                     event.xhr.send("{\"params\":" + JSON.stringify(params) + "}");
                     if(event.sync === true) {

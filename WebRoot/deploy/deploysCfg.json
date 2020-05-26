@@ -25,7 +25,8 @@
 ,"listTabVisible":true
 ,"owner":"app.liquidx.deploy.event"
 ,"events":[
-     { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
+      { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
+     ,{ "name":"onRowDoubleClicked", "server":"app.liquidx.deploy.deployManager.deploy", "params":[], "client":""}     
     ]
 ,"commands":[
  	 { "name":"insert"}
