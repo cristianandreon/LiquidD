@@ -297,6 +297,14 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            cmd = "sudo rm "+deployFolder+"/"+webAppWAR;
 		                            ssh.cmd(cmd, password);
 		
+		                            long currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
+		                            if(currentFileSize != 0) {
+	                                	msg = "Error :Failed to remove current war ("+deployFolder+"/"+webAppWAR+")<br/><br/>... maybe file was locked ";
+		                                Callback.send(msg);
+		                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
+		                                return null;
+		                            }
+
 		                            
 	
 		                            
@@ -359,6 +367,16 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                                Thread.sleep(5000);
 		                            }
 		
+		                            
+		                            long copiedFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
+		                            if(copiedFileSize != glFileSize) {
+	                                	msg = "Error : remote file deployed sie : "+copiedFileSize+" / uploaded file size : "+fileSize;
+		                                Callback.send(msg);
+		                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
+		                                return null;
+		                            }
+		                            
+		                            
 		                            // 5° check web app	                            
 		                            //
 		                            // verifica risposta
@@ -382,7 +400,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 			                            if(installedSuccesfully) {
 		                                	long remoteFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR+"" );
 		                                	if(remoteFileSize == glFileSize) {
-		                                		 msg = "5&deg; - Deploy of "+cfgName+" <span style=\"color:darkGreen\">done and checked</span>";
+		                                		 msg = "5&deg; - Deploy of "+cfgName+" <span style=\"color:darkGreen\">done, checked and online</span>";
 		                                		Callback.send(msg);
 		                                	} else {
 		                                		msg = "5&deg; - Deploy of "+cfgName+" <span style=\"color:red\">deployed file's size mismath ("+remoteFileSize+"/"+glFileSize+")<span>";

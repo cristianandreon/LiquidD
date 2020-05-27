@@ -26,7 +26,7 @@
 ,"owner":"app.liquidx.deploy.event"
 ,"events":[
       { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
-     ,{ "name":"onRowDoubleClicked", "server":"app.liquidx.deploy.deployManager.deploy", "params":[], "client":""}     
+     ,{ "name":"onRowDoubleClicked", "server":"app.liquidx.deploy.deployManager.deploy", "params":[], "client":"", "onDownloading":"deployDownloading" }     
     ]
 ,"commands":[
  	 { "name":"insert"}
