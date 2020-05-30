@@ -181,11 +181,11 @@
             <div class="code1" id="codeSample1">
                 <pre class="code">
                     <code class="java">
-&#x9;&#x9;&#x9;   static String driver = &#x22;postgres&#x22; or &#x22;oracle&#x22; or &#x22;mysql&#x22; or &#x22;sqlserver&#x22;; &#x3C;br/&#x3E;
-&#x9;&#x9;&#x9;   static String host = &#x22;your host name&#x22;;&#x3C;br/&#x3E;
-&#x9;&#x9;&#x9;   static String database = &#x22;your database&#x22;;&#x3C;br/&#x3E;
-&#x9;&#x9;&#x9;   static String user = &#x22;your user name&#x22;;&#x3C;br/&#x3E;
-&#x9;&#x9;&#x9;   static String password = &#x22;your password&#x22;;&#x3C;br/&#x3E;
+&#x9;&#x9;&#x9;   static String driver = &#x22;postgres&#x22; // or &#x22;oracle&#x22; or &#x22;mysql&#x22; or &#x22;sqlserver&#x22;;
+&#x9;&#x9;&#x9;   static String host = &#x22;your host name&#x22;;
+&#x9;&#x9;&#x9;   static String database = &#x22;your database&#x22;;
+&#x9;&#x9;&#x9;   static String user = &#x22;your user name&#x22;;
+&#x9;&#x9;&#x9;   static String password = &#x22;your password&#x22;;
                     </code>
                 </pre>
             </div>
