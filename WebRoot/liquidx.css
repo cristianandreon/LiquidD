@@ -115,7 +115,7 @@ a:hover { color:#4EBFDD; text-decoration:none; font-weight: bold; }
 
 
 .spacer{
-    margin-top:30px;
+    margin-top:20px;
     margin-bottom:20px;
     margin-left:15px;
     border-top:1px solid lightgray;
@@ -149,7 +149,7 @@ svg {
 path {
   fill: white;
   stroke: black;
-  stroke-width: 2;
+  stroke-width: 1;
   stroke-linejoin: round;
 }
 path:hover {

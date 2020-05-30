@@ -124,11 +124,16 @@
             <br/>
             <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:900px; height:360px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:1024px; height:360px; font-size:9pt; table-layout:auto; ">
                     <tr>
-                        <td colspan="1" style="width:0%">
-                            <div id="deploysCfg" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                        <td colspan="1">
+                            <div id="deploysCfg" style="height:360px; width:100%; background-color: rgba(213, 225, 232, 0.45">
                             </div>
+                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <div id="outDiv" style="height:50px; width:100%; border:1px solid lightgray"></div>
                          </td>
                     </tr>
                 </table>
@@ -152,27 +157,33 @@
             <br/>
             <br/>
             <br/>            
-			<br/>
-            <br/>            
-            <br/>
-			<h1>Double click in a row to execute the war file deploy :</h1></br></br>
-            <br/>            
-            <br/>            
-			Phases :</br></br>
-			<ul> 
-				<li>1° <b>upload</b> (if local file is newer or remote is missing)</li>
-				<li>2° <b>backup</b> (only if remote file was uploaded and existing backup newer of missing)</li>
-				<li>3° <b>remove</b> current .war</li>
-		   		<li>4° <b>deploy</b> new .war</li>
-		   		<li>5° <b>check</b> web app (http status 200)</li>
-	   		</ul>
             <br/>
             <br/>            
             <br/>
-            <h1>How does it work ?</h1><br/>
+            <div class="title1">How to run a deploy :</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>            
+            <br/>            
+            simply double click in the row ... deploy Phases :</br></br>
+            <ul> 
+                    <li>1° <b>upload</b> (if local file is newer or remote is missing)</li>
+                    <li>2° <b>backup</b> (only if remote file was uploaded and existing backup newer of missing)</li>
+                    <li>3° <b>remove</b> current .war</li>
+                    <li>4° <b>deploy</b> new .war</li>
+                    <li>5° <b>check</b> web app (http status 200)</li>
+            </ul>
+            <br/>
+            <br/>            
             <br/>
             <br/>
-            LiquidD need database connection in order to store persistent data (the deploy's cpnfigurationas)
+            <br/>
+            <br/>
+            <div class="title1">How does it work ?</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            LiquidD need database connection in order to store persistent data (the deploy's configuration detail)
             <br/>
             <br/>
             Under the package <b>app.liquid.dbx</b> in the <b>public class connection </b> you should define :
@@ -189,18 +200,21 @@
                     </code>
                 </pre>
             </div>
-            
-			<br/>
-			<br/>
-			<br/>
-            
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
             <br/>            
-			<h1>TODO :<h2></br></br>
-			<ul> 
-				<li>Multiple process</li>
-				<li>Upload resume</li>
-				<li>Notifications</li>
-	   		</ul>
+            <div class="title1">TODO :</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <ul> 
+                    <li>Multiple process</li>
+                    <li>Upload resume</li>
+                    <li>Notifications</li>
+            </ul>
         </div>
     </body>
 </html>
