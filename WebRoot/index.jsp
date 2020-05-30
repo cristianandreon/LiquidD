@@ -177,12 +177,19 @@
             <br/>
             Under the package <b>app.liquid.dbx</b> in the <b>public class connection </b> you should define :
             <br/>
-            <br/>    
-			   static String driver = "postgres" or "oracle" or "mysql" or "sqlserver"; <br/>
-			   static String host = "your host name";<br/>
-			   static String database = "your database";<br/>
-			   static String user = "your user name";<br/>
-			   static String password = "your password";<br/>
+            <br/>
+            <div class="code1" id="codeSample1">
+                <pre class="code">
+                    <code class="java">
+&#x9;&#x9;&#x9;   static String driver = &#x22;postgres&#x22; or &#x22;oracle&#x22; or &#x22;mysql&#x22; or &#x22;sqlserver&#x22;; &#x3C;br/&#x3E;
+&#x9;&#x9;&#x9;   static String host = &#x22;your host name&#x22;;&#x3C;br/&#x3E;
+&#x9;&#x9;&#x9;   static String database = &#x22;your database&#x22;;&#x3C;br/&#x3E;
+&#x9;&#x9;&#x9;   static String user = &#x22;your user name&#x22;;&#x3C;br/&#x3E;
+&#x9;&#x9;&#x9;   static String password = &#x22;your password&#x22;;&#x3C;br/&#x3E;
+                    </code>
+                </pre>
+            </div>
+            
 			<br/>
 			<br/>
 			<br/>
@@ -190,9 +197,9 @@
             <br/>            
 			<h1>TODO :<h2></br></br>
 			<ul> 
-				<li>multiple process</li>
-				<li>upload resume</li>
-				<li>notifications</li>
+				<li>Multiple process</li>
+				<li>Upload resume</li>
+				<li>Notifications</li>
 	   		</ul>
         </div>
     </body>
