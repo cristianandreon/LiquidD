@@ -98,7 +98,7 @@
             }
 
             function startFormX() {
-                Liquid.startPopup('deploy', '<%=workspace.get_file_content(request, "/deploy/deploy.json")%>');
+                // Liquid.startPopup('deploy', '<%=workspace.get_file_content(request, "/deploy/deploy.json")%>');
             }
             
             function closeFormX() {
@@ -140,16 +140,10 @@
             <br/>
             <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="display:none; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
                     <tr>
                         <td colspan="1" style="width:0%">
                             <div id="deploy" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
-                            </div>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="1" style="width:0%; height:30px;">
-                            <div id="outDiv" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.15); border: 1px solid lightgray;">
                             </div>
                          </td>
                     </tr>
@@ -157,6 +151,12 @@
             </center>
             <br/>
             <br/>
+            <br/>            
+			<br/>
+            <br/>            
+            <br/>
+			<h1>Double click in a row to execute the war file deploy :</h1></br></br>
+            <br/>            
             <br/>            
 			Phases :</br></br>
 			<ul> 
@@ -169,8 +169,26 @@
             <br/>
             <br/>            
             <br/>
+            <h1>How does it work ?</h1><br/>
+            <br/>
+            <br/>
+            LiquidD need database connection in order to store persistent data (the deploy's cpnfigurationas)
+            <br/>
+            <br/>
+            Under the package <b>app.liquid.dbx</b> in the <b>public class connection </b> you should define :
+            <br/>
+            <br/>    
+			   static String driver = "postgres" or "oracle" or "mysql" or "sqlserver"; <br/>
+			   static String host = "your host name";<br/>
+			   static String database = "your database";<br/>
+			   static String user = "your user name";<br/>
+			   static String password = "your password";<br/>
+			<br/>
+			<br/>
+			<br/>
+            
             <br/>            
-			TODO :</br></br>
+			<h1>TODO :<h2></br></br>
 			<ul> 
 				<li>multiple process</li>
 				<li>upload resume</li>
