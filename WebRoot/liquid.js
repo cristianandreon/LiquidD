@@ -2275,7 +2275,6 @@ var Liquid = {
                 if(bShowMessageToStatusBar) {
                     if(outDiv)
                         outDiv.innerHTML = this_response;
-                    console.log(this_response);
                 }
                 this_response = next_response;
             }
@@ -2292,6 +2291,7 @@ var Liquid = {
         var runningImg = "<img src=\""+Liquid.getImagePath("red.png")+"\" width=\"16\" height=\"16\"/>";
         if(outDiv) outDiv.innerHTML = runningImg+"[ "+liquid.controlId+" ] " + handlerName + " " + Liquid.getCommandOrEventName(commandOrEvent) + "...";
         liquid.lastResponseLen = null;
+        liquid.stackDownloading = null;
         if(typeof liquid.stackDownloading === 'undefined') liquid.stackDownloading = null;
         if(isDef(userCallback)) {
             var userCallbackFunc = Liquid.getProperty(userCallback);
@@ -2317,10 +2317,10 @@ var Liquid = {
                 // duplicate callback
                 return;
             }
-            liquid.stackDownloading = { lastResponseLen:liquid.lastResponseLen, loaded:event.loaded, total:event.total, timeStamp:event.timeStamp, eventPhase:event.eventPhase };
         }
+        liquid.stackDownloading = { lastResponseLen:liquid.lastResponseLen, responseLen:event.currentTarget.response.length, loaded:event.loaded, total:event.total, timeStamp:event.timeStamp, eventPhase:event.eventPhase };
         liquid.lastResponseLen = Liquid.onTransferDownloadingProgress(event, liquid, liquid.lastResponseLen, outDiv, commandOrEvent, userCallback, userCallbackParam);
-    },    
+    },
     onTransferLoaded:function(liquid, commandOrEvent, handlerName, event, userCallback, userCallbackParam) {
         var outDiv = Liquid.getStatusDiv(liquid);
         var runningImg = "<img src=\""+Liquid.getImagePath("green.png")+"\" width=\"16\" height=\"16\"/>";
@@ -2379,7 +2379,6 @@ var Liquid = {
                 if(isDef(col.validate)) {
                     var command = col.validate;                    
                     var liquidCommandParams = Liquid.buildCommandParams(liquid, command);
-
                     if(command.client) {
                         if(command.clientAfter !== true || command.clientBefore === true) {
                             validateResult = Liquid.executeClientSide(liquid, "validate:" + command.name, command.client, liquidCommandParams, command.isNative);
@@ -5046,10 +5045,10 @@ var Liquid = {
                             var rowId = queue.targetRow[ queue.liquid.tableJson.primaryKeyField ? queue.liquid.tableJson.primaryKeyField : "1" ];
                             if(rowId === '' || rowId === null) {
                                 if(queue.liquid.addingNode) {
-                                    queue.liquid.addingNode.data[queue.targetCol.field] = queue.propValue;
+                                	queue.liquid.addingNode.data[queue.targetCol.field] = queue.propValue;
                                 }
                                 if(queue.liquid.addingRow) {
-                                    queue.liquid.addingRow[queue.targetCol.field] = queue.propValue;
+                                	queue.liquid.addingRow[queue.targetCol.field] = queue.propValue;
                                 }
                             }
                             Liquid.updateDependencies(queue.liquid, queue.targetCol, null, null);
@@ -5090,7 +5089,8 @@ var Liquid = {
                         var event = events[ievt];
                         if(event) {
                             if(Liquid.isSystemEvent(event)) { // system event take care of the syncronous chain
-                                res = systemResult = Liquid.onEventProcess(liquid, event, obj, eventName, eventData, callback, callbackParams, defaultRetval);
+                            	var eventParams = Liquid.buildCommandParams(liquid, event);
+                                res = systemResult = Liquid.onEventProcess(liquid, event, obj, eventName, eventParams.params, eventData, callback, callbackParams, defaultRetval);
                                 systemEventCounter++;
                                 eventCounter++;
                             }
@@ -5101,7 +5101,8 @@ var Liquid = {
                             var event = events[ievt];
                             if(event) {
                                 if(!Liquid.isSystemEvent(event)) {
-                                    res = Liquid.onEventProcess(liquid, event, obj, eventName, eventData, null, null, defaultRetval);
+                                	var eventParams = Liquid.buildCommandParams(liquid, event);
+                                    res = Liquid.onEventProcess(liquid, event, obj, eventName, eventParams.params, eventData, null, null, defaultRetval);
                                     result = res;
                                     eventCounter++;
                                 }
@@ -5118,7 +5119,7 @@ var Liquid = {
         }
         return {result: result ? result : defaultRetval, systemResult: systemResult, nEvents: eventCounter, nSystemEvents: systemEventCounter};
     },
-    onEventProcess:function(liquid, event, obj, eventName, eventData, callback, callbackParams, defaultRetval) {
+    onEventProcess:function(liquid, event, obj, eventName, eventParams, eventData, callback, callbackParams, defaultRetval) {
         if(event) {
             var retVal = null;
             
@@ -5338,7 +5339,7 @@ var Liquid = {
         var command = liquidCommandParams.command;
         var params = liquidCommandParams.params;
         var retVal = true;
-
+        
         if(command.server) {
             Liquid.registerOnUnloadPage();
             if(!liquid.xhr)
@@ -5918,7 +5919,7 @@ var Liquid = {
                 if(isDef(liquid.tableJson.autoSelect)) {
                     var nodes = liquid.gridOptions.api.rowModel.rootNode.allLeafChildren;
                     if(isDef(nodes) && nodes.length > 0) {
-                        retVal = true;                        
+                        retVal = true;
                         if(liquid.tableJson.autoSelect.toLowerCase() === 'last')
                             nodes[nodes.length - 1].setSelected(true);
                         else if(liquid.tableJson.autoSelect.toLowerCase() === 'first')
@@ -6396,7 +6397,7 @@ var Liquid = {
             if(itemObj.dataset) {
                 if(isDef(itemObj.dataset.linkedInputId)) {
                     itemObj = document.getElementById(itemObj.dataset.linkedInputId);
-                }
+            }
             }
             return itemObj;
         }
@@ -6407,7 +6408,7 @@ var Liquid = {
             if(itemObj.dataset) {
                 if(isDef(itemObj.dataset.linkedInputId)) {
                     itemObj = document.getElementById(itemObj.dataset.linkedInputId+".reset");
-                }
+            }
             }
             return itemObj;
         }
@@ -10169,7 +10170,8 @@ var Liquid = {
                     } else {
                         for(var i=0; i<glLiquids.length; i++) { // by json in other control
                             if(glLiquids[i].controlId === json) {
-                                lookupJson = JSON.parse(JSON.stringify(glLiquids[i].tableJson));
+                                // lookupJson = JSON.parse(JSON.stringify(glLiquids[i].tableJson));
+                                lookupJson = deepClone(glLiquids[i].tableJson);
                                 registerControlId = glLiquids[i].controlId;
                                 break;
                             }
@@ -10180,7 +10182,7 @@ var Liquid = {
                                 if(isDef(lookupObj.dataset)) if(isDef(lookupObj.dataset.liquid)) { // by other liquid control
                                     for(var i=0; i<glLiquids.length; i++) {
                                         if(glLiquids[i].controlId === lookupObj.dataset.liquid) {
-                                            lookupJson = glLiquids[i].tableJson;
+                                            lookupJson = deepClone(glLiquids[i].tableJson);
                                             registerControlId = glLiquids[i].controlId;
                                             break;
                                         }
@@ -12688,3 +12690,20 @@ var LZW = {
         return result;
     }
 };
+
+function deepClone(obj, hash = new WeakMap()) {
+    if (Object(obj) !== obj || obj instanceof Function) return obj;
+    if (hash.has(obj)) return hash.get(obj); // Cyclic reference
+    try {
+        var result = new obj.constructor();
+    } catch(e) { // Constructor failed, create object without running the constructor
+        result = Object.create(Object.getPrototypeOf(obj));
+    }
+    if (obj instanceof Map)
+        Array.from(obj, ([key, val]) => result.set(deepClone(key, hash), 
+                                                   deepClone(val, hash)) );
+    else if (obj instanceof Set)
+        Array.from(obj, (key) => result.add(deepClone(key, hash)) );
+    hash.set(obj, result);
+    return Object.assign(result, ...Object.keys(obj).map (key => ( { [key]: ( key === 'linkedLabelObj' || key === 'linkedObj' || key === 'linkedCmd' ? null : deepClone(obj[key], hash)) }) ));
+}
