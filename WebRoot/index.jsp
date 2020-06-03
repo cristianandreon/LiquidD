@@ -32,7 +32,7 @@
 
         
         <!-- Start Liquid Engine -->
-        <%@ include file="/liquid/liquidXHeader.jsp" %>
+        <%@ include file="/liquid/liquidHeader.jsp" %>
         <%@ include file="/liquid/liquidSelector.jsp" %>
 
 
@@ -183,7 +183,7 @@
             <div class="spacer"></div>
             <br/>
             <br/>
-            LiquidD need database connection in order to store persistent data (the deploy's configuration detail)
+            LiquidD need a database connection in order to store persistent data (the deploy's configuration detail)
             <br/>
             <br/>
             Under the package <b>app.liquid.dbx</b> in the <b>public class connection </b> you should define :
@@ -192,6 +192,7 @@
             <div class="code1" id="codeSample1">
                 <pre class="code">
                     <code class="java">
+public class connection {
 &#x9;&#x9;&#x9;   static String driver = &#x22;postgres&#x22; // or &#x22;oracle&#x22; or &#x22;mysql&#x22; or &#x22;sqlserver&#x22;;
 &#x9;&#x9;&#x9;   static String host = &#x22;your host name&#x22;;
 &#x9;&#x9;&#x9;   static String database = &#x22;your database&#x22;;
@@ -201,6 +202,7 @@
                 </pre>
             </div>
             <br/>
+            N.B.: You don't need to crete any tables inside your database/schema, Liquid create its for you
             <br/>
             <br/>
             <br/>
