@@ -28,7 +28,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" accesskey="" href="./liquidx.css">
+        <link rel="stylesheet" accesskey="" href="./liquidD.css">
 
         
         <!-- Start Liquid Engine -->
