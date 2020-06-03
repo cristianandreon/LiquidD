@@ -202,7 +202,9 @@ public class connection {
                 </pre>
             </div>
             <br/>
-            N.B.: You don't need to crete any tables inside your database/schema, Liquid create its for you
+            N.B.: You don't need to crete any tables inside your database/schema, Liquid create its for you            
+            <br/>
+            N.B.: May be you need to add jdbc driver to the project (I'm using postgresql-42.2.12.jre7.jar)
             <br/>
             <br/>
             <br/>
