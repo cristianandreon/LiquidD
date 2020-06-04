@@ -86,7 +86,7 @@ public class deployManager {
                         String webAppURL = (String) utility.get(deplpoyBean, "webAppURL");
                         int undeployWaitTime = (int) utility.get(deplpoyBean, "undeployWaitTime");
                         int checkWaitTime = (int) utility.get(deplpoyBean, "checkWaitTime");
-                        String mailingList = (String) utility.get(deplpoyBean, "mailingList");
+                        String notifyEmails = (String) utility.get(deplpoyBean, "notifyEmails");
 
                         // Nome del WAR
                         webAppWAR = webAppWAR != null && !webAppWAR.isEmpty() ? webAppWAR : fileName;
@@ -232,7 +232,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            uploadFileError += ex.getLocalizedMessage();
 		                        }
 		                        
-	                    		String recipients[] = mailingList != null && !mailingList.isEmpty() ? mailingList.split(",") : null;
+	                    		String recipients[] = notifyEmails != null && !notifyEmails.isEmpty() ? notifyEmails.split(",") : null;
 	                        	String msg = null;
 		                        
 		                        if(uploadFileOk) {                        
