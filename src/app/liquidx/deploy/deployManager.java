@@ -206,9 +206,10 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                        // 1° upload
 		                        sftpManager sftp = new sftpManager();
 		                        boolean doBackup = true;
+		                        long retVal = 0;
 		                        try {
 		                        	Object [] result = sftp.upload( host, user, password, glSourceFile, sourceFileIS, copyFolder+"/"+webAppWAR );
-		                            long retVal = (long)result[0];
+		                            retVal = (long)result[0];
 		                            doBackup = (boolean)result[1]; 
 		                            if(retVal > 0) {
 		                                if(fileSize != null && !fileSize.isEmpty()) {
@@ -238,20 +239,27 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                        if(uploadFileOk) {                        
 		
 		                            // Verifica del file caricato
-		                            Callback.send("1&deg; - Checking uploaded file...");
+		                            Callback.send("1&deg;/5 - Checking uploaded file...");
+		                            long currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
+		                            if(currentFileSize != retVal) {
+	                                	msg = "Error :Failed to upload current war ("+copyFolder+"/"+webAppWAR+")<br/><br/>... size mismath : "+currentFileSize+"/"+retVal+"";
+		                                Callback.send(msg);
+		                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
+		                                return null;
+		                            }
 		
 		
 		                            //
 		                            // Apertura sessione ssh
 		                            //
-		                            Callback.send("1&deg; - Open ssh session ...");
+		                            Callback.send("1&deg;/5 - Open ssh session ...");
 		                            sshManager ssh = new sshManager();
 		                            ssh.connect(host, user, password);
 		
 		
 		
 		
-		                            Callback.send("1&deg; - Logging as root...");
+		                            Callback.send("1&deg;/5 - Logging as root...");
 		                            String cmd = "su -";
 		                            ssh.cmd(cmd, password);
 		
@@ -261,7 +269,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            // Backup file attualmente in prod
 		                            //
 		                            if(doBackup) {
-			                            Callback.send("2&deg; - Backup file (only if missing or older)...");
+			                            Callback.send("2&deg;/5 - Backup file (only if missing or older)...");
 			                            cmd = "mkdir -p "+backupFolder;
 			                            ssh.cmd(cmd);
 			                            cmd = "cp "+deployFolder+"/"+webAppWAR+ " " + backupFolder + " -u";
@@ -270,11 +278,11 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 			                            //
 			                            // Verifica file copiato
 			                            //
-			                            Callback.send("2&deg; - Checking backup file in "+backupFolder+"...");
+			                            Callback.send("2&deg;/5 - Checking backup file in "+backupFolder+"...");
 			                            cmd = "ls "+backupFolder+"/"+webAppWAR+" -al";
 			                            ssh.cmd(cmd);
 		                            } else {
-			                            Callback.send("2&deg; - Backup skipped, remote file is up to date...");
+			                            Callback.send("2&deg;/5 - Backup skipped, remote file is up to date...");
 			                            Thread.sleep(3000);
 		                            }
 		                            
@@ -283,11 +291,11 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            //
 		                            // Rimozione file produzione
 		                            //
-		                            Callback.send("3&deg; - Removing current file from "+deployFolder+"...");
+		                            Callback.send("3&deg;/5 - Removing current file from "+deployFolder+"...");
 		                            cmd = "sudo rm "+deployFolder+"/"+webAppWAR;
 		                            ssh.cmd(cmd, password);
 		
-		                            long currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
+		                            currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
 		                            if(currentFileSize != 0) {
 	                                	msg = "Error :Failed to remove current war ("+deployFolder+"/"+webAppWAR+")<br/><br/>... maybe file was locked ";
 		                                Callback.send(msg);
@@ -301,7 +309,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            //                        
 		                            // Attesa errore 404
 		                            //
-		                            Callback.send("3&deg; - Waiting for application server...");
+		                            Callback.send("3&deg;/5 - Waiting for application server...");
 		                            if(undeployWaitTime > 0) {
 		                                Thread.sleep(undeployWaitTime);
 		                            } else {
@@ -326,9 +334,9 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                                	}
 			                            }
 	                                    if(code == HttpURLConnection.HTTP_OK) {
-	                                    	Callback.send("3&deg; - <span style=\"color:red\">Web app still running : maybe deployFolder ("+deployFolder+"/"+webAppWAR+") is not valid<span>");
+	                                    	Callback.send("3&deg;/5 - <span style=\"color:red\">Web app still running : maybe deployFolder ("+deployFolder+"/"+webAppWAR+") is not valid<span>");
 	                                    } else {
-	                                    	Callback.send("3&deg; - <span style=\"color:darkGreen\">Applicatin server ready for install <b>"+webAppWAR+"</b>...<span>");
+	                                    	Callback.send("3&deg;/5 - <span style=\"color:darkGreen\">Applicatin server ready for install <b>"+webAppWAR+"</b>...<span>");
 	                                    }
 		                            }
 		                            Thread.sleep(3000);
@@ -340,9 +348,9 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            // Copia file nuova versione
 		                            //
 		                            if(isReadyForDeply) {
-		                                Callback.send("4&deg; - Ready for deply, copying new app to application server...");
+		                                Callback.send("4&deg;/5 - Ready for deply, copying new app to application server...");
 		                            } else {
-		                                Callback.send("4&deg; - Copying new app to application server (without Web App URL check)...");                            
+		                                Callback.send("4&deg;/5 - Copying new app to application server (without Web App URL check)...");                            
 		                            }
 		                            cmd = "sudo cp "+copyFolder+"/"+webAppWAR+" "+deployFolder+"/"+webAppWAR+"";
 		                            ssh.cmd(cmd, password);
@@ -373,7 +381,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            //
 		                            boolean installedSuccesfully = false;
 	
-	                            	Callback.send("5&deg; - Checking application server...");
+	                            	Callback.send("5&deg;/5 - Checking application server...");
 		                            if(webAppURL != null && !webAppURL.isEmpty()) {
 		                            	int n = 10;	                            	
 			                            utility.disableCertificateValidation();
