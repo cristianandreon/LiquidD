@@ -240,7 +240,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		
 		                            // Verifica del file caricato
 		                            Callback.send("1&deg;/5 - Checking uploaded file...");
-		                            long currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
+		                            long currentFileSize = sftp.getRemoteFileSize ( host, user, password, copyFolder+"/"+webAppWAR );
 		                            if(currentFileSize != retVal) {
 	                                	msg = "Error :Failed to upload current war ("+copyFolder+"/"+webAppWAR+")<br/><br/>... size mismath : "+currentFileSize+"/"+retVal+"";
 		                                Callback.send(msg);
