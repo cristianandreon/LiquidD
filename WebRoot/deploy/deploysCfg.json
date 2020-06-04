@@ -6,7 +6,7 @@
 ,"columns":[
      { "visible":false,"nullable":false,"typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"deploysCfg_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"name":"id","width":"50","digits":0}
     ,{"size":256,"nullable":true,"name":"name","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":256,"nullable":true,"name":"ip","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":256,"nullable":true,"name":"host","typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"size":256,"nullable":true,"name":"user","typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"visible":false,"size":256,"nullable":true,"name":"password","typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"size":512,"nullable":true,"name":"sourceFile","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
@@ -24,7 +24,7 @@
             ,"columns":[
                 {"name":"id","tooltip":"","label":"id","row":0,"col":0}
                 ,{"name":"name","tooltip":"Configuration name","label":"name","row":0,"col":1}
-                ,{"name":"ip","tooltip":"Ip of host where deploy","label":"ip","row":0,"col":2}
+                ,{"name":"host","tooltip":"Ip of host where deploy","label":"host","row":0,"col":2}
                 ,{"name":"user","tooltip":"User name for login sftp/ssh","label":"user","row":1,"col":0}
                 ,{"name":"password","tooltip":"password for login sftp/ssh","label":"password","row":1,"col":1}
                 ,{"name":"deployFolder","tooltip":"Where deploty the .war file","label":"deployFolder","row":1,"col":2 }
