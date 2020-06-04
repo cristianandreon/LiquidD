@@ -180,6 +180,10 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 	                        // Risoluzione deployFolder
 	                        deployFolder = solve_variable_field(deployFolder, user, webApp);
 	
+	                        // Strip last /
+	                        if(backupFolder.endsWith("/")) backupFolder = backupFolder.substring(9, deployFolder.length()-1);
+	                        if(copyFolder.endsWith("/")) copyFolder = copyFolder.substring(9, deployFolder.length()-1);
+	                        if(deployFolder.endsWith("/")) deployFolder = deployFolder.substring(9, deployFolder.length()-1);
 	                        
 	                        String message = " Processing <b>"+cfgName+"</b></br>"
 	                        		+"</br>"
