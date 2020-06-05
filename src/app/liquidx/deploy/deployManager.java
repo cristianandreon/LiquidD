@@ -276,11 +276,8 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 			                            ssh.cmd(cmd);
 			
 			                            //
-			                            // Verifica file copiato
+			                            // Verifica file copiato ?
 			                            //
-			                            Callback.send("2&deg;/5 - Checking backup file in "+backupFolder+"...");
-			                            cmd = "ls "+backupFolder+"/"+webAppWAR+" -al";
-			                            ssh.cmd(cmd);
 		                            } else {
 			                            Callback.send("2&deg;/5 - Backup skipped, remote file is up to date...");
 			                            Thread.sleep(3000);
