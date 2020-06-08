@@ -179,6 +179,18 @@
             <br/>
             <br/>
             <br/>
+            <div class="title1">How to run multiple deploys at the same time :</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>            
+            <br/>            
+            Don't double on other row while a deploy is running ... simply open multiple tab in your browser </br></br>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+            <br/>
             <div class="title1">How does it work ?</div>
             <div class="spacer"></div>
             <br/>
@@ -215,7 +227,7 @@ public class connection {
             <br/>
             <br/>
             <ul> 
-                    <li>Multiple process</li>
+                    <li>Show waiters</li>
                     <li>Upload resume</li>
                     <li>Notifications</li>
             </ul>
