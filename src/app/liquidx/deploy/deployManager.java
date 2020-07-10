@@ -1,4 +1,5 @@
 /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -191,6 +192,10 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 	                        		+"file : <b>"+sourceFile+"</b></br>"
 	                        		+"</span>"
 	                        		+"</br>"
+	                        		+"</br>"
+	                        		+"<span style=\"font-size:85%; left:50px; position: relative;\">"
+	                        		+"</span>"
+	                        		+"target : <b>"+user+"@"+host+"</b></br>"
 	                        		+"</br>"
 	                        		+"<span style=\"font-size:80%; left:60px; position: relative;\">"
 	                        		+"</br>Copy  to <b>"+copyFolder+"/"+webAppWAR+"</b></br>"
