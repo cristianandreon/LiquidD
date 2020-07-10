@@ -7824,14 +7824,14 @@ var Liquid = {
                 for(var i=0; i<liquid.selection.exclude.length; i++) {
                     if(idsUnselected.length > 0) idsUnselected += ",";
                     var value = liquid.selection.exclude[i];
-                    if(typeof value === 'string') idsUnselected += '"' + value + '"'; else idsUnselected += value;
+                    if(typeof value === 'string') idsUnselected += '"' + value.replace(/"/g, "\\\"") ; else idsUnselected += value;
                 }
             } else {
                 // include list
                 for(var i=0; i<liquid.selection.include.length; i++) {
                     if(idsSelected.length > 0) idsSelected += ",";
                     var value = liquid.selection.include[i];
-                    if(typeof value === 'string') idsSelected += '"' + value + '"'; else idsSelected += value;
+                    if(typeof value === 'string') idsSelected += '"' + value.replace(/"/g, "\\\"") + '"'; else idsSelected += value;
                 }
             }
         }
@@ -13400,9 +13400,20 @@ var Liquid = {
                 var date = new Date();
                 Liquid.getDB();
                 if(glLiquidDB) {
-                    glLiquidDB.transaction(function (tx) {   
-                        tx.executeSql("INSERT INTO CLIPBOARD (controlId,columns,rows,date) VALUES ('"+liquid.controlId+"','"+JSON.stringify(liquid.tableJson.columns)+"','"+(Liquid.serializedRow(liquid, true))+"','"+date.toISOString()+"')");
-                        Liquid.copyToClipBoradDone(liquid);
+                    glLiquidDB.transaction(function (tx) {
+                        try {
+                            var sql = "INSERT INTO CLIPBOARD (controlId,columns,rows,date) VALUES ("
+                                    + "'" + liquid.controlId + "'"
+                                    + ",'" + JSON.stringify(liquid.tableJson.columns)+"'"
+                                    + ",'" + (Liquid.serializedRow(liquid, true)).replace(/'/g, "''") + "'"
+                                    + ",'" + date.toISOString() + "'"
+                                    + ")";
+                            tx.executeSql(sql, [], function (tx, results) {
+                                Liquid.copyToClipBoradDone(liquid);
+                            }, function (tx, results) {
+                                console.error(results);
+                            });
+                        } catch(e) { console.error("ERROR: "+e); }
                     }, null);
                 } else if(glLiquidIDB) {                    
                     var transaction = glLiquidIDB.transaction(["CLIPBOARD"], "readwrite");
