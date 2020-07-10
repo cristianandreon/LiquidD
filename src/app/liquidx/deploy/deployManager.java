@@ -452,7 +452,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                        	emailer.postMail(recipients, "Deploy notification: "+cfgName, header+msg, "info@cristianandreon.eu");
 		                        }
 	                        } else {
-                                    msg = "1&deg; - Upload of "+cfgName+" <span style=\"color:marooned\">Not confirmed by used<span>";
+                                    msg = "1&deg; - Upload of "+cfgName+" <span style=\"color:maroon\">Not confirmed by used<span>";
                                     Callback.send(msg);                                    
                                 }
 	                    }
