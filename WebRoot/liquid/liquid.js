@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////
 //
 // Liquid ver.1.16   Copyright 2020 Cristian Andreon - cristianandreon.eu
-//  First update 8.1.2020 - Last update  10-7-2020
+//  First update 8.1.2020 - Last update  11-7-2020
 //  TODO : see trello.com
 //
 // *** File internal priority *** 
@@ -13400,16 +13400,16 @@ var Liquid = {
                 var date = new Date();
                 Liquid.getDB();
                 if(glLiquidDB) {
-                    glLiquidDB.transaction(function (tx) {
+                    glLiquidDB.transaction(function (tx) {   
                         try {
                             var sql = "INSERT INTO CLIPBOARD (controlId,columns,rows,date) VALUES ("
                                     + "'" + liquid.controlId + "'"
-                                    + ",'" + JSON.stringify(liquid.tableJson.columns)+"'"
-                                    + ",'" + (Liquid.serializedRow(liquid, true)).replace(/'/g, "''") + "'"
+                                    + ",'" + btoa(JSON.stringify(liquid.tableJson.columns))+"'"
+                                    + ",'" + btoa(Liquid.serializedRow(liquid, true)) + "'"
                                     + ",'" + date.toISOString() + "'"
                                     + ")";
                             tx.executeSql(sql, [], function (tx, results) {
-                                Liquid.copyToClipBoradDone(liquid);
+                        Liquid.copyToClipBoradDone(liquid);
                             }, function (tx, results) {
                                 console.error(results);
                             });
@@ -13482,10 +13482,12 @@ var Liquid = {
             }
         }
     },
-    pasteFromClipBoradExec:function(liquid, controlId, columns, rows) {
+    pasteFromClipBoradExec:function(liquid, controlId, columnsB64, rowsB64) {
         if(liquid) {
             if(controlId) {
-                var sourceLiquid = Liquid.getLiquid(controlId);                
+                var sourceLiquid = Liquid.getLiquid(controlId);
+                var columns = atob(columnsB64);
+                var rows = atob(rowsB64);
                 if(columns) {
                     var columnsJson = JSON.parse(columns);
                     if(columnsJson) {
