@@ -23,6 +23,12 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -93,6 +99,8 @@ public class deployManager {
                         webAppWAR = webAppWAR != null && !webAppWAR.isEmpty() ? webAppWAR : fileName;
 
                         String webApp = webAppWAR.substring(0, webAppWAR.lastIndexOf('.'));
+                        String sourceFileCDate = "[N/D]";
+                        String sourceFileLDate = "[N/D]";
 
                         // Adattamento webAppName
                         webAppWAR = webApp + ".war";
@@ -120,6 +128,13 @@ public class deployManager {
                                 Callback.send("1&deg; - Uploading " + sourceFile + " " + (f.length() / 1024 / 1024) + "MB...");
                                 glSourceFile = sourceFile;
                                 glFileSize = f.length();
+                                
+                                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm:ss");
+                                sourceFileLDate = dateFormat.format(f.lastModified());                                
+                                BasicFileAttributes attrs = Files.readAttributes(f.toPath(), BasicFileAttributes.class);
+                                FileTime time = attrs.creationTime();
+                                sourceFileCDate = dateFormat.format( new Date( time.toMillis() ) );
+                                
                             } else {
                                 String err = "source file not accessible";
                                 Callback.send("1&deg; - Deploy of " + cfgName + "failed, <span style=\"color:red\">" + err + "<span>");
@@ -185,12 +200,18 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 	                        if(backupFolder.endsWith("/")) backupFolder = backupFolder.substring(9, deployFolder.length()-1);
 	                        if(copyFolder.endsWith("/")) copyFolder = copyFolder.substring(9, deployFolder.length()-1);
 	                        if(deployFolder.endsWith("/")) deployFolder = deployFolder.substring(9, deployFolder.length()-1);
+                                
+                                String msg = null;
 	                        
 	                        String message = " Processing <b>"+cfgName+"</b></br>"
 	                        		+"</br>"
 	                        		+"<span style=\"font-size:90%\">"
 	                        		+"file : <b>"+sourceFile+"</b></br>"
 	                        		+"</span>"
+	                        		+"</br>"
+	                        		+"Size: "+glFileSize+"</br>"
+	                        		+"Creation date: "+sourceFileCDate+"</br>"
+	                        		+"Last modify date: "+sourceFileLDate+"</br>"
 	                        		+"</br>"
 	                        		+"</br>"
 	                        		+"<span style=\"font-size:85%; left:50px; position: relative;\">"
@@ -239,7 +260,6 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                        }
 		                        
 	                    		String recipients[] = notifyEmails != null && !notifyEmails.isEmpty() ? notifyEmails.split(",") : null;
-	                        	String msg = null;
 		                        
 		                        if(uploadFileOk) {                        
 		
@@ -283,6 +303,9 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 			                            //
 			                            // Verifica file copiato ?
 			                            //
+			                            Callback.send("2&deg;/5 - Checking backup file in "+backupFolder+"...");
+			                            cmd = "ls "+backupFolder+"/"+webAppWAR+" -al";
+			                            ssh.cmd(cmd);
 		                            } else {
 			                            Callback.send("2&deg;/5 - Backup skipped, remote file is up to date...");
 			                            Thread.sleep(3000);
@@ -370,10 +393,10 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            
 		                            long copiedFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
 		                            if(copiedFileSize != glFileSize) {
-	                                	msg = "Error : remote file deployed sie : "+copiedFileSize+" / uploaded file size : "+fileSize;
+	                                	msg = "WARNING : remote file deployed sie : "+copiedFileSize+" / uploaded file size : "+fileSize;
 		                                Callback.send(msg);
-		                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
-		                                return null;
+		                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.WARNING);
+		                                // return null;
 		                            }
 		                            
 		                            
@@ -417,7 +440,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                                Thread.sleep(1000);
 		                            }
 		                        } else {
-		                        	msg = "1&deg; - Upload of "+cfgName+" <span style=\"color:red\">Failed with error:"+uploadFileError+"<span>";
+                                            msg = "1&deg; - Upload of "+cfgName+" <span style=\"color:red\">Failed with error:"+uploadFileError+"<span>";
 		                            Callback.send(msg);
 		                        }
 		                        
@@ -428,7 +451,10 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                        	String header = "<h1>LiquidD - WAR Deploy</h1></br></br><h4>LiquidD - WAR Deploy base on Liquid framework<br/>https://gitgub.com/cristianandreon/Liquid</h4><br/>https://gitgub.com/cristianandreon/LiquidD</h4>";
 		                        	emailer.postMail(recipients, "Deploy notification: "+cfgName, header+msg, "info@cristianandreon.eu");
 		                        }
-	                        }
+	                        } else {
+                                    msg = "1&deg; - Upload of "+cfgName+" <span style=\"color:marooned\">Not confirmed by used<span>";
+                                    Callback.send(msg);                                    
+                                }
 	                    }
 	                    
 	                } else {
