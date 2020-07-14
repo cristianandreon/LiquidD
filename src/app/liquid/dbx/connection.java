@@ -14,17 +14,17 @@ import com.liquid.db;
 public class connection {
     
     static String driver = "postgres";
-    static String host = "localhost";
+    static String host = "cnconline";
 
     static String database = "LiquidX";
     static String user = "liquid";
     static String password = "liquid";
     static Class driverClass = null;
-	private static boolean hasSetup;
-	private static boolean hasSetupDB;
+    private static boolean hasSetup;
+    private static boolean hasSetupDB;
     
     
-    static public Connection getDBConnection() throws Exception {        
+    static public Connection getDBConnection() throws Exception, Throwable {        
     	try {
             if("oracle".equalsIgnoreCase(driver)) {
                 if(driverClass == null) driverClass = Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -54,11 +54,12 @@ public class connection {
         		}
         	}
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, th);
+            throw th;
     	}
         return null;    
     }
 
-    static public Connection getDBConnection(String database) throws Exception {        
+    static public Connection getDBConnection(String database) throws Exception, Throwable {        
     	try {            
             if("oracle".equalsIgnoreCase(driver)) {
                 if(driverClass == null) driverClass = Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -81,6 +82,7 @@ public class connection {
             }            
     	} catch(Throwable th) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, th);
+            throw th;
     	}
         return null;    
     }
