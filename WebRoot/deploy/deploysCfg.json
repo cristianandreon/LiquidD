@@ -53,6 +53,8 @@
  	 { "name":"insert"}
 	,{ "name":"update"}
 	,{ "name":"delete"}
+	,{ "name":"copy"}
+	,{ "name":"paste"}
 	,{ "name":"next"}
 	,{ "name":"previous"}
 ]
