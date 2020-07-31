@@ -317,9 +317,10 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            // Rimozione file produzione
 		                            //
 		                            Callback.send("3&deg;/5 - Removing current file from "+deployFolder+"...");
-		                            cmd = "sudo rm "+deployFolder+"/"+webAppWAR;
+		                            cmd = "rm "+deployFolder+"/"+webAppWAR;
 		                            ssh.cmd(cmd, password);
 		
+                                            Thread.sleep(1000);
 		                            currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
 		                            if(currentFileSize != 0) {
 	                                	msg = "Error :Failed to remove current war ("+deployFolder+"/"+webAppWAR+")<br/><br/>... maybe file was locked ";
