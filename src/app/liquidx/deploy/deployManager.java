@@ -322,11 +322,24 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		
                                             Thread.sleep(1000);
 		                            currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
-		                            if(currentFileSize != 0) {
-	                                	msg = "Error :Failed to remove current war ("+deployFolder+"/"+webAppWAR+")<br/><br/>... maybe file was locked ";
-		                                Callback.send(msg);
-		                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
-		                                return null;
+		                            if(currentFileSize != 0 && currentFileSize < 49436600) {
+                                                
+                                                Thread.sleep(1000);
+                                                
+                                                Callback.send("3&deg;/5 - Retry to removing current file from "+deployFolder+"...");
+                                                cmd = "rm "+deployFolder+"/"+webAppWAR;
+                                                ssh.cmd(cmd, password);
+
+                                                Thread.sleep(1000);
+
+                                                currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
+                                                if(currentFileSize != 0 && currentFileSize < 49436600) {
+                                                
+                                                    msg = "Error :Failed to remove current war ("+deployFolder+"/"+webAppWAR+")<br/><br/>... maybe file was locked ";
+                                                    Callback.send(msg);
+                                                    Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
+                                                    return null;
+                                                }
 		                            }
 
 		                            
@@ -357,10 +370,10 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                                        break;
 		                                    } else {
 		                                        Thread.sleep((3000));
-		                                	}
-			                            }
+                                                    }
+                                                }
 	                                    if(code == HttpURLConnection.HTTP_OK) {
-	                                    	Callback.send("3&deg;/5 - <span style=\"color:red\">Web app still running : maybe deployFolder ("+deployFolder+"/"+webAppWAR+") is not valid<span>");
+	                                    	Callback.send("3&deg;/5 - <span style=\"color:red\">Web app still running : maybe deployFolder ("+deployFolder+"/"+webAppWAR+") is not valid ... or 404 error redirected<span>");
 	                                    } else {
 	                                    	Callback.send("3&deg;/5 - <span style=\"color:darkGreen\">Applicatin server ready for install <b>"+webAppWAR+"</b>...<span>");
 	                                    }
