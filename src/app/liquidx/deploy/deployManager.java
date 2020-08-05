@@ -234,16 +234,23 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                        boolean doBackup = true;
 		                        long retVal = 0;
 		                        try {
-		                        	Object [] result = sftp.upload( host, user, password, glSourceFile, sourceFileIS, copyFolder+"/"+webAppWAR );
+                                            Object [] result = sftp.upload( host, user, password, glSourceFile, sourceFileIS, copyFolder+"/"+webAppWAR );
 		                            retVal = (long)result[0];
 		                            doBackup = (boolean)result[1]; 
 		                            if(retVal > 0) {
 		                                if(fileSize != null && !fileSize.isEmpty()) {
+		                                    if(Long.parseLong(fileSize) != retVal) {
+                                                        long currentFileSize = sftp.getRemoteFileSize ( host, user, password, copyFolder+"/"+webAppWAR );
+                                                        if(Long.parseLong(fileSize) == currentFileSize) {
+                                                            retVal = currentFileSize;
+                                                        }
+                                                    }
+                                                    
 		                                    if(Long.parseLong(fileSize) == retVal) {
 		                                        uploadFileOk = true;
 		                                        // upload descriptor
-		        	                    		InputStream descFileIS = new ByteArrayInputStream(desc_content.getBytes());                       
-		        	                            sftp.upload( host, user, password, null, descFileIS, copyFolder+"/"+(desc_file) );
+                                                        InputStream descFileIS = new ByteArrayInputStream(desc_content.getBytes());                       
+                                                        sftp.upload( host, user, password, null, descFileIS, copyFolder+"/"+(desc_file) );
 		                                    }
 		                                } else {
 		                                    uploadFileOk = true;
@@ -322,7 +329,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		
                                             Thread.sleep(1000);
 		                            currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
-		                            if(currentFileSize != 0 && currentFileSize < 49436600) {
+		                            if(currentFileSize != 0 && currentFileSize < 0xFFFFFFFF-0xFF) {
                                                 
                                                 Thread.sleep(1000);
                                                 
@@ -333,7 +340,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                                 Thread.sleep(1000);
 
                                                 currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
-                                                if(currentFileSize != 0 && currentFileSize < 49436600) {
+                                                if(currentFileSize != 0 && currentFileSize < 0xFFFFFFFF-0xFF) {
                                                 
                                                     msg = "Error :Failed to remove current war ("+deployFolder+"/"+webAppWAR+")<br/><br/>... maybe file was locked ";
                                                     Callback.send(msg);
@@ -391,7 +398,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            } else {
 		                                Callback.send("4&deg;/5 - Copying new app to application server (without Web App URL check)...");                            
 		                            }
-		                            cmd = "sudo cp "+copyFolder+"/"+webAppWAR+" "+deployFolder+"/"+webAppWAR+"";
+		                            cmd = "cp "+copyFolder+"/"+webAppWAR+" "+deployFolder+"/"+webAppWAR+"";
 		                            ssh.cmd(cmd, password);
 		
 		
@@ -462,8 +469,11 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                        // Notiification
 		                        //
 		                        if(recipients != null) {
+                                            try {
 		                        	String header = "<h1>LiquidD - WAR Deploy</h1></br></br><h4>LiquidD - WAR Deploy base on Liquid framework<br/>https://gitgub.com/cristianandreon/Liquid</h4><br/>https://gitgub.com/cristianandreon/LiquidD</h4>";
-		                        	emailer.postMail(recipients, "Deploy notification: "+cfgName, header+msg, "info@cristianandreon.eu");
+		                        	// TODO
+                                                // emailer.postMail(recipients, "Deploy notification: "+cfgName, header+msg, "email_addr");
+                                            } catch (Exception e) {}
 		                        }
 	                        } else {
                                     msg = "1&deg; - Upload of "+cfgName+" <span style=\"color:maroon\">Not confirmed by used<span>";
