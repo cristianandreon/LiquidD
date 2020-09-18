@@ -415,6 +415,8 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            long copiedFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
 		                            if(copiedFileSize != glFileSize) {
 	                                	msg = "WARNING : remote file deployed size : "+copiedFileSize+" / uploaded file size : "+glFileSize;
+                                                msg += " <br/> may be cp command failed :";
+                                                msg += " <br/></b> " + cmd + "</b>";
 		                                Callback.send(msg);
 		                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.WARNING);
 		                                // return null;
