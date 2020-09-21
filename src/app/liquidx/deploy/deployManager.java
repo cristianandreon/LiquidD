@@ -292,7 +292,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		
 		
 		                            Callback.send("1&deg;/5 - Logging as root...");
-		                            String cmd = "su -";
+		                            String cmd = "sudo -i";
 		                            ssh.cmd(cmd, password);
 		
 		                            
@@ -324,7 +324,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            // Rimozione file produzione
 		                            //
 		                            Callback.send("3&deg;/5 - Removing current file from "+deployFolder+"...");
-		                            cmd = "rm "+deployFolder+"/"+webAppWAR;
+		                            cmd = "sudo rm "+deployFolder+"/"+webAppWAR;
 		                            ssh.cmd(cmd, password);
 		
                                             Thread.sleep(1000);
@@ -334,7 +334,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                                 Thread.sleep(1000);
                                                 
                                                 Callback.send("3&deg;/5 - Retry to removing current file from "+deployFolder+"...");
-                                                cmd = "rm "+deployFolder+"/"+webAppWAR;
+                                                cmd = "sudo rm "+deployFolder+"/"+webAppWAR;
                                                 ssh.cmd(cmd, password);
 
                                                 Thread.sleep(1000);
@@ -398,7 +398,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 		                            } else {
 		                                Callback.send("4&deg;/5 - Copying new app to application server (without Web App URL check)...");                            
 		                            }
-		                            cmd = "cp "+copyFolder+"/"+webAppWAR+" "+deployFolder+"/"+webAppWAR+"";
+		                            cmd = "sudo cp "+copyFolder+"/"+webAppWAR+" "+deployFolder+"/"+webAppWAR+"";
 		                            ssh.cmd(cmd, password);
 		
 		
