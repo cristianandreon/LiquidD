@@ -37,7 +37,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 /**
  *
  * @author root
@@ -128,13 +127,13 @@ public class deployManager {
                                 Callback.send("1&deg; - Uploading " + sourceFile + " " + (f.length() / 1024 / 1024) + "MB...");
                                 glSourceFile = sourceFile;
                                 glFileSize = f.length();
-                                
+
                                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm:ss");
-                                sourceFileLDate = dateFormat.format(f.lastModified());                                
+                                sourceFileLDate = dateFormat.format(f.lastModified());
                                 BasicFileAttributes attrs = Files.readAttributes(f.toPath(), BasicFileAttributes.class);
                                 FileTime time = attrs.creationTime();
-                                sourceFileCDate = dateFormat.format( new Date( time.toMillis() ) );
-                                
+                                sourceFileCDate = dateFormat.format(new Date(time.toMillis()));
+
                             } else {
                                 String err = "source file not accessible";
                                 Callback.send("1&deg; - Deploy of " + cfgName + "failed, <span style=\"color:red\">" + err + "<span>");
@@ -177,329 +176,325 @@ public class deployManager {
                             /*
 function getFolderDateName() { var date = new Date(); var d = date.getDate(); var m = date.getMonth() + 1; var y = date.getFullYear(); var dateString = (y) + (m <= 9 ? '0' + m : m) + (d <= 9 ? '0' + d : d); return dateString; }
 "/home/%user%/rilasci/%webApp%/getFolderDateName();
-*/
-	
-	                       
-	                        // InputStream inputStream = new FileInputStream(filePath);
-	                        String ver = (String)utility.getArchiveXMLTag(sourceFile, "WEB-INF/product.xml", "product/version");
-	                        
-	                        String desc_file = "" + ver;
-	                        String desc_content = "" + (String)utility.getArchiveFile(sourceFile, "WEB-INF/product.xml", "product/version");;
-	                    
-	                    	
-	                        // Risoluzione backupFolder
-	                        backupFolder = solve_variable_field(backupFolder, user, webApp);
-	
-	                        // Risoluzione copyFolder
-	                        copyFolder = solve_variable_field(copyFolder, user, webApp);
-	
-	                        // Risoluzione deployFolder
-	                        deployFolder = solve_variable_field(deployFolder, user, webApp);
-	
-	                        // Strip last /
-	                        if(backupFolder.endsWith("/")) backupFolder = backupFolder.substring(9, deployFolder.length()-1);
-	                        if(copyFolder.endsWith("/")) copyFolder = copyFolder.substring(9, deployFolder.length()-1);
-	                        if(deployFolder.endsWith("/")) deployFolder = deployFolder.substring(9, deployFolder.length()-1);
-                                
-                                String msg = null;
-	                        
-	                        String message = " Processing <b>"+cfgName+"</b></br>"
-	                        		+"</br>"
-	                        		+"<span style=\"font-size:90%\">"
-	                        		+"file : <b>"+sourceFile+"</b></br>"
-	                        		+"</span>"
-	                        		+"</br>"
-	                        		+"Size: "+glFileSize+"</br>"
-	                        		+"Creation date: "+sourceFileCDate+"</br>"
-	                        		+"Last modify date: "+sourceFileLDate+"</br>"
-	                        		+"</br>"
-	                        		+"</br>"
-	                        		+"<span style=\"font-size:85%; left:50px; position: relative;\">"
-	                        		+"</span>"
-	                        		+"target : <b>"+user+"@"+host+"</b></br>"
-	                        		+"</br>"
-	                        		+"<span style=\"font-size:80%; left:60px; position: relative;\">"
-	                        		+"</br>Copy  to <b>"+copyFolder+"/"+webAppWAR+"</b></br>"
-	                        		+"</br>"
-	                        		+"</br>Backup to <b>"+backupFolder+"/"+webAppWAR+"</b></br>"
-	                        		+"</br>"
-	                        		+"</br>Deploy to <b>"+deployFolder+"/"+webAppWAR+"</b></br>"
-	                        		+"</span>"
-	                        		;
-	                        
-	                        if(Messagebox.show(message, "LiquidD", Messagebox.QUESTION+Messagebox.YES+Messagebox.NO) == Messagebox.YES) {	                        
-		                        
-		                        // 1° upload
-		                        sftpManager sftp = new sftpManager();
-		                        boolean doBackup = true;
-		                        long retVal = 0;
-		                        try {
-                                            Object [] result = sftp.upload( host, user, password, glSourceFile, sourceFileIS, copyFolder+"/"+webAppWAR );
-		                            retVal = (long)result[0];
-		                            doBackup = (boolean)result[1]; 
-		                            if(retVal > 0) {
-		                                if(fileSize != null && !fileSize.isEmpty()) {
-		                                    if(Long.parseLong(fileSize) != retVal) {
-                                                        long currentFileSize = sftp.getRemoteFileSize ( host, user, password, copyFolder+"/"+webAppWAR );
-                                                        if(Long.parseLong(fileSize) == currentFileSize) {
-                                                            retVal = currentFileSize;
-                                                        }
-                                                    }
-                                                    
-		                                    if(Long.parseLong(fileSize) == retVal) {
-		                                        uploadFileOk = true;
-		                                        // upload descriptor
-                                                        InputStream descFileIS = new ByteArrayInputStream(desc_content.getBytes());                       
-                                                        sftp.upload( host, user, password, null, descFileIS, copyFolder+"/"+(desc_file) );
-		                                    }
-		                                } else {
-		                                    uploadFileOk = true;
-		                                }
-		                            } else {
-		                            	uploadFileError = "File has zero size";
-		                            }
-		                        } catch (JSchException ex) {
-		                            java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
-		                            uploadFileError += ex.getLocalizedMessage();
-		                        } catch (SftpException ex) {
-		                            java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
-		                            uploadFileError += ex.getLocalizedMessage();
-		                        }
-		                        
-	                    		String recipients[] = notifyEmails != null && !notifyEmails.isEmpty() ? notifyEmails.split(",") : null;
-		                        
-		                        if(uploadFileOk) {                        
-		
-		                            // Verifica del file caricato
-		                            Callback.send("1&deg;/5 - Checking uploaded file...");
-		                            long currentFileSize = sftp.getRemoteFileSize ( host, user, password, copyFolder+"/"+webAppWAR );
-		                            if(currentFileSize != retVal) {
-	                                	msg = "Error :Failed to upload current war ("+copyFolder+"/"+webAppWAR+")<br/><br/>... size mismath : "+currentFileSize+"/"+retVal+"";
-		                                Callback.send(msg);
-		                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
-		                                return null;
-		                            }
-		
-		
-		                            //
-		                            // Apertura sessione ssh
-		                            //
-		                            Callback.send("1&deg;/5 - Open ssh session ...");
-		                            sshManager ssh = new sshManager();
-		                            ssh.connect(host, user, password);
-		
-		
-		
-		
-		                            Callback.send("1&deg;/5 - Logging as root...");
-		                            String cmd = "sudo -i";
-		                            ssh.cmd(cmd, password);
-		
-		                            
-			                        // 2° backup
-		                            //
-		                            // Backup file attualmente in prod
-		                            //
-		                            if(doBackup) {
-			                            Callback.send("2&deg;/5 - Backup file (only if missing or older)...");
-			                            cmd = "mkdir -p "+backupFolder;
-			                            ssh.cmd(cmd);
-			                            cmd = "cp "+deployFolder+"/"+webAppWAR+ " " + backupFolder + " -u";
-			                            ssh.cmd(cmd);
-			
-			                            //
-			                            // Verifica file copiato ?
-			                            //
-			                            Callback.send("2&deg;/5 - Checking backup file in "+backupFolder+"...");
-			                            cmd = "ls "+backupFolder+"/"+webAppWAR+" -al";
-			                            ssh.cmd(cmd);
-		                            } else {
-			                            Callback.send("2&deg;/5 - Backup skipped, remote file is up to date...");
-			                            Thread.sleep(3000);
-		                            }
-		                            
-		                            
-			                        // 3° remove current war
-		                            //
-		                            // Rimozione file produzione
-		                            //
-		                            Callback.send("3&deg;/5 - Removing current file from "+deployFolder+"...");
-		                            cmd = "sudo rm "+deployFolder+"/"+webAppWAR;
-		                            ssh.cmd(cmd, password);
-		
-                                            Thread.sleep(1000);
-		                            currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
-		                            if(currentFileSize != 0 && currentFileSize < 0xFFFFFFFF-0xFF) {
-                                                
-                                                Thread.sleep(1000);
-                                                
-                                                Callback.send("3&deg;/5 - Retry to removing current file from "+deployFolder+"...");
-                                                cmd = "sudo rm "+deployFolder+"/"+webAppWAR;
-                                                ssh.cmd(cmd, password);
+                             */
+                            // InputStream inputStream = new FileInputStream(filePath);
+                            String ver = (String) utility.getArchiveXMLTag(sourceFile, "WEB-INF/product.xml", "product/version");
 
-                                                Thread.sleep(1000);
+                            String desc_file = "" + ver;
+                            String desc_content = "" + (String) utility.getArchiveFile(sourceFile, "WEB-INF/product.xml", "product/version");;
 
-                                                currentFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
-                                                if(currentFileSize != 0 && currentFileSize < 0xFFFFFFFF-0xFF) {
-                                                
-                                                    msg = "Error :Failed to remove current war ("+deployFolder+"/"+webAppWAR+")<br/><br/>... maybe file was locked ";
-                                                    Callback.send(msg);
-                                                    Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
-                                                    return null;
+                            // Risoluzione backupFolder
+                            backupFolder = solve_variable_field(backupFolder, user, webApp);
+
+                            // Risoluzione copyFolder
+                            copyFolder = solve_variable_field(copyFolder, user, webApp);
+
+                            // Risoluzione deployFolder
+                            deployFolder = solve_variable_field(deployFolder, user, webApp);
+
+                            // Strip last /
+                            if (backupFolder.endsWith("/")) {
+                                backupFolder = backupFolder.substring(9, deployFolder.length() - 1);
+                            }
+                            if (copyFolder.endsWith("/")) {
+                                copyFolder = copyFolder.substring(9, deployFolder.length() - 1);
+                            }
+                            if (deployFolder.endsWith("/")) {
+                                deployFolder = deployFolder.substring(9, deployFolder.length() - 1);
+                            }
+
+                            String msg = null, msg_for_notity = null;
+
+                            String message = " Processing <b>" + cfgName + "</b></br>"
+                                    + "</br>"
+                                    + "<span style=\"font-size:90%\">"
+                                    + "file : <b>" + sourceFile + "</b></br>"
+                                    + "</span>"
+                                    + "</br>"
+                                    + "Size: " + glFileSize + "</br>"
+                                    + "Creation date: " + sourceFileCDate + "</br>"
+                                    + "Last modify date: " + sourceFileLDate + "</br>"
+                                    + "</br>"
+                                    + "</br>"
+                                    + "<span style=\"font-size:85%; left:50px; position: relative;\">"
+                                    + "</span>"
+                                    + "target : <b>" + user + "@" + host + "</b></br>"
+                                    + "</br>"
+                                    + "<span style=\"font-size:80%; left:60px; position: relative;\">"
+                                    + "</br>Copy  to <b>" + copyFolder + "/" + webAppWAR + "</b></br>"
+                                    + "</br>"
+                                    + "</br>Backup to <b>" + backupFolder + "/" + webAppWAR + "</b></br>"
+                                    + "</br>"
+                                    + "</br>Deploy to <b>" + deployFolder + "/" + webAppWAR + "</b></br>"
+                                    + "</span>";
+
+                            if (Messagebox.show(message, "LiquidD", Messagebox.QUESTION + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
+
+                                // 1° upload
+                                sftpManager sftp = new sftpManager();
+                                boolean doBackup = true;
+                                long retVal = 0;
+                                try {
+                                    Object[] result = sftp.upload(host, user, password, glSourceFile, sourceFileIS, copyFolder + "/" + webAppWAR);
+                                    retVal = (long) result[0];
+                                    doBackup = (boolean) result[1];
+                                    if (retVal > 0) {
+                                        if (fileSize != null && !fileSize.isEmpty()) {
+                                            if (Long.parseLong(fileSize) != retVal) {
+                                                long currentFileSize = sftp.getRemoteFileSize(host, user, password, copyFolder + "/" + webAppWAR);
+                                                if (Long.parseLong(fileSize) == currentFileSize) {
+                                                    retVal = currentFileSize;
                                                 }
-		                            }
+                                            }
 
-		                            
-	
-		                            
-		                            //                        
-		                            // Attesa errore 404
-		                            //
-		                            Callback.send("3&deg;/5 - Waiting for application server...");
-		                            if(undeployWaitTime > 0) {
-		                                Thread.sleep(undeployWaitTime);
-		                            } else {
-		                                Thread.sleep(7000);
-		                            }
-		                            boolean isReadyForDeply = false;
-		                            
-	                            	
-		                            		
-		                            if(webAppURL != null && !webAppURL.isEmpty()) {
-		                            	int n = 10;
-		                            	int code = 0;
-			                            utility.disableCertificateValidation();
-			                            for(int i=0; i<n; i++) {
-				                            Object [] resURL = utility.readURL( webAppURL, "GET", null );
-				                            code = (int)resURL[0];
-		                                    if(code == HttpURLConnection.HTTP_NOT_FOUND) {
-		                                        isReadyForDeply = true;
-		                                        break;
-		                                    } else {
-		                                        Thread.sleep((3000));
-                                                    }
-                                                }
-	                                    if(code == HttpURLConnection.HTTP_OK) {
-	                                    	Callback.send("3&deg;/5 - <span style=\"color:red\">Web app still running : maybe deployFolder ("+deployFolder+"/"+webAppWAR+") is not valid ... or 404 error redirected<span>");
-	                                    } else {
-	                                    	Callback.send("3&deg;/5 - <span style=\"color:darkGreen\">Applicatin server ready for install <b>"+webAppWAR+"</b>...<span>");
-	                                    }
-		                            }
-		                            Thread.sleep(3000);
-		
-		                            
-		                            
-		                            // 4° deploy new war
-		                            //
-		                            // Copia file nuova versione
-		                            //
-		                            if(isReadyForDeply) {
-		                                Callback.send("4&deg;/5 - Ready for deply, copying new app to application server...");
-		                            } else {
-		                                Callback.send("4&deg;/5 - Copying new app to application server (without Web App URL check)...");                            
-		                            }
-		                            cmd = "sudo cp "+copyFolder+"/"+webAppWAR+" "+deployFolder+"/"+webAppWAR+"";
-		                            ssh.cmd(cmd, password);
-		
-		
-		                            //
-		                            // Attesa
-		                            //
-		                            if(checkWaitTime > 0) {
-		                                Thread.sleep(checkWaitTime);
-		                            } else {
-		                                Thread.sleep(5000);
-		                            }
-		
-		                            
-		                            long copiedFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR );
-		                            if(copiedFileSize != glFileSize) {
-	                                	msg = "WARNING : remote file deployed size : "+copiedFileSize+" / uploaded file size : "+glFileSize;
-                                                msg += " <br/> may be cp command failed :";
-                                                msg += " <br/></b> " + cmd + "</b>";
-		                                Callback.send(msg);
-		                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.WARNING);
-		                                // return null;
-		                            }
-		                            
-		                            
-		                            // 5° check web app	                            
-		                            //
-		                            // verifica risposta
-		                            //
-		                            boolean installedSuccesfully = false;
-	
-	                            	Callback.send("5&deg;/5 - Checking application server...");
-		                            if(webAppURL != null && !webAppURL.isEmpty()) {
-		                            	int n = 10;	                            	
-			                            utility.disableCertificateValidation();
-			                            for(int i=0; i<n; i++) {
-				                            Object [] resURL = utility.readURL( webAppURL, "GET", null );
-				                            int code = (int)resURL[0];			                            
-		                                    if(code == HttpURLConnection.HTTP_OK || code == HttpURLConnection.HTTP_ACCEPTED) {
-		                                    	installedSuccesfully = true;
-		                                        break;
-		                                    } else {	                                    	
-		                                        Thread.sleep((3000));
-		                                	}
-		                                }
-			                            if(installedSuccesfully) {
-		                                	long remoteFileSize = sftp.getRemoteFileSize ( host, user, password, deployFolder+"/"+webAppWAR+"" );
-		                                	if(remoteFileSize == glFileSize) {
-		                                		 msg = "5&deg; - Deploy of "+cfgName+" <span style=\"color:darkGreen\">done, checked and online</span>";
-		                                		Callback.send(msg);
-		                                	} else {
-		                                		msg = "5&deg; - Deploy of "+cfgName+" <span style=\"color:red\">deployed file's size mismath ("+remoteFileSize+"/"+glFileSize+")<span>";
-			                                    Callback.send(msg);
-		                                	}
-		                                } else {
-		                                	msg = "5&deg; - Deploy of "+cfgName+" <span style=\"color:red\">done but web app "+webAppWAR+" not running<span>";
-		                                    Callback.send(msg);
-		                                }
-		                                Thread.sleep(1000);
-		                            } else {                        
-	                                	msg = "5&deg; - Deploy of "+cfgName+" <span style=\"color:darkGray\">done but not checked<span>";
-		                                Callback.send(msg);
-		                                Thread.sleep(1000);
-		                            }
-		                        } else {
-                                            msg = "1&deg; - Upload of "+cfgName+" <span style=\"color:red\">Failed with error:"+uploadFileError+"<span>";
-		                            Callback.send(msg);
-		                        }
-		                        
-		                        //
-		                        // Notiification
-		                        //
-		                        if(recipients != null) {
-                                            try {
-		                        	String header = "<h1>LiquidD - WAR Deploy</h1></br></br><h4>LiquidD - WAR Deploy base on Liquid framework<br/>https://gitgub.com/cristianandreon/Liquid</h4><br/>https://gitgub.com/cristianandreon/LiquidD</h4>";
-		                        	// TODO
-                                                // emailer.postMail(recipients, "Deploy notification: "+cfgName, header+msg, "email_addr");
-                                            } catch (Exception e) {}
-		                        }
-	                        } else {
-                                    msg = "1&deg; - Upload of "+cfgName+" <span style=\"color:maroon\">Not confirmed by used<span>";
-                                    Callback.send(msg);                                    
+                                            if (Long.parseLong(fileSize) == retVal) {
+                                                uploadFileOk = true;
+                                                // upload descriptor
+                                                InputStream descFileIS = new ByteArrayInputStream(desc_content.getBytes());
+                                                sftp.upload(host, user, password, null, descFileIS, copyFolder + "/" + (desc_file));
+                                            }
+                                        } else {
+                                            uploadFileOk = true;
+                                        }
+                                    } else {
+                                        uploadFileError = "File has zero size";
+                                    }
+                                } catch (JSchException ex) {
+                                    java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
+                                    uploadFileError += ex.getLocalizedMessage();
+                                } catch (SftpException ex) {
+                                    java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
+                                    uploadFileError += ex.getLocalizedMessage();
                                 }
-	                    }
-	                    
-	                } else {
-	                    Callback.send("Deploy of "+cfgName+"failed, <span style=\"color:red\">read bean error<span>");
-	                    return (Object)"{ \"result\":-2, \"error\":\""+utility.base64Encode("read bean error") + "\" }";                
-	                }
-	            } else {
-	                Callback.send("Deploy of "+cfgName+" failed, <span style=\"color:red\">primaryKey not found<span>");
-	                return (Object)"{ \"result\":-1, \"error\":\""+utility.base64Encode("primaryKey not found") + "\" }";                
-	            }
-	        } else {
-	            Callback.send("Deploy failed, <span style=\"color:red\">params not defined<span>");
-	            return (Object)"{ \"result\":-1, \"error\":\""+utility.base64Encode("primaryKey not found") + "\" }";                
-	        }
-    	} catch (Throwable th) {
-    		String err = "Error:"+th.getLocalizedMessage();
-            Callback.send("Deploy failed, <span style=\"color:red\">"+err+"<span>");
-            return (Object)"{ \"result\":-1, \"error\":\""+utility.base64Encode(err) + "\" }";                
-    	}
+
+                                String recipients[] = notifyEmails != null && !notifyEmails.isEmpty() ? notifyEmails.split(",") : null;
+
+                                if (uploadFileOk) {
+
+                                    // Verifica del file caricato
+                                    Callback.send("1&deg;/5 - Checking uploaded file...");
+                                    long currentFileSize = sftp.getRemoteFileSize(host, user, password, copyFolder + "/" + webAppWAR);
+                                    if (currentFileSize != retVal) {
+                                        msg = "Error :Failed to upload current war (" + copyFolder + "/" + webAppWAR + ")<br/><br/>... size mismath : " + currentFileSize + "/" + retVal + "";
+                                        Callback.send(msg);
+                                        Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
+                                        return null;
+                                    }
+
+                                    //
+                                    // Apertura sessione ssh
+                                    //
+                                    Callback.send("1&deg;/5 - Open ssh session ...");
+                                    sshManager ssh = new sshManager();
+                                    ssh.connect(host, user, password);
+
+                                    Callback.send("1&deg;/5 - Logging as root...");
+                                    String cmd = "sudo -i";
+                                    ssh.cmd(cmd, password);
+
+                                    // 2° backup
+                                    //
+                                    // Backup file attualmente in prod
+                                    //
+                                    if (doBackup) {
+                                        Callback.send("2&deg;/5 - Backup file (only if missing or older)...");
+                                        cmd = "mkdir -p " + backupFolder;
+                                        ssh.cmd(cmd);
+                                        cmd = "cp " + deployFolder + "/" + webAppWAR + " " + backupFolder + " -u";
+                                        ssh.cmd(cmd);
+
+                                        //
+                                        // Verifica file copiato ?
+                                        //
+                                        Callback.send("2&deg;/5 - Checking backup file in " + backupFolder + "...");
+                                        cmd = "ls " + backupFolder + "/" + webAppWAR + " -al";
+                                        ssh.cmd(cmd);
+                                    } else {
+                                        Callback.send("2&deg;/5 - Backup skipped, remote file is up to date...");
+                                        Thread.sleep(3000);
+                                    }
+
+                                    // 3° remove current war
+                                    //
+                                    // Rimozione file produzione
+                                    //
+                                    Callback.send("3&deg;/5 - Removing current file from " + deployFolder + "...");
+                                    cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
+                                    ssh.cmd(cmd, password);
+
+                                    Thread.sleep(1000);
+                                    currentFileSize = sftp.getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR);
+                                    if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
+
+                                        Thread.sleep(1000);
+
+                                        Callback.send("3&deg;/5 - Retry to removing current file from " + deployFolder + "...");
+                                        cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
+                                        ssh.cmd(cmd, password);
+
+                                        Thread.sleep(1000);
+
+                                        currentFileSize = sftp.getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR);
+                                        if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
+
+                                            msg = "Error :Failed to remove current war (" + deployFolder + "/" + webAppWAR + ")<br/><br/>... maybe file was locked ";
+                                            Callback.send(msg);
+                                            Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
+                                            return null;
+                                        }
+                                    }
+
+                                    //                        
+                                    // Attesa errore 404
+                                    //
+                                    Callback.send("3&deg;/5 - Waiting for application server...");
+                                    if (undeployWaitTime > 0) {
+                                        Thread.sleep(undeployWaitTime);
+                                    } else {
+                                        Thread.sleep(7000);
+                                    }
+                                    boolean isReadyForDeply = false;
+
+                                    if (webAppURL != null && !webAppURL.isEmpty()) {
+                                        int n = 10;
+                                        int code = 0;
+                                        utility.disableCertificateValidation();
+                                        for (int i = 0; i < n; i++) {
+                                            Object[] resURL = utility.readURL(webAppURL, "GET", null);
+                                            code = (int) resURL[0];
+                                            if (code == HttpURLConnection.HTTP_NOT_FOUND) {
+                                                isReadyForDeply = true;
+                                                break;
+                                            } else {
+                                                Thread.sleep((3000));
+                                            }
+                                        }
+                                        if (code == HttpURLConnection.HTTP_OK) {
+                                            Callback.send("3&deg;/5 - <span style=\"color:red\">Web app still running : maybe deployFolder (" + deployFolder + "/" + webAppWAR + ") is not valid ... or 404 error redirected<span>");
+                                        } else {
+                                            Callback.send("3&deg;/5 - <span style=\"color:darkGreen\">Applicatin server ready for install <b>" + webAppWAR + "</b>...<span>");
+                                        }
+                                    }
+                                    Thread.sleep(3000);
+
+                                    // 4° deploy new war
+                                    //
+                                    // Copia file nuova versione
+                                    //
+                                    if (isReadyForDeply) {
+                                        Callback.send("4&deg;/5 - Ready for deply, copying new app to application server...");
+                                    } else {
+                                        Callback.send("4&deg;/5 - Copying new app to application server (without Web App URL check)...");
+                                    }
+                                    cmd = "sudo cp " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
+                                    ssh.cmd(cmd, password);
+
+                                    //
+                                    // Attesa
+                                    //
+                                    if (checkWaitTime > 0) {
+                                        Thread.sleep(checkWaitTime);
+                                    } else {
+                                        Thread.sleep(5000);
+                                    }
+
+                                    long copiedFileSize = sftp.getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR);
+                                    if (copiedFileSize != glFileSize) {
+                                        msg = "WARNING : remote file deployed size : " + copiedFileSize + " / uploaded file size : " + glFileSize;
+                                        msg += " <br/> may be cp command failed :";
+                                        msg += " <br/></b> " + cmd + "</b>";
+                                        Callback.send(msg);
+                                        Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.WARNING);
+                                        // return null;
+                                    }
+
+                                    // 5° check web app	                            
+                                    //
+                                    // verifica risposta
+                                    //
+                                    boolean installedSuccesfully = false;
+
+                                    Callback.send("5&deg;/5 - Checking application server...");
+                                    if (webAppURL != null && !webAppURL.isEmpty()) {
+                                        int n = 10;
+                                        utility.disableCertificateValidation();
+                                        for (int i = 0; i < n; i++) {
+                                            Object[] resURL = utility.readURL(webAppURL, "GET", null);
+                                            int code = (int) resURL[0];
+                                            if (code == HttpURLConnection.HTTP_OK || code == HttpURLConnection.HTTP_ACCEPTED) {
+                                                installedSuccesfully = true;
+                                                break;
+                                            } else {
+                                                Thread.sleep((3000));
+                                            }
+                                        }
+                                        if (installedSuccesfully) {
+                                            long remoteFileSize = sftp.getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR + "");
+                                            if (remoteFileSize == glFileSize) {
+                                                msg_for_notity = "Deploy of " + cfgName + " done, checked and online";
+                                                msg = "Deploy of " + cfgName + " <span style=\"color:darkGreen\">done, checked and online</span>";
+                                                Callback.send("5&deg; - " + msg);
+                                            } else {
+                                                msg_for_notity = "Deploy of " + cfgName + "deployed file's size mismath (" + remoteFileSize + "/" + glFileSize;
+                                                msg = "Deploy of " + cfgName + " <span style=\"color:red\">deployed file's size mismath (" + remoteFileSize + "/" + glFileSize + ")<span>";
+                                                Callback.send("5&deg; - " + msg);
+                                            }
+                                        } else {
+                                            msg_for_notity = "Deploy of " + cfgName + " done but web app " + webAppWAR + " not running";
+                                            msg = "Deploy of " + cfgName + " <span style=\"color:red\">done but web app " + webAppWAR + " not running<span>";
+                                            Callback.send("5&deg; - " + msg);
+                                        }
+                                        Thread.sleep(1000);
+                                    } else {
+                                        msg_for_notity = "Deploy of " + cfgName + " done but not checked";
+                                        msg = "Deploy of " + cfgName + " <span style=\"color:darkGray\">done but not checked<span>";
+                                        Callback.send("5&deg; - " + msg);
+                                        Thread.sleep(1000);
+                                    }
+                                } else {
+                                    msg_for_notity = "Upload of " + cfgName + " Failed with error:" + uploadFileError;
+                                    msg = "Upload of " + cfgName + " <span style=\"color:red\">Failed with error:" + uploadFileError + "<span>";
+                                    Callback.send("1&deg; - " + msg);
+                                }
+
+                                //
+                                // Notiification
+                                //
+                                if (recipients != null) {
+                                    try {
+                                        String header = "<h1>LiquidD - WAR Deploy</h1></br></br><h4>LiquidD - WAR Deploy base on Liquid framework<br/>https://gitgub.com/cristianandreon/Liquid</h4><br/>https://gitgub.com/cristianandreon/LiquidD</h4>";
+                                        // TODO
+                                        // emailer.postMail(recipients, "Deploy notification: "+cfgName, header+msg, "email_addr");
+                                    } catch (Exception e) {
+                                    }
+                                }
+
+                                String script = "notifyMessage(\"" + msg_for_notity + "\")";
+                                com.liquid.JSScript.script(script);
+
+                            } else {
+                                msg = "1&deg; - Upload of " + cfgName + " <span style=\"color:maroon\">Not confirmed by used<span>";
+                                Callback.send(msg);
+                            }
+                        }
+
+                    } else {
+                        Callback.send("Deploy of " + cfgName + "failed, <span style=\"color:red\">read bean error<span>");
+                        return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode("read bean error") + "\" }";
+                    }
+                } else {
+                    Callback.send("Deploy of " + cfgName + " failed, <span style=\"color:red\">primaryKey not found<span>");
+                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode("primaryKey not found") + "\" }";
+                }
+            } else {
+                Callback.send("Deploy failed, <span style=\"color:red\">params not defined<span>");
+                return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode("primaryKey not found") + "\" }";
+            }
+        } catch (Throwable th) {
+            String err = "Error:" + th.getLocalizedMessage();
+            Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+            return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\" }";
+        }
         return null;
     }
 

@@ -51,6 +51,7 @@
 
         
         <script src="./zooming.min.js"></script>        
+        <script src="./notifications.js"></script>        
         <script>
 
 
@@ -168,7 +169,7 @@
             simply double click in the row ... deploy Phases :</br></br>
             <ul> 
                     <li>1° <b>upload</b> (if local file is newer or remote is missing)</li>
-                    <li>2° <b>backup</b> (only if remote file was uploaded and existing backup newer of missing)</li>
+                    <li>2° <b>backup</b> (only if .war file succesfully uploaded and is more recent, or previous .war file is missing)</li>
                     <li>3° <b>remove</b> current .war</li>
                     <li>4° <b>deploy</b> new .war</li>
                     <li>5° <b>check</b> web app (http status 200)</li>
