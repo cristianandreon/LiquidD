@@ -372,7 +372,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                         if (code == HttpURLConnection.HTTP_OK) {
                                             Callback.send("3&deg;/5 - <span style=\"color:red\">Web app still running : maybe deployFolder (" + deployFolder + "/" + webAppWAR + ") is not valid ... or 404 error redirected<span>");
                                         } else {
-                                            Callback.send("3&deg;/5 - <span style=\"color:darkGreen\">Applicatin server ready for install <b>" + webAppWAR + "</b>...<span>");
+                                            Callback.send("3&deg;/5 - <span style=\"color:darkGreen\">Applicatin server ready for deploy <b>" + webAppWAR + "</b>...<span>");
                                         }
                                     }
                                     Thread.sleep(3000);
@@ -382,7 +382,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                     // Copia file nuova versione
                                     //
                                     if (isReadyForDeply) {
-                                        Callback.send("4&deg;/5 - Ready for deply, copying new app to application server...");
+                                        Callback.send("4&deg;/5 - Ready for deploy, copying new app to application server...");
                                     } else {
                                         Callback.send("4&deg;/5 - Copying new app to application server (without Web App URL check)...");
                                     }
