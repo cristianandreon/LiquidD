@@ -1,0 +1,49 @@
+{ 
+ "database":"LiquidX"
+,"schema":"liquidx"
+,"table":"projects"
+,"primaryKey":"id"
+,"columns":[
+     { "visible":false,"nullable":false,"name":"id","width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"projects_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
+    ,{"size":256,"nullable":true,"name":"name","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":256,"nullable":true,"name":"desc","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"folder","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"hibernate_package","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"view_model_package","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"liquid_folder","typeName":"varchar","digits":0,"type":"12"}
+    ,{"nullable":true,"name":"notifyEmails","typeName":"text","digits":0,"type":"12"}
+]
+,"grids":[
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":6,"nCols":2
+            ,"columns":[
+                {"name":"id","tooltip":"","label":"id","row":0,"col":0}
+                ,{"name":"name","tooltip":"Project's name","label":"Project name","row":1,"col":0}
+                ,{"name":"desc","tooltip":"Project's description","label":"Project description","row":1,"col":1}
+                ,{"name":"folder","tooltip":"Project's root folder","label":"Project folder","row":2,"col":0}
+                ,{"name":"hibernate_package","tooltip":"","label":"Hibernate_package name","row":3,"col":0}
+                ,{"name":"view_model_package","tooltip":"","label":"View Model package name","row":3,"col":1}
+                ,{"name":"liquid_folder","tooltip":"","label":"Liquid folder","row":4,"col":0}
+                ,{"name":"notifyEmails","tooltip":"Define address list","label":"notifyEmails","row":5,"col":0}
+            ]
+        }
+    ]
+,"editable":true
+,"createTableIfMissing":true
+,"navVisible":true
+,"autoInsert":false
+,"listTabVisible":true
+,"owner":"app.liquidx.project.event"
+,"events":[
+      { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
+     ,{ "name":"onRowDoubleClicked--", "server":"app.liquidx.deploy.projectManager.XXX", "params":[], "client":"", "onDownloading":"projectDownloading" }
+    ]
+,"commands":[
+ 	 { "name":"insert"}
+	,{ "name":"update"}
+	,{ "name":"delete"}
+	,{ "name":"copy"}
+	,{ "name":"paste"}
+	,{ "name":"next"}
+	,{ "name":"previous"}
+]
+}

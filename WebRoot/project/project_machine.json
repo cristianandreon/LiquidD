@@ -1,0 +1,49 @@
+{ 
+ "database":"LiquidX"
+,"schema":"liquidx"
+,"table":"project_machine"
+,"primaryKey":"id"
+,"columns":[
+     { "visible":false,"nullable":false,"name":"id","width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"project_machine_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
+    ,{"size":10,"nullable":true,"name":"project_id","typeName":"varchar","digits":0,"type":"4","required":true}
+    ,{"size":256,"nullable":true,"name":"project","typeName":"varchar","digits":0,"type":"12","required":true, 
+        "lookup":"projects","options":{
+            "lookupField":"name","targetColumn":"project_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200"
+        }
+    }
+    ,{"size":10,"nullable":true,"name":"machine_id","typeName":"varchar","digits":0,"type":"4","required":true}
+    ,{"size":256,"nullable":true,"name":"machine","typeName":"varchar","digits":0,"type":"12","required":true, 
+        "lookup":"machines","options":{
+            "lookupField":"name","targetColumn":"machine_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200"
+        }
+    }
+]
+,"grids":[
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":3,"nCols":1
+            ,"columns":[
+                {"name":"id","tooltip":"","label":"id","row":0,"col":0}
+                ,{"name":"project","tooltip":"Project name","label":"Project","row":1,"col":0}
+                ,{"name":"machine","tooltip":"Machine name","label":"Machine","row":2,"col":0}
+            ]
+        }
+    ]
+,"editable":true
+,"createTableIfMissing":true
+,"navVisible":true
+,"autoInsert":false
+,"listTabVisible":true
+,"owner":"app.liquidx.project.event"
+,"events":[
+      { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
+     ,{ "name":"onRowDoubleClicked--", "server":"app.liquidx.deploy.projectManager.XXX", "params":[], "client":"", "onDownloading":"projectDownloading" }
+    ]
+,"commands":[
+ 	 { "name":"insert"}
+	,{ "name":"update"}
+	,{ "name":"delete"}
+	,{ "name":"copy"}
+	,{ "name":"paste"}
+	,{ "name":"next"}
+	,{ "name":"previous"}
+]
+}

@@ -32,7 +32,7 @@
 
         
         <!-- Start Liquid Engine -->
-        <%@ include file="/liquid/liquidHeader.jsp" %>
+        <%@ include file="/liquid/liquidXHeader.jsp" %>
         <%@ include file="/liquid/liquidSelector.jsp" %>
 
 
@@ -62,12 +62,12 @@
     
                 // Scroll event
                 document.body.addEventListener("scroll", scrollListner);
-                $( "#title" ).data("small", 0);
+                jQ1124( "#title" ).data("small", 0);
                 
                 // highlight js
                 hljs.configure({ tabReplace: '  ', classPrefix: '' });
                 hljs.initHighlightingOnLoad();                
-                $('pre code').each(function(i, block) {
+                jQ1124('pre code').each(function(i, block) {
                    hljs.highlightBlock(block);
                  });
                  
@@ -77,14 +77,14 @@
             
             function scrollListner(e) {
                 if(document.body.scrollTop > 70) {
-                    if($( "#title" ).data("small") !== 1) {
-                        $( "#title" ).animate({ fontSize: 17 }, 300, function(){ });
-                        $( "#title" ).data("small", 1);
+                    if(jQ1124( "#title" ).data("small") !== 1) {
+                        jQ1124( "#title" ).animate({ fontSize: 17 }, 300, function(){ });
+                        jQ1124( "#title" ).data("small", 1);
                     }
                 } else {
-                    if($( "#title" ).data("small") === 1) {
-                        $( "#title" ).animate({ fontSize: 48 }, 300, function(){ });
-                        $( "#title" ).data("small", 0);
+                    if(jQ1124( "#title" ).data("small") === 1) {
+                        jQ1124( "#title" ).animate({ fontSize: 48 }, 300, function(){ });
+                        jQ1124( "#title" ).data("small", 0);
                     }
                 }
             }
@@ -98,13 +98,18 @@
                 Liquid.projectMode = true;
             }
 
-            function startFormX() {
-                // Liquid.startPopup('deploy', '<%=workspace.get_file_content(request, "/deploy/deploy.json")%>');
+            function startProjectHelper() {
+                Liquid.startPopup('projects', '<%=workspace.get_file_content(request, "/project/projects.json")%>');
+                Liquid.startPopup('machines', '<%=workspace.get_file_content(request, "/project/machines.json")%>');
+                Liquid.startPopup('schemas', '<%=workspace.get_file_content(request, "/project/schemas.json")%>');
+                Liquid.startPopup('project_machine', '<%=workspace.get_file_content(request, "/project/project_machine.json")%>');
+                Liquid.startPopup('machine_schema', '<%=workspace.get_file_content(request, "/project/machine_schema.json")%>');
+                Liquid.startPopup('fields', '<%=workspace.get_file_content(request, "/project/fields.json")%>');
             }
             
             function closeFormX() {
                 setTimeout( function() { startFormX() }, 1000 );
-                $( '#deploy' ).fadeOut( "fast", function() { });
+                jQ1124( '#deploy' ).fadeOut( "fast", function() { });
             }
 
             function deployDownloading(liquid, data, clientData, parameter, event) {
@@ -114,9 +119,11 @@
         </script>
     </head>
     
-    <body onload="onLoad(); startDeploysCfg(); startFormX(); ">
+    <body onload="onLoad(); startDeploysCfg(); startProjectHelper(); ">
         <div id="bg" style="width:100%; height:100%;"><img src="./images/kupka3.jpg" style="width:100%; height:100%; -webkit-filter:opacity(7);opacity:0.07; -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=7)'; filter: alpha(opacity=7); -khtml-opacity: 0.07;"/></div>
-        <div id="feedbacksFrame" style="display:block" class="demoContent">
+        
+        <!-- DEPLOY MANAGER -->
+        <div id="deployFrame" style="display:block" class="demoContent">
             <br/>
             <br/>
             <br/>
@@ -215,7 +222,7 @@ public class connection {
                 </pre>
             </div>
             <br/>
-            N.B.: You don't need to crete any tables inside your database/schema, Liquid create its for you            
+            N.B.: You don't need to create any tables inside your database/schema, Liquid create its for you            
             <br/>
             N.B.: May be you need to add jdbc driver to the project (I'm using postgresql-42.2.12.jre7.jar)
             <br/>
@@ -233,5 +240,138 @@ public class connection {
                     <li>Notifications</li>
             </ul>
         </div>
+        
+
+
+
+        
+        <!-- PROJECT HELPER -->
+        <div id="projectHelperFrame" style="display:block" class="demoContent">
+            <br/>
+            <br/>
+            <br/>
+            <div class="title1">JAVA Web Project Helper - <span style="font-size:80%">adding fields in multiple target</span></div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <center>
+                <table border=0 cellspacing=0 cellpadding=0 style="width:800px; height:600px; font-size:9pt; table-layout:auto; ">
+                    <tr>
+                        <td colspan="1">
+                            <div id="fields" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                            </div>
+                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" style="height:50px;">
+                            <div id="outDiv" style="height:100%; width:100%; border:1px solid lightgray"></div>
+                         </td>
+                    </tr>
+                </table>
+            </center>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div class="title2">Projects</div>
+            <br/>
+            <center>
+                <table border=0 cellspacing=0 cellpadding=0 style="display:none-; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                    <tr>
+                        <td colspan="1" style="width:100%">
+                            <div id="projects" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                            </div>
+                         </td>
+                    </tr>
+                </table>
+            </center>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+            <div class="title2">Machines</div>
+            <br/>            
+            <center>
+                <table border=0 cellspacing=0 cellpadding=0 style="display:none-; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                    <tr>
+                        <td colspan="1" style="width:100%">
+                            <div id="machines" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                            </div>
+                         </td>
+                    </tr>
+                </table>
+            </center>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+            <div class="title2">Schemas</div>
+            <br/>            
+            <center>
+                <table border=0 cellspacing=0 cellpadding=0 style="display:none-; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                    <tr>
+                        <td colspan="1" style="width:100%">
+                            <div id="schemas" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                            </div>
+                         </td>
+                    </tr>
+                </table>
+            </center>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+            <div class="title2">Project's machines</div>
+            <br/>            
+            <center>
+                <table border=0 cellspacing=0 cellpadding=0 style="display:none-; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                    <tr>
+                        <td colspan="1" style="width:100%">
+                            <div id="project_machine" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                            </div>
+                         </td>
+                    </tr>
+                </table>
+            </center>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+            <div class="title2">Machine's schemas</div>
+            <br/>            
+            <center>
+                <table border=0 cellspacing=0 cellpadding=0 style="display:none-; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                    <tr>
+                        <td colspan="1" style="width:100%">
+                            <div id="machine_schema" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                            </div>
+                         </td>
+                    </tr>
+                </table>
+            </center>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+            <br/>            
+            <div class="title1">TODO :</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <ul> 
+                <li>Test</li>
+            </ul>
+        </div>        
     </body>
 </html>
