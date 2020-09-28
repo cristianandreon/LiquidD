@@ -32,7 +32,7 @@
 
         
         <!-- Start Liquid Engine -->
-        <%@ include file="/liquid/liquidXHeader.jsp" %>
+        <%@ include file="/liquid/liquidHeader.jsp" %>
         <%@ include file="/liquid/liquidSelector.jsp" %>
 
 
@@ -144,6 +144,11 @@
                             <div id="outDiv" style="height:50px; width:100%; border:1px solid lightgray"></div>
                          </td>
                     </tr>
+                    <tr>
+                        <td colspan="1">
+                            <input id="doBakcup" type="checkbox" style="padding:10px; height:30px; width:30px; " checked="checked" >Do Backup</input>
+                         </td>
+                    </tr>
                 </table>
             </center>
             <br/>
@@ -156,7 +161,7 @@
                 <table border=0 cellspacing=0 cellpadding=0 style="display:none; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
                     <tr>
                         <td colspan="1" style="width:0%">
-                            <div id="deploy" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                            <div id="deploy" width="30px" height="30px" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
                             </div>
                          </td>
                     </tr>
