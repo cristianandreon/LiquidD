@@ -57,6 +57,7 @@ public class deployManager {
                 JSONArray rowsData = com.liquid.event.getJSONArray(params, "formX");
                 String cfgId = null, cfgName = null, fileName = null, fileSize = null, file = null;
                 if (rowsData != null) {
+                    // Old way ...
                     JSONObject rowData = rowsData.getJSONObject(0);
                     cfgId = rowData.getString("2");
                     cfgName = rowData.getString("3");
@@ -71,7 +72,9 @@ public class deployManager {
                     }
                     String controlId = "deploysCfg";
                 } else {
-                    JSONObject rowData = com.liquid.event.getJSONObject(params, "data");
+                    // New way ...
+                    // N.B.: We just want the data of the current control (which is empty)
+                    JSONObject rowData = com.liquid.event.getJSONObject(params, "data", "");
                     cfgId = rowData.getString("1");
                 }
 
