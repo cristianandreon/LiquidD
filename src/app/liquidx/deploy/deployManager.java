@@ -77,7 +77,10 @@ public class deployManager {
                     JSONObject rowData = com.liquid.event.getJSONObject(params, "data", "");
                     cfgId = rowData.getString("1");
                 }
+                    
+                JSONObject doBackupJSON = com.liquid.event.getJSONObject(params, "data", "doBackup");
 
+                    
                 // Lettura del bean di configurazione
                 if (cfgId != null && !cfgId.isEmpty()) {
                     // Object deplpoyBean = db.get_bean(requestParam, controlId, id, null, "*", null, 1);
@@ -235,7 +238,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 
                                 // 1° upload
                                 sftpManager sftp = new sftpManager();
-                                boolean doBackup = true;
+                                boolean doBackup = "true".equalsIgnoreCase( doBackupJSON.getString("data")) ? true : false;
                                 long retVal = 0;
                                 try {
                                     Object[] result = sftp.upload(host, user, password, glSourceFile, sourceFileIS, copyFolder + "/" + webAppWAR);

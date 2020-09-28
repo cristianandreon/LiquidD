@@ -146,7 +146,7 @@
                     </tr>
                     <tr>
                         <td colspan="1">
-                            <input id="doBakcup" type="checkbox" style="padding:10px; height:30px; width:30px; " checked="checked" >Do Backup</input>
+                            <input id="doBackup" type="checkbox" style="padding:10px; height:30px; width:30px; " checked="checked" >Do Backup</input>
                          </td>
                     </tr>
                 </table>
