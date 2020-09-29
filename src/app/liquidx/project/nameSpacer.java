@@ -23,9 +23,13 @@ public class nameSpacer {
         String [] items = stringToConvert.split("_");
         String out = "";
         for (int i=0; i<items.length; i++) {
-            if (i == 0)
-                out += items[i].toLowerCase();
-            else {
+            if (i == 0) {
+                if(items[i].length() == 1) {
+                    out += items[i].toUpperCase();
+                } else {
+                    out += items[i].toLowerCase();
+                }
+            } else {
                 out += items[i].substring(0, 1).toUpperCase();
                 out += items[i].substring(1, items[i].length()).toLowerCase();
             }

@@ -32,7 +32,7 @@
 
         
         <!-- Start Liquid Engine -->
-        <%@ include file="/liquid/liquidXHeader.jsp" %>
+        <%@ include file="/liquid/liquidHeader.jsp" %>
         <%@ include file="/liquid/liquidSelector.jsp" %>
 
 
@@ -289,7 +289,7 @@ public class connection {
                 </table>
             </center>
             <br/>
-            <div id="htmlResult" style="display:none; height:800%; width:calc(100% - 50px); border:1px solid lightgray"></div>
+            <div id="htmlResult" style="display:none; width:calc(100% - 50px); border:1px solid lightgray"></div>
             <br/>
             <br/>
             <br/>

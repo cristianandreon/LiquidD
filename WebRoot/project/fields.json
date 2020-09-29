@@ -4,7 +4,7 @@
 ,"table":"fields"
 ,"primaryKey":"id"
 ,"columns":[
-     { "visible":false,"nullable":false,"name":"id","width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"fields_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
+     { "visible":true,"nullable":false,"name":"id","width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"fields_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
     ,{ "visible":false,"size":10,"nullable":true,"name":"project_id","typeName":"varchar","digits":0,"type":"4","required":true }
     ,{ "size":256,"nullable":true,"name":"project","typeName":"varchar","digits":0,"type":"12","required":true,
         "lookup":"projects","options":{
@@ -50,6 +50,7 @@
 ,"navVisible":true
 ,"autoInsert":false
 ,"listTabVisible":true
+,"rowSelection":"multiple"
 ,"owner":"app.liquidx.deploy.projectManager"
 ,"events":[
       { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
