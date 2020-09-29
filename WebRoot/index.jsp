@@ -32,7 +32,7 @@
 
         
         <!-- Start Liquid Engine -->
-        <%@ include file="/liquid/liquidHeader.jsp" %>
+        <%@ include file="/liquid/liquidXHeader.jsp" %>
         <%@ include file="/liquid/liquidSelector.jsp" %>
 
 
@@ -114,7 +114,21 @@
 
             function deployDownloading(liquid, data, clientData, parameter, event) {
                 document.getElementById("outDiv").innerHTML = ""+data;
-            }                
+            }
+                        
+            function onExecuted(liquid, param) {
+                if(param) {
+                    if(param.command) {
+                        if(param.command.response) {
+                            if(param.command.response.data) {
+                                var htmlResult = atob(param.command.response.data);
+                                jQ1124( '#htmlResult' ).html(htmlResult);
+                                jQ1124( '#htmlResult' ).slideDown();
+                            }
+                        }
+                    }
+                }
+            }
 
         </script>
     </head>
@@ -275,6 +289,7 @@ public class connection {
                 </table>
             </center>
             <br/>
+            <div id="htmlResult" style="display:none; height:800%; width:calc(100% - 50px); border:1px solid lightgray"></div>
             <br/>
             <br/>
             <br/>
