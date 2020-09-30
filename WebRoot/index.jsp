@@ -3,6 +3,7 @@
     import="javax.servlet.*"
     import="javax.servlet.http.*"
     import="javax.servlet.jsp.*"
+    import="java.net.InetAddress"
     import="com.liquid.workspace"
     import="com.liquid.connection"
     import="com.liquid.db"
@@ -13,6 +14,8 @@
 %><%!
 
 %><%
+
+    String hostName = InetAddress.getLocalHost().getHostName();
 
 %>
 <%-- 
@@ -32,8 +35,13 @@
 
         
         <!-- Start Liquid Engine -->
-        <%@ include file="/liquid/liquidHeader.jsp" %>
-        <%@ include file="/liquid/liquidSelector.jsp" %>
+        <% if("Cristian-PC".equalsIgnoreCase(hostName)) { // Case of my developing host %>
+            <%@ include file="/liquid/liquidXHeader.jsp" %>
+            <%@ include file="/liquid/liquidSelector.jsp" %>
+        <% } else { // Normal case %>
+            <%@ include file="/liquid/liquidHeader.jsp" %>
+            <%@ include file="/liquid/liquidSelector.jsp" %>
+        <% } %>
 
 
         <link rel="stylesheet" accesskey="" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
@@ -135,7 +143,31 @@
     
     <body onload="onLoad(); startDeploysCfg(); startProjectHelper(); ">
         <div id="bg" style="width:100%; height:100%;"><img src="./images/kupka3.jpg" style="width:100%; height:100%; -webkit-filter:opacity(7);opacity:0.07; -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=7)'; filter: alpha(opacity=7); -khtml-opacity: 0.07;"/></div>
+
         
+        <div class="liquidForeignTables" style="border-bottom: 1px solid lightgrey" class="demoContent">
+            <ul>
+                <li id="deployFrameTab" class="liquidTabSel"><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Deployer</a></li>
+                <li id="projectHelperFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Project Helper</a></li>
+            </ul>
+        </div>                        
+
+        <script>
+            function onMainTab(obj) {
+                if(obj.parentNode.id === 'deployFrameTab') {
+                    jQ1124('#projectHelperFrame').slideUp("fast");
+                    jQ1124('#deployFrame').slideDown("normal");
+                    document.getElementById('projectHelperFrameTab').className = "";
+                    document.getElementById('deployFrameTab').className = "liquidTabSel";
+                } else {
+                    jQ1124('#projectHelperFrame').slideDown( "normal", function () { Liquid.onVisible('projectHelperFrame') } );
+                    jQ1124('#deployFrame').slideUp("fast");
+                    document.getElementById('projectHelperFrameTab').className = "liquidTabSel";
+                    document.getElementById('deployFrameTab').className = "";                    
+                }                    
+            }
+        </script>
+
         <!-- DEPLOY MANAGER -->
         <div id="deployFrame" style="display:block" class="demoContent">
             <br/>
@@ -259,13 +291,13 @@ public class connection {
                     <li>Notifications</li>
             </ul>
         </div>
-        
 
 
 
-        
+
+
         <!-- PROJECT HELPER -->
-        <div id="projectHelperFrame" style="display:block" class="demoContent">
+        <div id="projectHelperFrame" style="display:none" class="demoContent">
             <br/>
             <br/>
             <br/>
@@ -274,9 +306,9 @@ public class connection {
             <br/>
             <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:800px; height:600px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:calc(100% - 50px); height:450px; font-size:9pt; table-layout:auto; ">
                     <tr>
-                        <td colspan="1">
+                        <td colspan="1" style="height:400px; width:100%; ">
                             <div id="fields" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
                             </div>
                          </td>
@@ -297,9 +329,9 @@ public class connection {
             <div class="title2">Projects</div>
             <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="display:none-; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:600px; height:360px; font-size:9pt; table-layout:auto; ">
                     <tr>
-                        <td colspan="1" style="width:100%">
+                        <td colspan="1" style="">
                             <div id="projects" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
                             </div>
                          </td>
@@ -315,9 +347,9 @@ public class connection {
             <div class="title2">Machines</div>
             <br/>            
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="display:none-; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:800px; height:360px; font-size:9pt; table-layout:auto; ">
                     <tr>
-                        <td colspan="1" style="width:100%">
+                        <td colspan="1" style="">
                             <div id="machines" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
                             </div>
                          </td>
@@ -333,9 +365,9 @@ public class connection {
             <div class="title2">Schemas</div>
             <br/>            
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="display:none-; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:600px; height:360px; font-size:9pt; table-layout:auto; ">
                     <tr>
-                        <td colspan="1" style="width:100%">
+                        <td colspan="1" style="">
                             <div id="schemas" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
                             </div>
                          </td>
@@ -351,9 +383,9 @@ public class connection {
             <div class="title2">Project's machines</div>
             <br/>            
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="display:none-; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:600px; height:360px; font-size:9pt; table-layout:auto; ">
                     <tr>
-                        <td colspan="1" style="width:100%">
+                        <td colspan="1" style="">
                             <div id="project_machine" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
                             </div>
                          </td>
@@ -369,9 +401,9 @@ public class connection {
             <div class="title2">Machine's schemas</div>
             <br/>            
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="display:none-; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:600px; height:360px; font-size:9pt; table-layout:auto; ">
                     <tr>
-                        <td colspan="1" style="width:100%">
+                        <td colspan="1" style="">
                             <div id="machine_schema" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
                             </div>
                          </td>
@@ -392,6 +424,6 @@ public class connection {
             <ul> 
                 <li>Test</li>
             </ul>
-        </div>        
+        </div>
     </body>
 </html>

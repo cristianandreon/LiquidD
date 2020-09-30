@@ -76,6 +76,7 @@ public class projectManager {
                                     String database = (String)utility.get(machineBean, "database");
                                     String user = (String)utility.get(machineBean, "user");
                                     String password = (String)utility.get(machineBean, "password");
+                                    String service = (String)utility.get(machineBean, "service");
 
 
                                             
@@ -84,120 +85,138 @@ public class projectManager {
                                     //
                                     Connection conn = null;
                                     try {
-                                        conn = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password);
+                                        conn = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
                                     } catch (Throwable th) {
                                         String err = "Error:" + th.getLocalizedMessage();
                                     }
                                     
+                                    try {
+                                        
+                                        if(conn != null) {
+                                            conn.setAutoCommit(false);
+                                        }
                                     
  
-                                    //
-                                    //  Process the sql for every schema
-                                    //
-                                    ArrayList<Object>  schemasBean = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "machine_schema", null, "*", "where machine_id='"+machineId+"'", 0);
-                                    for(int is=0; is<schemasBean.size(); is++) {
-                                        Object schemaBean = schemasBean.get(is);
-                                        String schema = (String)utility.get(schemaBean, "schema");
-                                        
-                                        allSQL += newLine;
-                                        allSQL += newLine;
-                                        allSQL += "<span style=\"font-size:22px\">"+"Schema <b>"+schema+"</b></span>";
-                                        allSQL += newLine;
-                                        
-                                        for(int iF=0; iF<fieldsBean.size(); iF++) {
-                                            Object fieldBean = fieldsBean.get(iF); 
-                                            String fieldTable = (String)utility.get(fieldBean, "table");
-                                            String fieldName = (String)utility.get(fieldBean, "field");
-                                            String fieldType = (String)utility.get(fieldBean, "type");
-                                            String fieldSize = (String)utility.get(fieldBean, "size");
-                                            String fieldNullable = (String)utility.get(fieldBean, "nullable");
-                                            String fieldDefault = (String)utility.get(fieldBean, "def");
-                                            String fieldRemarks = (String)utility.get(fieldBean, "remarks");
-                                            String fieldAutoincrement = null;
-                                            String label = (String)utility.get(fieldBean, "label");
-                                            String hibFieldName = nameSpacer.DB2Hibernate(fieldName);
-                                            String controlType = "TEXTBOX"; // LISTBOX";
-                                            String valuesList = ""; // "S=Si,N=No"
+                                        //
+                                        //  Process the sql for every schema
+                                        //
+                                        ArrayList<Object>  schemasBean = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "machine_schema", null, "*", "where machine_id='"+machineId+"'", 0);
+                                        for(int is=0; is<schemasBean.size(); is++) {
+                                            Object schemaBean = schemasBean.get(is);
+                                            String schema = (String)utility.get(schemaBean, "schema");
+
+                                            allSQL += newLine;
+                                            allSQL += newLine;
+                                            allSQL += "<span style=\"font-size:22px\">"+"Schema <b>"+schema+"</b></span>";
+                                            allSQL += newLine;
+
+                                            for(int iF=0; iF<fieldsBean.size(); iF++) {
+                                                Object fieldBean = fieldsBean.get(iF); 
+                                                String fieldTable = (String)utility.get(fieldBean, "table");
+                                                String fieldName = (String)utility.get(fieldBean, "field");
+                                                String fieldType = (String)utility.get(fieldBean, "type");
+                                                String fieldSize = (String)utility.get(fieldBean, "size");
+                                                String fieldNullable = (String)utility.get(fieldBean, "nullable");
+                                                String fieldDefault = (String)utility.get(fieldBean, "def");
+                                                String fieldRemarks = (String)utility.get(fieldBean, "remarks");
+                                                String fieldAutoincrement = null;
+                                                String label = (String)utility.get(fieldBean, "label");
+                                                String hibFieldName = nameSpacer.DB2Hibernate(fieldName);
+                                                String controlType = "TEXTBOX"; // LISTBOX";
+                                                String valuesList = ""; // "S=Si,N=No"
 
 
 
 
-                                            String sqlCode = com.liquid.metadata.getAddColumnSQL(engine, database, schema, fieldTable, fieldName, fieldType, fieldSize, fieldNullable, fieldAutoincrement, fieldDefault, fieldRemarks);
+                                                String sqlCode = com.liquid.metadata.getAddColumnSQL(engine, database, schema, fieldTable, fieldName, fieldType, fieldSize, fieldNullable, fieldAutoincrement, fieldDefault, fieldRemarks);
 
-                                            // execute sql
-                                            if(sqlCode != null && !sqlCode.isEmpty()) {
-                                                allSQL += newLine+newLine;
-                                                allSQL += sqlCode.replace("\n", newLine);
-                                                if(conn != null) {
+                                                // execute sql
+                                                if(sqlCode != null && !sqlCode.isEmpty()) {
+                                                    allSQL += newLine+newLine;
+                                                    allSQL += sqlCode.replace("\n", newLine);
+                                                    if(conn != null) {
+                                                    }
+                                                }
+
+
+                                                if(is == 0) { // only at first cycle
+
+                                                    hibernateHBMFile = nameSpacer.DB2Hibernate(fieldTable) + ".hbm.xml";
+                                                    hibernatJavaFile = nameSpacer.DB2Hibernate(fieldTable) + ".java";
+
+                                                    //
+                                                    // Generate Hibernate .hbm
+                                                    //
+                                                    String hbmCode = ""
+                                                            +utility.htmlEncode("<property name=\""+hibFieldName+"\" type=\"java.lang.String\">", true)+newLine
+                                                            +utility.htmlEncode("<column name=\""+fieldName+"\" length=\"100\" />", true)+newLine
+                                                            +utility.htmlEncode("</property>", true)+newLine
+                                                            +"";
+
+                                                    allHBM += newLine+newLine;
+                                                    allHBM += utility.htmlEncode("<!-- "+fieldName+" / " + label + " -->", true) + newLine;
+                                                    allHBM += hbmCode;
+
+                                                    //
+                                                    // Generate Hibernate .java
+                                                    //
+                                                    String javaVarCode = "private String "+hibFieldName+";"+newLine;
+                                                    allJAVAVar += javaVarCode;
+
+                                                    String javaCode = 
+                                                            "public String get"+hibFieldName+"() {"+newLine
+                                                            +"\treturn this."+hibFieldName+";"+newLine
+                                                            +"}"+newLine
+                                                            +""+newLine
+                                                            +"public void set"+hibFieldName+"(String "+hibFieldName+") {"+newLine
+                                                            +"\tthis."+hibFieldName+" = "+hibFieldName+";"+newLine
+                                                            +"}"+newLine
+                                                            +""+newLine;
+
+                                                    allJAVA += newLine+newLine;
+                                                    allJAVA += "// "+fieldName+" / " + label+newLine;
+                                                    allJAVA += javaCode;
+
+
+                                                    //
+                                                    // Generate zk panels .xml
+                                                    //
+                                                    String zkCode = "" +
+                                                            utility.htmlEncode("<!-- "+hibFieldName+" -->", true) +newLine+
+                                                            utility.htmlEncode("<property name=\""+hibFieldName+"\">", true) +newLine+
+                                                            utility.htmlEncode("<etichetta>"+label+"</etichetta>", true) +newLine+
+                                                            utility.htmlEncode("<tipoControllo>"+controlType+"</tipoControllo>", true) +newLine+
+                                                            utility.htmlEncode("<elencoValori>"+valuesList+"</elencoValori>", true) +newLine+
+                                                            utility.htmlEncode("<posX>0</posX>", true) +newLine+
+                                                            utility.htmlEncode("<posY>0</posY>", true) +newLine+
+                                                            utility.htmlEncode("</property>", true) +newLine+
+                                                            "";
+
+                                                    allXML += newLine+newLine;
+                                                    allXML += "// "+fieldName+" / " + label;
+                                                    allXML += zkCode;
+
+                                                    // Generale Liquid .json     
                                                 }
                                             }
-                                        
-                                        
-                                            if(is == 0) { // only at first cycle
-                                                
-                                                hibernateHBMFile = nameSpacer.DB2Hibernate(fieldTable) + ".hbm.xml";
-                                                hibernatJavaFile = nameSpacer.DB2Hibernate(fieldTable) + ".java";
-                                                        
-                                                //
-                                                // Generate Hibernate .hbm
-                                                //
-                                                String hbmCode = ""
-                                                        +utility.htmlEncode("<property name=\""+hibFieldName+"\" type=\"java.lang.String\">", true)+newLine
-                                                        +utility.htmlEncode("<column name=\""+fieldName+"\" length=\"100\" />", true)+newLine
-                                                        +utility.htmlEncode("</property>", true)+newLine
-                                                        +"";
-                                                
-                                                allHBM += newLine+newLine;
-                                                allHBM += utility.htmlEncode("<!-- "+fieldName+" / " + label + " -->", true) + newLine;
-                                                allHBM += hbmCode;
-
-                                                //
-                                                // Generate Hibernate .java
-                                                //
-                                                String javaVarCode = "private String "+hibFieldName+";"+newLine;
-                                                allJAVAVar += javaVarCode;
-
-                                                String javaCode = 
-                                                        "public String get"+hibFieldName+"() {"+newLine
-                                                        +"\treturn this."+hibFieldName+";"+newLine
-                                                        +"}"+newLine
-                                                        +""+newLine
-                                                        +"public void set"+hibFieldName+"(String "+hibFieldName+") {"+newLine
-                                                        +"\tthis."+hibFieldName+" = "+hibFieldName+";"+newLine
-                                                        +"}"+newLine
-                                                        +""+newLine;
-                                                
-                                                allJAVA += newLine+newLine;
-                                                allJAVA += "// "+fieldName+" / " + label+newLine;
-                                                allJAVA += javaCode;
-
-
-                                                //
-                                                // Generate zk panels .xml
-                                                //
-                                                String zkCode = "" +
-                                                        utility.htmlEncode("<!-- "+hibFieldName+" -->", true) +newLine+
-                                                        utility.htmlEncode("<property name=\""+hibFieldName+"\">", true) +newLine+
-                                                        utility.htmlEncode("<etichetta>"+label+"</etichetta>", true) +newLine+
-                                                        utility.htmlEncode("<tipoControllo>"+controlType+"</tipoControllo>", true) +newLine+
-                                                        utility.htmlEncode("<elencoValori>"+valuesList+"</elencoValori>", true) +newLine+
-                                                        utility.htmlEncode("<posX>0</posX>", true) +newLine+
-                                                        utility.htmlEncode("<posY>0</posY>", true) +newLine+
-                                                        utility.htmlEncode("</property>", true) +newLine+
-                                                        "";
-                                                
-                                                allXML += newLine+newLine;
-                                                allXML += "// "+fieldName+" / " + label;
-                                                allXML += zkCode;
-
-                                                // Generale Liquid .json     
-                                            }
                                         }
-                                    }
-                                }
+                                        
+                                        if(conn != null) {
+                                            conn.commit();
+                                        }
+                                    } catch (Throwable th) {
+                                        if(conn != null) {
+                                            conn.rollback();
+                                        }
+                                    } finally {
+                                        if(conn != null) {
+                                            conn.close();
+                                        }
+                                    }                                    
+
                                 String package_hib = "com.geisoft."+project.toLowerCase()+"hibernate.conf".replace(".", "/");
                                 String package_vm = "com.geisoft."+project.toLowerCase()+".model".replace(".", "/");
-                                
+
                                 String result = "<div>"
                                         +"<span style=\"font-size:30px\">"+"SQL"+"</span>"
                                         +allSQL
@@ -217,10 +236,16 @@ public class projectManager {
                                         +"</div>"
                                         ;
                                 return (Object) "{ \"client\":\"onExecuted\", \"result\":1, \"data\":\"" + utility.base64Encode(result) + "\" }";
+                                }
+                                
+                            } else {
+                                Callback.send("Process of " + cfgName + "failed, <span style=\"color:red\">read machine bean error<span>");
+                                return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode("read machine bean error") + "\" }";
                             }
+                        } else {
+                            Callback.send("Process of " + cfgName + "failed, <span style=\"color:red\">read project bean error<span>");
+                            return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode("read project bean error") + "\" }";
                         }
-
-
                     } else {
                         Callback.send("Process of " + cfgName + "failed, <span style=\"color:red\">read bean error<span>");
                         return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode("read bean error") + "\" }";

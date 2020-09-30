@@ -8,13 +8,13 @@
     ,{ "visible":false,"size":10,"nullable":true,"name":"machine_id","typeName":"varchar","digits":0,"type":"4","required":true}
     ,{ "size":256,"nullable":true,"name":"machine","typeName":"varchar","digits":0,"type":"12","required":true, 
         "lookup":"machines","options":{
-            "lookupField":"name","targetColumn":"machine_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200"
+            "lookupField":"name","targetColumn":"machine_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200", "commands":[]
         }
     }
     ,{ "visible":false,"size":10,"nullable":true,"name":"schema_id","typeName":"varchar","digits":0,"type":"4","required":true}
     ,{ "size":256,"nullable":true,"name":"schema","typeName":"varchar","digits":0,"type":"12","required":true, 
         "lookup":"schemas","options":{
-            "lookupField":"name","targetColumn":"schema_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200"
+            "lookupField":"name","targetColumn":"schema_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200", "commands":[]
         }
     }
 ]

@@ -4,23 +4,23 @@
 ,"table":"fields"
 ,"primaryKey":"id"
 ,"columns":[
-     { "visible":true,"nullable":false,"name":"id","width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"fields_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
-    ,{ "visible":false,"size":10,"nullable":true,"name":"project_id","typeName":"varchar","digits":0,"type":"4","required":true }
-    ,{ "size":256,"nullable":true,"name":"project","typeName":"varchar","digits":0,"type":"12","required":true,
+     { "name":"id", "visible":true,"nullable":false,"width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"fields_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
+    ,{ "name":"project_id", "visible":false,"size":10,"nullable":true,"typeName":"varchar","digits":0,"type":"4","required":true }
+    ,{ "name":"project", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true,
         "lookup":"projects","options":{
-            "lookupField":"name","targetColumn":"project_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200"
+            "lookupField":"name","targetColumn":"project_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200", "commands":[]
         }
     }
-    ,{ "size":256,"nullable":true,"name":"table","typeName":"varchar","digits":0,"type":"12","required":true }
-    ,{ "size":256,"nullable":true,"name":"field","typeName":"varchar","digits":0,"type":"12","required":true }
-    ,{ "size":256,"nullable":true,"name":"type","typeName":"varchar","digits":0,"type":"12","required":true, 
+    ,{ "name":"table", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
+    ,{ "name":"field", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
+    ,{ "name":"type", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true, 
         "editor":{ "type":"values", "values":["VARCHAR2", "DATE", "TIMESTAMP", "NUMBER", "BLOB" ] }
     }
-    ,{ "size":256,"nullable":true,"name":"size","typeName":"varchar","digits":0,"type":"12","required":true }
-    ,{ "size":1,"nullable":true,"name":"nullable","typeName":"varchar","digits":0,"type":"12","required":true, "default":"'y'" }
-    ,{ "nullable":true,"name":"def","typeName":"varchar","digits":0,"type":"12","required":false }
-    ,{ "nullable":true,"name":"remarks","typeName":"varchar","digits":0,"type":"12","required":false }
-    ,{ "nullable":true,"name":"label","typeName":"varchar","digits":0,"type":"12","required":true }
+    ,{ "name":"size", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
+    ,{ "name":"nullable","size":1,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true, "default":"'y'" }
+    ,{ "name":"def","nullable":true,"typeName":"varchar","digits":0,"type":"12","required":false }
+    ,{ "name":"remarks","nullable":true,"typeName":"varchar","digits":0,"type":"12","required":false }
+    ,{ "name":"label","nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
 ]
 ,"grids":[
         {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":10,"nCols":1
@@ -51,6 +51,7 @@
 ,"autoInsert":false
 ,"listTabVisible":true
 ,"rowSelection":"multiple"
+,"autoSizeColumns":true
 ,"owner":"app.liquidx.deploy.projectManager"
 ,"events":[
       { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
