@@ -173,7 +173,7 @@
             <br/>
             <br/>
             <br/>
-            <div class="title1">WAR Deploy - workInProgress</div>
+            <div class="title1">WAR Deployer</div>
             <div class="spacer"></div>
             <br/>
             <br/>

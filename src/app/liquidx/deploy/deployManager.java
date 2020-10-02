@@ -267,10 +267,19 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                     }
                                 } catch (JSchException ex) {
                                     java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
-                                    uploadFileError += ex.getLocalizedMessage();
+                                    String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
+                                    Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\" }";
                                 } catch (SftpException ex) {
                                     java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
                                     uploadFileError += ex.getLocalizedMessage();
+                                    String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
+                                    Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\" }";
+                                } catch (Exception e) {
+                                    String err = "Error:" + e.getLocalizedMessage()+ " Check Network/VPN";
+                                    Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\" }";
                                 }
 
                                 String recipients[] = notifyEmails != null && !notifyEmails.isEmpty() ? notifyEmails.split(",") : null;
