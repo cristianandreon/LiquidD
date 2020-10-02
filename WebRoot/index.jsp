@@ -327,7 +327,9 @@ public class connection {
             <br/>
             <br/>
             <br/>
-            <div class="title2">Projects</div>
+            <div class="title1">Projects</div>
+            <div class="spacer"></div>
+            <br/>
             <br/>
             <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
                 <tr>
@@ -343,8 +345,10 @@ public class connection {
             <br/>
             <br/>
             <br/>
-            <div class="title2">Machines</div>
-            <br/>            
+            <div class="title1">Machines</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
             <table border=0 cellspacing=0 cellpadding=0 style="width:800px; font-size:9pt; table-layout:auto; ">
                 <tr>
                     <td colspan="1" style="">
@@ -359,8 +363,10 @@ public class connection {
             <br/>
             <br/>
             <br/>
-            <div class="title2">Schemas</div>
-            <br/>            
+            <div class="title1">Schemas</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
             <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
                 <tr>
                     <td colspan="1" style="">
@@ -375,8 +381,10 @@ public class connection {
             <br/>
             <br/>
             <br/>
-            <div class="title2">Project's machines</div>
-            <br/>            
+            <div class="title1">Project's machines</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
             <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
                 <tr>
                     <td colspan="1" style="">
@@ -391,7 +399,9 @@ public class connection {
             <br/>
             <br/>
             <br/>
-            <div class="title2">Machine's schemas</div>
+            <div class="title1">Project's Machine's schemas</div>
+            <div class="spacer"></div>
+            <br/>
             <br/>
             <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
                 <tr>

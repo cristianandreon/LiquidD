@@ -100,7 +100,7 @@ public class projectManager {
                                         //
                                         //  Process the sql for every schema
                                         //
-                                        ArrayList<Object>  schemasBean = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "machine_schema", null, "*", "where machine_id='"+machineId+"'", 0);
+                                        ArrayList<Object>  schemasBean = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "machine_schema", null, "*", "where machine_id='"+machineId+"' and project_id='"+projectId+"'", 0);
                                         for(int is=0; is<schemasBean.size(); is++) {
                                             Object schemaBean = schemasBean.get(is);
                                             String schema = (String)utility.get(schemaBean, "schema");

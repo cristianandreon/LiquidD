@@ -5,6 +5,12 @@
 ,"primaryKey":"id"
 ,"columns":[
      { "visible":false,"nullable":false,"name":"id","width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"machine_schema_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
+    ,{ "name":"project_id","visible":false,"size":10,"nullable":true,"typeName":"varchar","digits":0,"type":"4","required":true}
+    ,{ "name":"project","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true, 
+        "lookup":"projects","options":{
+            "lookupField":"name","targetColumn":"project_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200", "commands":[]
+        }
+    }
     ,{ "visible":false,"size":10,"nullable":true,"name":"machine_id","typeName":"varchar","digits":0,"type":"4","required":true}
     ,{ "size":256,"nullable":true,"name":"machine","typeName":"varchar","digits":0,"type":"12","required":true, 
         "lookup":"machines","options":{
@@ -19,11 +25,12 @@
     }
 ]
 ,"grids":[
-        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":3,"nCols":1
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":4,"nCols":1
             ,"columns":[
                 {"name":"id","tooltip":"","label":"id","row":0,"col":0}
-                ,{"name":"machine","tooltip":"Machine name","label":"Machine","row":1,"col":0}
-                ,{"name":"schema","tooltip":"Schema name","label":"Schema","row":2,"col":0}
+                ,{"name":"project","tooltip":"Project","label":"Project","row":1,"col":0}
+                ,{"name":"machine","tooltip":"Machine name","label":"Machine","row":2,"col":0}
+                ,{"name":"schema","tooltip":"Schema name","label":"Schema","row":3,"col":0}
             ]
         }
     ]
