@@ -17,6 +17,8 @@
             ]
         }
     ]
+,"mode":"combo"
+,"combo": { "height":25, "field":"name", "status":"close" }
 ,"editable":true
 ,"createTableIfMissing":true
 ,"navVisible":true

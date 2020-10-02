@@ -295,8 +295,9 @@ public class connection {
 
 
 
-
+        <!-- -------------- -->
         <!-- PROJECT HELPER -->
+        <!-- -------------- -->
         <div id="projectHelperFrame" style="display:none" class="demoContent">
             <br/>
             <br/>
@@ -328,16 +329,14 @@ public class connection {
             <br/>
             <div class="title2">Projects</div>
             <br/>
-            <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:600px; height:360px; font-size:9pt; table-layout:auto; ">
-                    <tr>
-                        <td colspan="1" style="">
-                            <div id="projects" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
-                            </div>
-                         </td>
-                    </tr>
-                </table>
-            </center>
+            <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="projects" style="height:100%; width:100%; height:360px; margin-left:75px; background-color: rgba(213, 225, 232, 0.45">
+                        </div>
+                     </td>
+                </tr>
+            </table>
             <br/>
             <br/>
             <br/>            
@@ -346,16 +345,14 @@ public class connection {
             <br/>
             <div class="title2">Machines</div>
             <br/>            
-            <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:800px; height:360px; font-size:9pt; table-layout:auto; ">
-                    <tr>
-                        <td colspan="1" style="">
-                            <div id="machines" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
-                            </div>
-                         </td>
-                    </tr>
-                </table>
-            </center>
+            <table border=0 cellspacing=0 cellpadding=0 style="width:800px; font-size:9pt; table-layout:auto; ">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="machines" style="height:100%; width:100%; height:360px; margin-left:75px; background-color: rgba(213, 225, 232, 0.45">
+                        </div>
+                     </td>
+                </tr>
+            </table>
             <br/>
             <br/>
             <br/>            
@@ -364,16 +361,14 @@ public class connection {
             <br/>
             <div class="title2">Schemas</div>
             <br/>            
-            <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:600px; height:360px; font-size:9pt; table-layout:auto; ">
-                    <tr>
-                        <td colspan="1" style="">
-                            <div id="schemas" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
-                            </div>
-                         </td>
-                    </tr>
-                </table>
-            </center>
+            <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="schemas" style="height:100%; width:100%; height:360px; margin-left:75px; background-color: rgba(213, 225, 232, 0.45">
+                        </div>
+                     </td>
+                </tr>
+            </table>
             <br/>
             <br/>
             <br/>            
@@ -382,16 +377,14 @@ public class connection {
             <br/>
             <div class="title2">Project's machines</div>
             <br/>            
-            <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:600px; height:360px; font-size:9pt; table-layout:auto; ">
-                    <tr>
-                        <td colspan="1" style="">
-                            <div id="project_machine" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
-                            </div>
-                         </td>
-                    </tr>
-                </table>
-            </center>
+            <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="project_machine" style="height:100%; width:100%; height:360px; margin-left:75px; background-color: rgba(213, 225, 232, 0.45">
+                        </div>
+                     </td>
+                </tr>
+            </table>
             <br/>
             <br/>
             <br/>            
@@ -399,31 +392,21 @@ public class connection {
             <br/>
             <br/>
             <div class="title2">Machine's schemas</div>
-            <br/>            
-            <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:600px; height:360px; font-size:9pt; table-layout:auto; ">
-                    <tr>
-                        <td colspan="1" style="">
-                            <div id="machine_schema" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
-                            </div>
-                         </td>
-                    </tr>
-                </table>
-            </center>
+            <br/>
+            <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="machine_schema" style="height:100%; width:100%; height:360px; margin-left:75px; background-color: rgba(213, 225, 232, 0.45">
+                        </div>
+                     </td>
+                </tr>
+            </table>
             <br/>
             <br/>
             <br/>            
             <br/>
             <br/>
             <br/>
-            <br/>            
-            <div class="title1">TODO :</div>
-            <div class="spacer"></div>
-            <br/>
-            <br/>
-            <ul> 
-                <li>Test</li>
-            </ul>
         </div>
     </body>
 </html>

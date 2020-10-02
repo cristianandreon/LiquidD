@@ -27,6 +27,8 @@
             ]
         }
     ]
+,"mode":"combo"
+,"combo": { "height":25, "field":["machine", "schema"], "status":"close", "fieldSep":".", "rowSep":" | " }
 ,"editable":true
 ,"createTableIfMissing":true
 ,"navVisible":true
