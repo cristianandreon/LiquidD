@@ -224,7 +224,7 @@
             <br/>
             <br/>            
             <br/>            
-            simply double click in the row ... deploy Phases :</br></br>
+            simply double click in the row ... deploy phases :</br></br>
             <ul> 
                     <li>1° <b>upload</b> (if local file is newer or remote is missing)</li>
                     <li>2° <b>backup</b> (only if .war file succesfully uploaded and is more recent, or previous .war file is missing)</li>
@@ -243,7 +243,7 @@
             <br/>
             <br/>            
             <br/>            
-            Don't double on other row while a deploy is running ... simply open multiple tab in your browser </br></br>
+            Don't double click on an other row while a deploy is running ... simply open multiple tab in your browser </br></br>
             <br/>
             <br/>            
             <br/>
