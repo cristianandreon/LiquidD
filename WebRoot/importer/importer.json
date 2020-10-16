@@ -1,0 +1,77 @@
+{ 
+ "database":"LiquidX"
+,"schema":"liquidx"
+,"table":"importer"
+,"primaryKey":"id"
+,"columns":[
+     { "visible":false,"nullable":false,"name":"id","width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"projects_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
+    ,{"size":256,"nullable":true,"name":"sDriver","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":256,"nullable":true,"name":"sUser","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"sPassword","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"sHost","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"sPort","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"sService","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"sDatabase","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"sSchema","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"sTable","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"tDriver","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":256,"nullable":true,"name":"tUser","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"tPassword","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"tHost","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"tPort","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"tService","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"tDatabase","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"tSchema","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"tTable","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":4000,"nullable":true,"name":"ids","typeName":"varchar","digits":0,"type":"12"}
+]
+,"grids":[
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":11,"nCols":2
+            ,"columns":[
+                {"name":"id","tooltip":"","label":"id","row":0,"col":0}
+                ,{"name":"sDriver","label":"Source driver","row":1,"col":0}
+                ,{"name":"sUser","label":"Source user name","row":2,"col":0}
+                ,{"name":"sPassword","label":"Source password","row":3,"col":0}
+                ,{"name":"sHost","label":"Source host","row":4,"col":0}
+                ,{"name":"sPort","label":"Source port","row":5,"col":0}
+                ,{"name":"sService","label":"Source service","row":6,"col":0}
+                ,{"name":"sDatabase","label":"Source database","row":7,"col":0}
+                ,{"name":"sSchema","tooltip":"","label":"Source schema","row":8,"col":0}
+                ,{"name":"sTable","tooltip":"","label":"Source table","row":9,"col":0}
+                ,{"name":"tDriver","label":"Target driver","row":1,"col":1}
+                ,{"name":"tUser","label":"Target user name","row":2,"col":1}
+                ,{"name":"tPassword","label":"Target password","row":3,"col":1}
+                ,{"name":"tHost","label":"Target host","row":4,"col":1}
+                ,{"name":"tPort","label":"Target port","row":5,"col":1}
+                ,{"name":"tService","label":"Target service","row":6,"col":1}
+                ,{"name":"tDatabase","label":"Target database","row":7,"col":1}
+                ,{"name":"tSchema","tooltip":"","label":"Target schema","row":8,"col":1}
+                ,{"name":"tTable","tooltip":"","label":"Target table","row":9,"col":1}
+                ,{"name":"ids","tooltip":"Define address list","label":"ids","row":10,"col":0}
+            ]
+        }
+    ]
+,"mode":""
+,"combo": { "height":25, "field":"name", "status":"close" }
+,"editable":true
+,"createTableIfMissing":true
+,"navVisible":true
+,"autoInsert":false
+,"listTabVisible":true
+,"autoSelect":true
+,"owner":"app.liquidx.project.event"
+,"events":[
+      { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
+     ,{ "name":"onRowDoubleClicked--", "server":"app.liquidx.importer.importerManager.execute", "params":[], "client":"", "onDownloading":"importerDownloading" }
+    ]
+,"commands":[
+ 	 { "name":"insert"}
+	,{ "name":"update"}
+	,{ "name":"delete"}
+	,{ "name":"copy"}
+	,{ "name":"paste"}
+	,{ "name":"next"}
+	,{ "name":"previous"}
+        ,{ "name":"exec", "img":"gear.png", "size":20, "server":"app.liquidx.importer.importerManager.execute", "params":[], "onDownloading":"importerDownloading" }
+]
+}

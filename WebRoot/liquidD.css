@@ -65,6 +65,13 @@ a:hover { color:#4EBFDD; text-decoration:none; font-weight: bold; }
 .ver {
     font-size: 50%;
 }
+.title0{
+    color: #0a4e8a;
+    padding-top: 4px;
+    font-family: verdana;
+    font-size: 48px;
+    padding-left: 10px;
+}
 .title1{
     color: #0a4e8a;
     padding-top: 4px;

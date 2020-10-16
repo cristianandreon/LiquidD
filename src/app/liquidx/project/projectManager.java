@@ -33,7 +33,7 @@ public class projectManager {
             if (params != null) {
                 // {"params":[{"formX":[{"1":"","2":"","3":""}]},{"name":"deploy"}]}
                 // JSONArray rowsData = com.liquid.event.getJSONArray(params, "name");
-                String projectId = null, cfgName = "";
+                String projectId = null;
                 String allSQL = "";
                 String allHBM = "";
                 String allJAVA = "";
@@ -54,7 +54,7 @@ public class projectManager {
                 if (fieldsBean != null) {
                     projectId = (String)utility.get(fieldsBean.get(0),"project_id");
 
-                    Callback.send("Processing " + cfgName + " ...");
+                    Callback.send("Processing " + projectId + " ...");
 
                     // Lettura del bean macchine
                     if (projectId != null && !projectId.isEmpty()) {
@@ -239,19 +239,19 @@ public class projectManager {
                                 }
                                 
                             } else {
-                                Callback.send("Process of " + cfgName + "failed, <span style=\"color:red\">read machine bean error<span>");
+                                Callback.send("Process of " + projectId + "failed, <span style=\"color:red\">read machine bean error<span>");
                                 return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode("read machine bean error") + "\" }";
                             }
                         } else {
-                            Callback.send("Process of " + cfgName + "failed, <span style=\"color:red\">read project bean error<span>");
+                            Callback.send("Process of " + projectId + "failed, <span style=\"color:red\">read project bean error<span>");
                             return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode("read project bean error") + "\" }";
                         }
                     } else {
-                        Callback.send("Process of " + cfgName + "failed, <span style=\"color:red\">read bean error<span>");
+                        Callback.send("Process of " + projectId + "failed, <span style=\"color:red\">read bean error<span>");
                         return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode("read bean error") + "\" }";
                     }
                 } else {
-                    Callback.send("Process of " + cfgName + " failed, <span style=\"color:red\">primaryKey not found<span>");
+                    Callback.send("Process of " + projectId + " failed, <span style=\"color:red\">primaryKey not found<span>");
                     return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode("primaryKey not found") + "\" }";
                 }
             } else {

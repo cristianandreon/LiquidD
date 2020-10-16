@@ -115,6 +115,10 @@
                 Liquid.startPopup('fields', '<%=workspace.get_file_content(request, "/project/fields.json")%>');
             }
             
+            function startImporter() {
+                Liquid.startPopup('importer', '<%=workspace.get_file_content(request, "/importer/importer.json")%>');
+            }
+                
             function closeFormX() {
                 setTimeout( function() { startFormX() }, 1000 );
                 jQ1124( '#deploy' ).fadeOut( "fast", function() { });
@@ -122,8 +126,14 @@
 
             function deployDownloading(liquid, data, clientData, parameter, event) {
                 document.getElementById("outDiv").innerHTML = ""+data;
+            }                        
+            function projectDownloading(liquid, data, clientData, parameter, event) {
+                document.getElementById("outDivProject").innerHTML = ""+data;
             }
-                        
+            function importerDownloading(liquid, data, clientData, parameter, event) {
+                document.getElementById("outDivimporter").innerHTML = ""+data;
+            }
+
             function onExecuted(liquid, param) {
                 if(param) {
                     if(param.command) {
@@ -141,29 +151,47 @@
         </script>
     </head>
     
-    <body onload="onLoad(); startDeploysCfg(); startProjectHelper(); ">
+    <body onload="onLoad(); startDeploysCfg(); startProjectHelper(); startImporter();">
         <div id="bg" style="width:100%; height:100%;"><img src="./images/kupka3.jpg" style="width:100%; height:100%; -webkit-filter:opacity(7);opacity:0.07; -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=7)'; filter: alpha(opacity=7); -khtml-opacity: 0.07;"/></div>
 
         
+        <div class="spacer"></div>
+        <center>
+        <div class="title0">LiquidD : Developer utilities</div>
+        </center>
+        <br/>
+        <br/>        
         <div class="liquidForeignTables" style="border-bottom: 1px solid lightgrey" class="demoContent">
             <ul>
                 <li id="deployFrameTab" class="liquidTabSel"><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Deployer</a></li>
-                <li id="projectHelperFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Project Helper</a></li>
+                <li id="projectFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Project Helper</a></li>
+                <li id="importerFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Importer</a></li>
             </ul>
         </div>                        
 
         <script>
             function onMainTab(obj) {
                 if(obj.parentNode.id === 'deployFrameTab') {
-                    jQ1124('#projectHelperFrame').slideUp("fast");
+                    jQ1124('#projectFrame').slideUp("fast");
+                    jQ1124('#importerFrame').slideUp("fast");
                     jQ1124('#deployFrame').slideDown("normal");
-                    document.getElementById('projectHelperFrameTab').className = "";
+                    document.getElementById('projectFrameTab').className = "";
+                    document.getElementById('importerFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "liquidTabSel";
-                } else {
-                    jQ1124('#projectHelperFrame').slideDown( "normal", function () { Liquid.onVisible('projectHelperFrame') } );
+                } else if(obj.parentNode.id === 'projectFrameTab') {
                     jQ1124('#deployFrame').slideUp("fast");
-                    document.getElementById('projectHelperFrameTab').className = "liquidTabSel";
-                    document.getElementById('deployFrameTab').className = "";                    
+                    jQ1124('#importerFrame').slideUp("fast");
+                    jQ1124('#projectFrame').slideDown("normal");
+                    document.getElementById('projectFrameTab').className = "liquidTabSel";
+                    document.getElementById('importerFrameTab').className = "";
+                    document.getElementById('deployFrameTab').className = "";
+                } else if(obj.parentNode.id === 'importerFrameTab') {
+                    jQ1124('#projectFrame').slideUp("fast");
+                    jQ1124('#deployFrame').slideUp("fast");
+                    jQ1124('#importerFrame').slideDown( "normal", function () { Liquid.onVisible('importerFrame') } );
+                    document.getElementById('projectFrameTab').className = "";
+                    document.getElementById('importerFrameTab').className = "liquidTabSel";
+                    document.getElementById('deployFrameTab').className = "";
                 }                    
             }
         </script>
@@ -298,7 +326,7 @@ public class connection {
         <!-- -------------- -->
         <!-- PROJECT HELPER -->
         <!-- -------------- -->
-        <div id="projectHelperFrame" style="display:none" class="demoContent">
+        <div id="projectFrame" style="display:none" class="demoContent">
             <br/>
             <br/>
             <br/>
@@ -316,7 +344,7 @@ public class connection {
                     </tr>
                     <tr>
                         <td colspan="1" style="height:50px;">
-                            <div id="outDiv" style="height:100%; width:100%; border:1px solid lightgray"></div>
+                            <div id="outDivProject" style="height:100%; width:100%; border:1px solid lightgray"></div>
                          </td>
                     </tr>
                 </table>
@@ -418,5 +446,45 @@ public class connection {
             <br/>
             <br/>
         </div>
+        
+        
+        
+        <!-- --------------- -->
+        <!-- IMPORTER HELPER -->
+        <!-- --------------- -->
+        <div id="importerFrame" style="display:none" class="demoContent">
+            <br/>
+            <br/>
+            <br/>
+            <div class="title1">Importer - <span style="font-size:80%">copy rows from data source</span></div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <center>
+                <table border=0 cellspacing=0 cellpadding=0 style="width:calc(100% - 50px); height:650px; font-size:9pt; table-layout:auto; ">
+                    <tr>
+                        <td colspan="1" style="height:600px; width:100%; ">
+                            <div id="importer" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                            </div>
+                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" style="height:50px;">
+                            <div id="outDivimporter" style="height:100%; width:100%; border:1px solid lightgray"></div>
+                         </td>
+                    </tr>
+                </table>
+            </center>
+            <br/>
+         <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+        </div>
+        
+        
+        
     </body>
 </html>
