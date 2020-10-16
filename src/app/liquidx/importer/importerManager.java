@@ -108,6 +108,8 @@ public class importerManager {
                                 + ", \"loadALL\":" + "true" + ""
                                 + "}";
 
+                        Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">creating control...<span>");
+
                         // create control
                         workspace sLiquid = workspace.get_tbl_manager_workspace(sControlId);
                         workspace tLiquid = workspace.get_tbl_manager_workspace(tControlId);
@@ -129,11 +131,19 @@ public class importerManager {
                             // read bean
                             String rowId = ids[i];
                             if(rowId != null && !rowId.isEmpty()) {
+                                Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Loading ros #"+rowId+"...<span>");
+                                // ArrayList<Object> rowBeans = db.load_beans((HttpServletRequest)null, sControlId, null, "*", null, rowId, 1);
+                                // Object rowBean = rowBeans.get(0);
                                 Object rowBean = db.load_bean((HttpServletRequest) requestParam, sControlId, "*", rowId);
                                 if(rowBean != null) {
-                                    String res = db.insert(rowBean, tLiquid);
-                                    if(res != null) {
-                                        JSONObject resJson = new JSONObject(res);
+                                    Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Loading foreign tables of row #"+rowId+"...<span>");
+                                    Object [] resLoadBeans = db.load_child_bean(rowBean, "*", 0);
+
+                                    Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Inserting row #"+rowId+"...<span>");
+                                    String resInsert = db.insert(rowBean, tLiquid, "*");
+
+                                    if(resInsert != null) {
+                                        JSONObject resJson = new JSONObject(resInsert);
                                         JSONArray tables = resJson.getJSONArray("tables");
                                         int nErr = 0;
                                         for(int t=0; t<tables.length(); t++) {
@@ -142,8 +152,14 @@ public class importerManager {
                                                 String err = utility.base64Decode(tJson.getString("error"));
                                                 Callback.send("Importer failed on id:"+rowId+", <span style=\"color:red\">" + err + "<span>");
                                                 nErr++;
-                                                Thread.sleep(7000);
+                                                Thread.sleep(3000);
                                             }
+                                        }
+                                        if(resJson.has("error")) {
+                                            String err = utility.base64Decode(resJson.getString("error"));
+                                            Callback.send("Importer failed on id:"+rowId+", <span style=\"color:red\">" + err + "<span>");
+                                            nErr++;
+                                            Thread.sleep(3000);
                                         }
                                         if(nErr == 0) {
                                             nImpoted++;
