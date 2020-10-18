@@ -45,13 +45,6 @@
             ]
         }
     ]
-,"editable":true
-,"createTableIfMissing":true
-,"navVisible":true
-,"autoInsert":false
-,"listTabVisible":true
-,"rowSelection":"multiple"
-,"autoSizeColumns":true
 ,"owner":"app.liquidx.deploy.projectManager"
 ,"events":[
       { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
@@ -68,4 +61,11 @@
         ,{ "name":"exec", "img":"gear.png", "size":20, "server":"app.liquidx.project.projectManager.execute", "params":[], "onDownloading":"projectDownloading" }
         
 ]
+,"editable":true
+,"createTableIfMissing":true
+,"navVisible":true
+,"autoInsert":false
+,"listTabVisible":true
+,"rowSelection":"multiple"
+,"autoSizeColumns":true
 }

@@ -6,20 +6,20 @@
 ,"columns":[
      { "visible":false,"nullable":false,"name":"id","width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"projects_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
     ,{"size":256,"nullable":true,"name":"sDriver","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":256,"nullable":true,"name":"sUser","typeName":"varchar","digits":0,"type":"12"}
-    ,{"size":256,"nullable":true,"name":"sPassword","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"sUser","typeName":"varchar","digits":0,"type":"12","visible":false}
+    ,{"size":256,"nullable":true,"name":"sPassword","typeName":"varchar","digits":0,"type":"12","visible":false}
     ,{"size":256,"nullable":true,"name":"sHost","typeName":"varchar","digits":0,"type":"12"}
-    ,{"size":256,"nullable":true,"name":"sPort","typeName":"varchar","digits":0,"type":"12"}
-    ,{"size":256,"nullable":true,"name":"sService","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"sPort","typeName":"varchar","digits":0,"type":"12","visible":false}
+    ,{"size":256,"nullable":true,"name":"sService","typeName":"varchar","digits":0,"type":"12","visible":false}
     ,{"size":256,"nullable":true,"name":"sDatabase","typeName":"varchar","digits":0,"type":"12"}
     ,{"size":256,"nullable":true,"name":"sSchema","typeName":"varchar","digits":0,"type":"12"}
     ,{"size":256,"nullable":true,"name":"sTable","typeName":"varchar","digits":0,"type":"12"}
     ,{"size":256,"nullable":true,"name":"tDriver","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":256,"nullable":true,"name":"tUser","typeName":"varchar","digits":0,"type":"12"}
-    ,{"size":256,"nullable":true,"name":"tPassword","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"tUser","typeName":"varchar","digits":0,"type":"12","visible":false}
+    ,{"size":256,"nullable":true,"name":"tPassword","typeName":"varchar","digits":0,"type":"12","visible":false}
     ,{"size":256,"nullable":true,"name":"tHost","typeName":"varchar","digits":0,"type":"12"}
-    ,{"size":256,"nullable":true,"name":"tPort","typeName":"varchar","digits":0,"type":"12"}
-    ,{"size":256,"nullable":true,"name":"tService","typeName":"varchar","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"tPort","typeName":"varchar","digits":0,"type":"12","visible":false}
+    ,{"size":256,"nullable":true,"name":"tService","typeName":"varchar","digits":0,"type":"12","visible":false}
     ,{"size":256,"nullable":true,"name":"tDatabase","typeName":"varchar","digits":0,"type":"12"}
     ,{"size":256,"nullable":true,"name":"tSchema","typeName":"varchar","digits":0,"type":"12"}
     ,{"size":256,"nullable":true,"name":"tTable","typeName":"varchar","digits":0,"type":"12"}
@@ -54,6 +54,7 @@
 ,"mode":""
 ,"combo": { "height":25, "field":"name", "status":"close" }
 ,"editable":true
+,"autoSizeColumns":true
 ,"createTableIfMissing":true
 ,"navVisible":true
 ,"autoInsert":false

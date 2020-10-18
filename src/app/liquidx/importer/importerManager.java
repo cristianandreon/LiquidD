@@ -6,13 +6,11 @@
  */
 package app.liquidx.importer;
 
-import app.liquidx.project.nameSpacer;
 import com.liquid.Callback;
 import com.liquid.db;
 import com.liquid.utility;
 import com.liquid.workspace;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import org.json.JSONArray;
@@ -95,6 +93,7 @@ public class importerManager {
                                 + ", \"columns\":\"" + "*" + "\""
                                 + ", \"foreignTables\":\"" + "*" + "\""
                                 + ", \"loadALL\":" + "true" + ""
+                                + ", \"readOnly\":" + "true" + ""
                                 + "}";
 
                         String tTableJson = ""
@@ -106,6 +105,7 @@ public class importerManager {
                                 + ", \"columns\":\"" + "*" + "\""
                                 + ", \"foreignTables\":\"" + "*" + "\""
                                 + ", \"loadALL\":" + "true" + ""
+                                + ", \"readOnly\":" + "true" + "" // make quick load
                                 + "}";
 
                         Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">creating control...<span>");
@@ -126,50 +126,80 @@ public class importerManager {
                         String[] ids = sIds.split(",");
                         
                         int nImpoted = 0;
+                        String errors = "";
+                        String warnings = "";
 
                         for (int i = 0; i < ids.length; i++) {
                             // read bean
                             String rowId = ids[i];
                             if(rowId != null && !rowId.isEmpty()) {
-                                Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Loading ros #"+rowId+"...<span>");
-                                // ArrayList<Object> rowBeans = db.load_beans((HttpServletRequest)null, sControlId, null, "*", null, rowId, 1);
-                                // Object rowBean = rowBeans.get(0);
+                                
+                                Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Loading row "+rowId+"@"+sTable+"...<span>");
                                 Object rowBean = db.load_bean((HttpServletRequest) requestParam, sControlId, "*", rowId);
+                                
                                 if(rowBean != null) {
-                                    Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Loading foreign tables of row #"+rowId+"...<span>");
+                                    
+                                    Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Loading foreign tables of row "+rowId+"@"+sTable+"...<span>");
                                     Object [] resLoadBeans = db.load_child_bean(rowBean, "*", 0);
-
-                                    Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Inserting row #"+rowId+"...<span>");
-                                    String resInsert = db.insert(rowBean, tLiquid, "*");
-
-                                    if(resInsert != null) {
-                                        JSONObject resJson = new JSONObject(resInsert);
-                                        JSONArray tables = resJson.getJSONArray("tables");
-                                        int nErr = 0;
-                                        for(int t=0; t<tables.length(); t++) {
-                                            JSONObject tJson = tables.getJSONObject(t);
-                                            if(tJson.has("error")) {
-                                                String err = utility.base64Decode(tJson.getString("error"));
-                                                Callback.send("Importer failed on id:"+rowId+", <span style=\"color:red\">" + err + "<span>");
-                                                nErr++;
-                                                Thread.sleep(3000);
+                                    
+                                    if(resLoadBeans != null) {
+                                        if(resLoadBeans[0] != null) {
+                                            
+                                            // { beans, int nBeans, int nBeansLoaded, String errors, String warning }
+                                            if(resLoadBeans[3] != null) {
+                                                if(!((String)resLoadBeans[3]).isEmpty()) errors += (errors.length() > 0 ? "\n" : "") + (String)resLoadBeans[3];
                                             }
-                                        }
-                                        if(resJson.has("error")) {
-                                            String err = utility.base64Decode(resJson.getString("error"));
+                                            if(resLoadBeans[4] != null) {
+                                                if(!((String)resLoadBeans[4]).isEmpty()) warnings += (warnings.length() > 0 ? "\n" : "") + (String)resLoadBeans[4];
+                                            }
+                                            
+                                            Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Inserting row "+rowId+"@"+sTable+"...<span>");
+                                            tLiquid.tableJson.put("readOnly", false); // dont care about default metadata
+                                            String resInsert = db.insert(rowBean, tLiquid, "*");
+
+                                            if(resInsert != null) {
+                                                JSONObject resJson = new JSONObject(resInsert);
+                                                JSONArray tables = resJson.getJSONArray("tables");
+                                                int nErr = 0;
+                                                for(int t=0; t<tables.length(); t++) {
+                                                    JSONObject tJson = tables.getJSONObject(t);
+                                                    if(tJson.has("error")) {
+                                                        String err = utility.base64Decode(tJson.getString("error"));
+                                                        errors += (errors.length()>0 ? "\n" : "") + err;
+                                                        Callback.send("Importer failed on id:"+rowId+", <span style=\"color:red\">" + err + "<span>");
+                                                        nErr++;
+                                                    }
+                                                }
+                                                if(resJson.has("error")) {
+                                                    String err = utility.base64Decode(resJson.getString("error"));
+                                                    errors += (errors.length()>0 ? "\n" : "") + (err != null ? err : "");
+                                                    Callback.send("Importer failed on id:"+rowId+", <span style=\"color:red\">" + err + "<span>");
+                                                    nErr++;
+                                                }
+                                                if(nErr == 0) {
+                                                    nImpoted++;
+                                                    Thread.sleep(3000);
+                                                }
+                                            }
+                                        } else {
+                                            String err = "Error loading child beans : empty";
+                                            errors += (errors.length()>0 ? "\n" : "") + (err != null ? err : "");
                                             Callback.send("Importer failed on id:"+rowId+", <span style=\"color:red\">" + err + "<span>");
-                                            nErr++;
-                                            Thread.sleep(3000);
                                         }
-                                        if(nErr == 0) {
-                                            nImpoted++;
-                                        }
+                                    } else {
+                                        String err = "Error loading child beans : null";
+                                        errors += (errors.length()>0 ? "\n" : "") + (err != null ? err : "");
+                                        Callback.send("Importer failed on id:"+rowId+", <span style=\"color:red\">" + err + "<span>");
                                     }
                                 }
                             }
                         }
 
-                        Callback.send("Importer of " + projectId + " done, <span style=\"color:darkGreen\">"+nImpoted+" impoted<span>");
+                        Callback.send("Importer of " + projectId + " done, <span style=\"color:darkGreen\">"+nImpoted+" impoted<span>"
+                                +"<br/>"
+                                + "<span style=\"color:darkRed\">"+errors.replace("\n\n","<br/>").replace("\n","<br/>")+"<span>"
+                                + "<span style=\"color:darkOrange\">"+warnings.replace("\n\n","<br/>").replace("\n","<br/>")+"<span>"
+                        );
                         return (Object) "{ \"result\":1, \"error\":\"" + "" + "\" }";
           
                     } else {

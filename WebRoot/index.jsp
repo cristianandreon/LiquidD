@@ -456,14 +456,21 @@ public class connection {
             <br/>
             <br/>
             <br/>
-            <div class="title1">Importer - <span style="font-size:80%">copy rows from data source</span></div>
+            <div class="title1">Importer - <span style="font-size:80%">copy cascade rows from data source (jdb connection) to target</span></div>
             <div class="spacer"></div>
             <br/>
             <br/>
+            <div class="title2"><li><span style="font-size:80%">define source and target jdbc (host/port/service/user/password) connection</span></li></div>
+            <br/>
+            <div class="title2"><li><span style="font-size:80%">define the table</span></div>
+            <br/>
+            <div class="title2"><li><span style="font-size:80%">define the primary keys value to copy (comma separated string)</span></li></div>
+            <br/>
+            <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:calc(100% - 50px); height:650px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:calc(100% - 50px); height:250px; font-size:9pt; table-layout:auto; ">
                     <tr>
-                        <td colspan="1" style="height:600px; width:100%; ">
+                        <td colspan="1" style="height:200px; width:100%; ">
                             <div id="importer" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
                             </div>
                          </td>

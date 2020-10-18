@@ -79,6 +79,13 @@ a:hover { color:#4EBFDD; text-decoration:none; font-weight: bold; }
     font-size: 24px;
     padding-left: 10px;
 }
+.title2{
+    color: rgb(30, 30, 30);
+    padding-top: 4px;
+    font-family: verdana;
+    font-size: 15px;
+    padding-left: 40px;
+}
 .desc1{
     color:rgb(86, 85, 85);
     padding-top: 6px;
