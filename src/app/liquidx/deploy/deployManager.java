@@ -210,15 +210,18 @@ public class deployManager {
 
                             // Strip last /
                             if (backupFolder.endsWith("/")) {
-                                backupFolder = backupFolder.substring(0, deployFolder.length() - 1);
+                                backupFolder = backupFolder.substring(0, backupFolder.length() - 1);
                             }
                             if (copyFolder.endsWith("/")) {
-                                copyFolder = copyFolder.substring(0, deployFolder.length() - 1);
+                                copyFolder = copyFolder.substring(0, copyFolder.length() - 1);
                             }
                             if (deployFolder.endsWith("/")) {
                                 deployFolder = deployFolder.substring(0, deployFolder.length() - 1);
                             }
 
+                            boolean doBackup = "true".equalsIgnoreCase( doBackupJSON.getString("data")) ? true : false;
+                            boolean askConfirmation = "true".equalsIgnoreCase( askConfirmationJSON.getString("data")) ? true : false;
+                            
                             String msg = null, msg_for_notity = null;
 
                             String message = " Processing <b>" + cfgName + "</b></br>"
@@ -239,7 +242,9 @@ public class deployManager {
                                     + "<span style=\"font-size:80%; left:60px; position: relative;\">"
                                     + "</br>Copy  to <b>" + copyFolder + "/" + webAppWAR + "</b></br>"
                                     + "</br>"
-                                    + "</br>Backup to <b>" + backupFolder + "/" + webAppWAR + "</b></br>"
+                                    + (!doBackup ? "<span style=\"color:darkGray; \">" : "")
+                                    + (doBackup ? ("</br>Backup to <b>" + backupFolder + "/" + webAppWAR + "</b></br>") : ("</br>Backup Disabled (to <b>" + backupFolder + "/" + webAppWAR + "</b>)</br>"))
+                                    + (!doBackup ? "</span>" : "")
                                     + "</br>"
                                     + "</br>Deploy to <b>" + deployFolder + "/" + webAppWAR + "</b></br>"
                                     + "</span>";
@@ -247,11 +252,9 @@ public class deployManager {
                             if (Messagebox.show(message, "LiquidD", Messagebox.QUESTION + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
 
                                 // 1° upload
-                                sftpManager sftp = new sftpManager();
-                                boolean doBackup = "true".equalsIgnoreCase( doBackupJSON.getString("data")) ? true : false;
-                                boolean askConfirmation = "true".equalsIgnoreCase( askConfirmationJSON.getString("data")) ? true : false;
-                                
+                                sftpManager sftp = new sftpManager();                               
                                 long retVal = 0;
+                                
                                 try {
                                     Object[] result = sftp.upload(host, user, password, glSourceFile, sourceFileIS, copyFolder + "/" + webAppWAR);
                                     retVal = (long) result[0];
