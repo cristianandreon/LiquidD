@@ -206,10 +206,10 @@
             <br/>
             <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:1024px; height:360px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:1024px; height:auto; font-size:9pt; table-layout:auto; ">
                     <tr>
                         <td colspan="1">
-                            <div id="deploysCfg" style="height:360px; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                            <div id="deploysCfg" style="height:560px; width:100%; background-color: rgba(213, 225, 232, 0.45">
                             </div>
                          </td>
                     </tr>
@@ -220,7 +220,12 @@
                     </tr>
                     <tr>
                         <td colspan="1">
-                            <input id="doBackup" type="checkbox" style="padding:10px; height:30px; width:30px; " checked="checked" >Do Backup</input>
+                            <input id="doBackup" type="checkbox" style="padding:10px; height:30px; width:30px; " checked >Do Backup</input>
+                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <input id="askConfirmation" type="checkbox" style="padding:10px; height:30px; width:30px; " >Ask confirmation before deploy</input>
                          </td>
                     </tr>
                 </table>
@@ -254,10 +259,10 @@
             <br/>            
             simply double click in the row ... deploy phases :</br></br>
             <ul> 
-                    <li>1° <b>upload</b> (if local file is newer or remote is missing)</li>
-                    <li>2° <b>backup</b> (only if .war file succesfully uploaded and is more recent, or previous .war file is missing)</li>
+                    <li>1° <b>upload</b> (if local file is newer or remote is missing) [in the "copyFolder"]</li>
+                    <li>2° <b>backup</b> (only if .war file succesfully uploaded and is more recent, or previous .war file is missing) [in the "backupFolder"]</li>
                     <li>3° <b>remove</b> current .war</li>
-                    <li>4° <b>deploy</b> new .war</li>
+                    <li>4° <b>deploy</b> new .war [in the "deployFolder"]</li>
                     <li>5° <b>check</b> web app (http status 200)</li>
             </ul>
             <br/>

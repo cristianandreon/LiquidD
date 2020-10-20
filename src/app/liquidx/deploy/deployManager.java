@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 /**
  *
@@ -79,6 +80,8 @@ public class deployManager {
                 }
                     
                 JSONObject doBackupJSON = com.liquid.event.getJSONObject(params, "data", "doBackup");
+                JSONObject askConfirmationJSON = com.liquid.event.getJSONObject(params, "data", "askConfirmation");
+                
 
                     
                 // Lettura del bean di configurazione
@@ -179,10 +182,17 @@ public class deployManager {
 
                         if (bDataDecoded) {
 
+                            // Sample
                             /*
-function getFolderDateName() { var date = new Date(); var d = date.getDate(); var m = date.getMonth() + 1; var y = date.getFullYear(); var dateString = (y) + (m <= 9 ? '0' + m : m) + (d <= 9 ? '0' + d : d); return dateString; }
-"/home/%user%/rilasci/%webApp%/getFolderDateName();
+                                function getFolderDateName() { 
+                                    var date = new Date(); 
+                                    var d = date.getDate(); 
+                                    var m = date.getMonth() + 1; 
+                                    var y = date.getFullYear(); 
+                                    var dateString = String(y) + (m <= 9 ? '0' + m : m) + (d <= 9 ? '0' + d : d); return dateString; }
+                                "/home/%user%/rilasci/%webApp%/getFolderDateName();
                              */
+                            
                             // InputStream inputStream = new FileInputStream(filePath);
                             String ver = (String) utility.getArchiveXMLTag(sourceFile, "WEB-INF/product.xml", "product/version");
 
@@ -200,13 +210,13 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 
                             // Strip last /
                             if (backupFolder.endsWith("/")) {
-                                backupFolder = backupFolder.substring(9, deployFolder.length() - 1);
+                                backupFolder = backupFolder.substring(0, deployFolder.length() - 1);
                             }
                             if (copyFolder.endsWith("/")) {
-                                copyFolder = copyFolder.substring(9, deployFolder.length() - 1);
+                                copyFolder = copyFolder.substring(0, deployFolder.length() - 1);
                             }
                             if (deployFolder.endsWith("/")) {
-                                deployFolder = deployFolder.substring(9, deployFolder.length() - 1);
+                                deployFolder = deployFolder.substring(0, deployFolder.length() - 1);
                             }
 
                             String msg = null, msg_for_notity = null;
@@ -239,6 +249,8 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                 // 1° upload
                                 sftpManager sftp = new sftpManager();
                                 boolean doBackup = "true".equalsIgnoreCase( doBackupJSON.getString("data")) ? true : false;
+                                boolean askConfirmation = "true".equalsIgnoreCase( askConfirmationJSON.getString("data")) ? true : false;
+                                
                                 long retVal = 0;
                                 try {
                                     Object[] result = sftp.upload(host, user, password, glSourceFile, sourceFileIS, copyFolder + "/" + webAppWAR);
@@ -285,8 +297,9 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                 String recipients[] = notifyEmails != null && !notifyEmails.isEmpty() ? notifyEmails.split(",") : null;
 
                                 if (uploadFileOk) {
-
+                                    //
                                     // Verifica del file caricato
+                                    //
                                     Callback.send("1&deg;/5 - Checking uploaded file...");
                                     long currentFileSize = sftp.getRemoteFileSize(host, user, password, copyFolder + "/" + webAppWAR);
                                     if (currentFileSize != retVal) {
@@ -304,7 +317,13 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                     ssh.connect(host, user, password);
 
                                     Callback.send("1&deg;/5 - Logging as root...");
+                                    
+                                    /*
                                     String cmd = "sudo -i";
+                                    ssh.cmd(cmd, password);
+                                    */
+
+                                    String cmd = "sudo su -";
                                     ssh.cmd(cmd, password);
 
                                     // 2° backup
@@ -359,9 +378,44 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                         }
                                     }
 
+                                    
+        
+                                    if(askConfirmation) {
+                                        message = " Processing <b>" + cfgName + "</b></br>"
+                                                + "</br>"
+                                                + "<span style=\"font-size:130%\">"
+                                                + "<b> Ready for deploy :</b></br>"
+                                                + "</span>"
+                                                + "</br>"
+                                                + "</br>"
+                                                + "<span style=\"font-size:80%; left:50px; position: relative;\">"
+                                                + " - Undeploy app from <b>" + webAppWAR + "</b>"
+                                                + "</span>"
+                                                + "</br>"
+                                                + "<span style=\"font-size:80%; left:50px; position: relative;\">"
+                                                + " - Wait for application server ready</b>"
+                                                + "</span>"
+                                                + "</br>"
+                                                + "<span style=\"font-size:80%; left:50px; position: relative;\">"
+                                                + "</br> - Deploy app to <b>" + deployFolder + "/" + webAppWAR + "</b></br>"
+                                                + "</br>"
+                                                + "</br>"
+                                                + "<span style=\"font-size:110%; left:50px; position: relative;\">"
+                                                + "</br>Deploy app to <b>" + deployFolder + "/" + webAppWAR + "</b></br>"
+                                                + "</span>";
+                                        if (Messagebox.show(message, "LiquidD", Messagebox.QUESTION + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
+                                        } else {
+                                            // Stop here
+                                            return null;
+                                        }
+                                    }
+        
+                                    
                                     //                        
                                     // Attesa errore 404
                                     //
+                                    
+                                   
                                     Callback.send("3&deg;/5 - Waiting for application server...");
                                     if (undeployWaitTime > 0) {
                                         Thread.sleep(undeployWaitTime);
@@ -383,6 +437,7 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                             } else {
                                                 Thread.sleep((3000));
                                             }
+                                            Callback.send("3&deg;/5 - Waiting for application server ["+(i+1)+"/"+n+"]...");
                                         }
                                         if (code == HttpURLConnection.HTTP_OK) {
                                             Callback.send("3&deg;/5 - <span style=\"color:red\">Web app still running : maybe deployFolder (" + deployFolder + "/" + webAppWAR + ") is not valid ... or 404 error redirected<span>");
@@ -392,6 +447,28 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
                                     }
                                     Thread.sleep(3000);
 
+
+                                    if(!isReadyForDeply) {
+                                        message = " Processing <b>" + cfgName + "</b></br>"
+                                                + "</br>"
+                                                + "<span style=\"font-size:130%\">"
+                                                + "<b> DANGER :</b></br>"
+                                                + "</span>"
+                                                + "</br>"
+                                                + "</br>"
+                                                + "<span style=\"font-size:110%; left:50px; position: relative;\">"
+                                                + "Application Server didn't undeploy current app <b>" + webAppWAR + "</b>"
+                                                + "</span>"
+                                                + "</br>"
+                                                + "</br>Deploy anyway to <b>" + deployFolder + "/" + webAppWAR + "</b></br>"
+                                                + "</span>";
+                                        if (Messagebox.show(message, "LiquidD", Messagebox.ERROR + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
+                                        } else {
+                                            // Stop here
+                                            return null;
+                                        }
+                                    }
+                                
                                     // 4° deploy new war
                                     //
                                     // Copia file nuova versione
@@ -515,6 +592,8 @@ function getFolderDateName() { var date = new Date(); var d = date.getDate(); va
 
     public static String solve_variable_field(String expr, String user, String webApp) throws Exception {
         if (expr != null && !expr.isEmpty()) {
+            // expr = expr.replaceAll("<!--.*?-->", "").replaceAll("<[^>]+>", "");
+            expr = Jsoup.parse(expr).text().replaceAll("\\<.*?>","");
             ScriptEngineManager sem = new ScriptEngineManager();
             ScriptEngine js = sem.getEngineByName("JavaScript");
             Object result = null;
