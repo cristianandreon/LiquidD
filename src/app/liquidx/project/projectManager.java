@@ -12,9 +12,12 @@ import com.liquid.db;
 import com.liquid.utility;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -51,6 +54,10 @@ public class projectManager {
                     // selected rows
                     fieldsBean = (ArrayList<Object>) db.get_bean((HttpServletRequest)requestParam, db.getSelection(tbl_wrk, params), "bean", "*", 0);
                 }
+                
+                JSONObject executeSQLSON = com.liquid.event.getJSONObject(params, "data", "executeSQL");
+                boolean bExecuteSQL = "true".equalsIgnoreCase( executeSQLSON.getString("data")) ? true : false;
+                
                 if (fieldsBean != null) {
                     projectId = (String)utility.get(fieldsBean.get(0),"project_id");
 
@@ -84,10 +91,16 @@ public class projectManager {
                                     // Connect
                                     //
                                     Connection conn = null;
-                                    try {
-                                        conn = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
-                                    } catch (Throwable th) {
-                                        String err = "Error:" + th.getLocalizedMessage();
+
+                                    if(bExecuteSQL) {
+                                        Callback.send("Connectiong to " + ip + " ("+engine+") ...");
+                                        try {
+                                            conn = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
+                                        } catch (Throwable th) {
+                                            String err = "Error:" + th.getLocalizedMessage();
+                                            Callback.send("<span style=\"color:red\">Error connectiong to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");
+                                            Thread.sleep(5000);
+                                        }
                                     }
                                     
                                     try {
@@ -107,7 +120,8 @@ public class projectManager {
 
                                             allSQL += newLine;
                                             allSQL += newLine;
-                                            allSQL += "<span style=\"font-size:22px\">"+"Schema <b>"+schema+"</b></span>";
+                                            allSQL += "<span style=\"font-size:22px\">"+"-- Schema <b>"+schema+"</b></span>";
+                                            allSQL += "<span style=\"font-size:15px\">"+" - Machine "+ip+" ("+engine+")</span>";                                            
                                             allSQL += newLine;
 
                                             for(int iF=0; iF<fieldsBean.size(); iF++) {
@@ -131,6 +145,23 @@ public class projectManager {
                                                 String sqlCode = com.liquid.metadata.getAddColumnSQL(engine, database, schema, fieldTable, fieldName, fieldType, fieldSize, fieldNullable, fieldAutoincrement, fieldDefault, fieldRemarks);
 
                                                 // execute sql
+                                                if(bExecuteSQL) {
+                                                    if(conn != null) {
+                                                        Statement stmt = conn.createStatement();
+                                                        boolean res = stmt.execute(sqlCode);
+                                                        if(!res) {
+                                                            ResultSet rs = stmt.getResultSet();
+                                                            if(rs != null) {
+                                                                if(rs.next()) {
+                                                                    String result = rs.getString(1);
+                                                                    if(result != null) {
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
                                                 if(sqlCode != null && !sqlCode.isEmpty()) {
                                                     allSQL += newLine+newLine;
                                                     allSQL += sqlCode.replace("\n", newLine);
@@ -139,7 +170,7 @@ public class projectManager {
                                                 }
 
 
-                                                if(is == 0) { // only at first cycle
+                                                if(is == 0 && im == 0) { // only at first cycle
 
                                                     hibernateHBMFile = nameSpacer.DB2Hibernate(fieldTable) + ".hbm.xml";
                                                     hibernatJavaFile = nameSpacer.DB2Hibernate(fieldTable) + ".java";
@@ -147,9 +178,24 @@ public class projectManager {
                                                     //
                                                     // Generate Hibernate .hbm
                                                     //
+                                                    
+                                                    String sType = "java.lang.String";
+                                                    String sLen = null;
+                                                    
+                                                    if("Timestamp".equalsIgnoreCase(fieldType)) {
+                                                        sType = "java.sql.Timestamp";
+                                                        sLen = "7";
+                                                    } else if("Date".equalsIgnoreCase(fieldType)) {
+                                                        sType = "java.sql.Date";
+                                                        sLen = "7";
+                                                    } else {
+                                                        sLen = fieldSize;
+                                                    }
+                                                    
+                                                            
                                                     String hbmCode = ""
-                                                            +utility.htmlEncode("<property name=\""+hibFieldName+"\" type=\"java.lang.String\">", true)+newLine
-                                                            +utility.htmlEncode("<column name=\""+fieldName+"\" length=\"100\" />", true)+newLine
+                                                            +utility.htmlEncode("<property name=\""+hibFieldName+"\" type=\""+sType+"\">", true)+newLine
+                                                            +utility.htmlEncode("<column name=\""+fieldName+"\" "+(sLen != null ? "length=\""+sLen+"\"" : "")+" />", true)+newLine
                                                             +utility.htmlEncode("</property>", true)+newLine
                                                             +"";
 
@@ -213,8 +259,9 @@ public class projectManager {
                                             conn.close();
                                         }
                                     }                                    
+                                }
 
-                                String package_hib = "com.geisoft."+project.toLowerCase()+"hibernate.conf".replace(".", "/");
+                                String package_hib = "com.geisoft."+project.toLowerCase()+".hibernate.conf".replace(".", "/");
                                 String package_vm = "com.geisoft."+project.toLowerCase()+".model".replace(".", "/");
 
                                 String result = "<div>"
@@ -236,7 +283,6 @@ public class projectManager {
                                         +"</div>"
                                         ;
                                 return (Object) "{ \"client\":\"onExecuted\", \"result\":1, \"data\":\"" + utility.base64Encode(result) + "\" }";
-                                }
                                 
                             } else {
                                 Callback.send("Process of " + projectId + "failed, <span style=\"color:red\">read machine bean error<span>");
@@ -263,6 +309,5 @@ public class projectManager {
             Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
             return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\" }";
         }
-        return null;
     }
 }

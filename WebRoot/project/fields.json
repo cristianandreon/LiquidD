@@ -58,7 +58,7 @@
 	,{ "name":"paste"}
 	,{ "name":"next"}
 	,{ "name":"previous"}
-        ,{ "name":"exec", "img":"gear.png", "size":20, "server":"app.liquidx.project.projectManager.execute", "params":[], "onDownloading":"projectDownloading" }
+        ,{ "name":"exec", "img":"gear.png", "size":20, "server":"app.liquidx.project.projectManager.execute", "params":["executeSQL"], "onDownloading":"projectDownloading" }
         
 ]
 ,"editable":true

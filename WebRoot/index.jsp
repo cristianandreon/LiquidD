@@ -64,9 +64,6 @@
 
 
             function onLoad() {
-                // Start top menu
-                // Liquid.startMenuX(document.getElementById('menuXTop'), '<%=workspace.get_file_content(request, "/liquidMenuJSONs/mainMenuXTop.json", true)%>');
-                
     
                 // Scroll event
                 document.body.addEventListener("scroll", scrollListner);
@@ -340,7 +337,7 @@ public class connection {
             <br/>
             <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:calc(100% - 50px); height:450px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:calc(100% - 50px); height:450px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                     <tr>
                         <td colspan="1" style="height:400px; width:100%; ">
                             <div id="fields" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
@@ -350,6 +347,11 @@ public class connection {
                     <tr>
                         <td colspan="1" style="height:50px;">
                             <div id="outDivProject" style="height:100%; width:100%; border:1px solid lightgray"></div>
+                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <input id="executeSQL" type="checkbox" style="padding:10px; height:30px; width:30px; " checked >Execute SQL</input>
                          </td>
                     </tr>
                 </table>
@@ -364,10 +366,10 @@ public class connection {
             <div class="spacer"></div>
             <br/>
             <br/>
-            <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="projects" style="height:100%; width:100%; height:360px; margin-left:75px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="projects" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
                         </div>
                      </td>
                 </tr>
@@ -382,10 +384,10 @@ public class connection {
             <div class="spacer"></div>
             <br/>
             <br/>
-            <table border=0 cellspacing=0 cellpadding=0 style="width:800px; font-size:9pt; table-layout:auto; ">
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:800px; font-size:9pt; table-layout:auto;  -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="machines" style="height:100%; width:100%; height:360px; margin-left:75px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="machines" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
                         </div>
                      </td>
                 </tr>
@@ -400,10 +402,10 @@ public class connection {
             <div class="spacer"></div>
             <br/>
             <br/>
-            <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="schemas" style="height:100%; width:100%; height:360px; margin-left:75px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="schemas" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
                         </div>
                      </td>
                 </tr>
@@ -418,10 +420,10 @@ public class connection {
             <div class="spacer"></div>
             <br/>
             <br/>
-            <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="project_machine" style="height:100%; width:100%; height:360px; margin-left:75px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="project_machine" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
                         </div>
                      </td>
                 </tr>
@@ -436,10 +438,10 @@ public class connection {
             <div class="spacer"></div>
             <br/>
             <br/>
-            <table border=0 cellspacing=0 cellpadding=0 style="width:600px; font-size:9pt; table-layout:auto; ">
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="machine_schema" style="height:100%; width:100%; height:360px; margin-left:75px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="machine_schema" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
                         </div>
                      </td>
                 </tr>
@@ -473,7 +475,7 @@ public class connection {
             <br/>
             <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:calc(100% - 50px); height:250px; font-size:9pt; table-layout:auto; ">
+                <table border=0 cellspacing=0 cellpadding=0 style="width:calc(100% - 50px); height:250px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
                     <tr>
                         <td colspan="1" style="height:200px; width:100%; ">
                             <div id="importer" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">

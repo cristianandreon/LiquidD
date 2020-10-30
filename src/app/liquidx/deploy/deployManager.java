@@ -477,7 +477,7 @@ public class deployManager {
                                     // Copia file nuova versione
                                     //
                                     if (isReadyForDeply) {
-                                        Callback.send("4&deg;/5 - Ready for deploy, copying new app to application server...");
+                                        Callback.send("4&deg;/5 - Copying new app to application server...");
                                     } else {
                                         Callback.send("4&deg;/5 - Copying new app to application server (without Web App URL check)...");
                                     }
