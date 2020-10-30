@@ -51,6 +51,7 @@ public class deployManager {
     static float minSpeed = 0.0f;
 
     static public Object deploy(Object tbl_wrk, Object params, Object clientData, Object requestParam) throws JSONException, InterruptedException, Exception {
+        String retVal = "{ \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
         try {
             if (params != null) {
                 // {"params":[{"formX":[{"1":"","2":"","3":""}]},{"name":"deploy"}]}
@@ -253,22 +254,22 @@ public class deployManager {
 
                                 // 1° upload
                                 sftpManager sftp = new sftpManager();                               
-                                long retVal = 0;
+                                long lRetVal = 0;
                                 
                                 try {
                                     Object[] result = sftp.upload(host, user, password, glSourceFile, sourceFileIS, copyFolder + "/" + webAppWAR);
-                                    retVal = (long) result[0];
+                                    lRetVal = (long) result[0];
                                     doBackup = (boolean) result[1];
-                                    if (retVal > 0) {
+                                    if (lRetVal > 0) {
                                         if (fileSize != null && !fileSize.isEmpty()) {
-                                            if (Long.parseLong(fileSize) != retVal) {
+                                            if (Long.parseLong(fileSize) != lRetVal) {
                                                 long currentFileSize = sftp.getRemoteFileSize(host, user, password, copyFolder + "/" + webAppWAR);
                                                 if (Long.parseLong(fileSize) == currentFileSize) {
-                                                    retVal = currentFileSize;
+                                                    lRetVal = currentFileSize;
                                                 }
                                             }
 
-                                            if (Long.parseLong(fileSize) == retVal) {
+                                            if (Long.parseLong(fileSize) == lRetVal) {
                                                 uploadFileOk = true;
                                                 // upload descriptor
                                                 InputStream descFileIS = new ByteArrayInputStream(desc_content.getBytes());
@@ -284,17 +285,17 @@ public class deployManager {
                                     java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
                                     String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
                                     Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
-                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\" }";
+                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
                                 } catch (SftpException ex) {
                                     java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
                                     uploadFileError += ex.getLocalizedMessage();
                                     String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
                                     Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
-                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\" }";
+                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
                                 } catch (Exception e) {
                                     String err = "Error:" + e.getLocalizedMessage()+ " Check Network/VPN";
                                     Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
-                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\" }";
+                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
                                 }
 
                                 String recipients[] = notifyEmails != null && !notifyEmails.isEmpty() ? notifyEmails.split(",") : null;
@@ -305,11 +306,11 @@ public class deployManager {
                                     //
                                     Callback.send("1&deg;/5 - Checking uploaded file...");
                                     long currentFileSize = sftp.getRemoteFileSize(host, user, password, copyFolder + "/" + webAppWAR);
-                                    if (currentFileSize != retVal) {
+                                    if (currentFileSize != lRetVal) {
                                         msg = "Error :Failed to upload current war (" + copyFolder + "/" + webAppWAR + ")<br/><br/>... size mismath : " + currentFileSize + "/" + retVal + "";
                                         Callback.send(msg);
                                         Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
-                                        return null;
+                                        return retVal;
                                     }
 
                                     //
@@ -377,7 +378,7 @@ public class deployManager {
                                             msg = "Error :Failed to remove current war (" + deployFolder + "/" + webAppWAR + ")<br/><br/>... maybe file was locked ";
                                             Callback.send(msg);
                                             Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
-                                            return null;
+                                            return retVal;
                                         }
                                     }
 
@@ -409,7 +410,7 @@ public class deployManager {
                                         if (Messagebox.show(message, "LiquidD", Messagebox.QUESTION + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
                                         } else {
                                             // Stop here
-                                            return null;
+                                            return retVal;
                                         }
                                     }
         
@@ -468,7 +469,7 @@ public class deployManager {
                                         if (Messagebox.show(message, "LiquidD", Messagebox.ERROR + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
                                         } else {
                                             // Stop here
-                                            return null;
+                                            return retVal;
                                         }
                                     }
                                 
@@ -575,22 +576,23 @@ public class deployManager {
 
                     } else {
                         Callback.send("Deploy of " + cfgName + "failed, <span style=\"color:red\">read bean error<span>");
-                        return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode("read bean error") + "\" }";
+                        retVal = "{ \"result\":-2, \"error\":\"" + utility.base64Encode("read bean error") + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
                     }
                 } else {
                     Callback.send("Deploy of " + cfgName + " failed, <span style=\"color:red\">primaryKey not found<span>");
-                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode("primaryKey not found") + "\" }";
+                    retVal = "{ \"result\":-1, \"error\":\"" + utility.base64Encode("primaryKey not found") + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
                 }
             } else {
                 Callback.send("Deploy failed, <span style=\"color:red\">params not defined<span>");
-                return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode("primaryKey not found") + "\" }";
+                retVal = "{ \"result\":-1, \"error\":\"" + utility.base64Encode("primaryKey not found") + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
             }
         } catch (Throwable th) {
             String err = "Error:" + th.getLocalizedMessage();
             Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
-            return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\" }";
+            retVal = "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
         }
-        return null;
+        
+        return (Object)retVal;
     }
 
     public static String solve_variable_field(String expr, String user, String webApp) throws Exception {

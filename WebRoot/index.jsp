@@ -154,7 +154,7 @@
         
         <div class="spacer"></div>
         <center>
-        <div class="title0">LiquidD : Developer utilities</div>
+        <div class="title0  reflect">LiquidD : Developer utilities</div>
         </center>
         <br/>
         <br/>        
@@ -203,29 +203,31 @@
             <br/>
             <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:1024px; height:auto; font-size:9pt; table-layout:auto; ">
-                    <tr>
-                        <td colspan="1">
-                            <div id="deploysCfg" style="height:560px; width:100%; background-color: rgba(213, 225, 232, 0.45">
-                            </div>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="1">
-                            <div id="outDiv" style="height:50px; width:100%; border:1px solid lightgray"></div>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="1">
-                            <input id="doBackup" type="checkbox" style="padding:10px; height:30px; width:30px; " checked >Do Backup</input>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="1">
-                            <input id="askConfirmation" type="checkbox" style="padding:10px; height:30px; width:30px; " >Ask confirmation before deploy</input>
-                         </td>
-                    </tr>
-                </table>
+                <div style="perspective:1500px;-webkit-perspective: 1500px">
+                    <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:1024px; height:auto; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
+                        <tr>
+                            <td colspan="1">
+                                <div id="deploysCfg" style="height:560px; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                                </div>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1">
+                                <div id="outDiv" style="height:50px; width:100%; border-bottom:1px solid lightgray"></div>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1">
+                                <input id="doBackup" type="checkbox" style="margin:10px; height:30px; width:30px; " checked >Do Backup</input>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1">
+                                <input id="askConfirmation" type="checkbox" style="margin:10px; height:30px; width:30px; " >Ask confirmation before deploy</input>
+                             </td>
+                        </tr>
+                    </table>
+                </div>
             </center>
             <br/>
             <br/>
@@ -337,24 +339,26 @@ public class connection {
             <br/>
             <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:calc(100% - 50px); height:450px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
-                    <tr>
-                        <td colspan="1" style="height:400px; width:100%; ">
-                            <div id="fields" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
-                            </div>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="1" style="height:50px;">
-                            <div id="outDivProject" style="height:100%; width:100%; border:1px solid lightgray"></div>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="1">
-                            <input id="executeSQL" type="checkbox" style="padding:10px; height:30px; width:30px; " checked >Execute SQL</input>
-                         </td>
-                    </tr>
-                </table>
+                <div style="perspective:1500px;-webkit-perspective: 1500px">
+                    <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:calc(100% - 50px); height:450px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
+                        <tr>
+                            <td colspan="1" style="height:400px; width:100%; ">
+                                <div id="fields" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                                </div>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" style="height:50px;">
+                                <div id="outDivProject" style="height:100%; width:100%; border:1px solid lightgray"></div>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1">
+                                <input id="executeSQL" type="checkbox" style="padding:10px; height:30px; width:30px; " checked >Execute SQL</input>
+                             </td>
+                        </tr>
+                    </table>
+                </div>
             </center>
             <br/>
             <div id="htmlResult" style="display:none; width:calc(100% - 50px); border:1px solid lightgray"></div>
@@ -475,19 +479,21 @@ public class connection {
             <br/>
             <br/>
             <center>
-                <table border=0 cellspacing=0 cellpadding=0 style="width:calc(100% - 50px); height:250px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
-                    <tr>
-                        <td colspan="1" style="height:200px; width:100%; ">
-                            <div id="importer" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
-                            </div>
-                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="1" style="height:50px;">
-                            <div id="outDivimporter" style="height:100%; width:100%; border:1px solid lightgray"></div>
-                         </td>
-                    </tr>
-                </table>
+                <div style="perspective:1500px;-webkit-perspective: 1500px">
+                    <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:calc(100% - 50px); height:250px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
+                        <tr>
+                            <td colspan="1" style="height:200px; width:100%; ">
+                                <div id="importer" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                                </div>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" style="height:50px;">
+                                <div id="outDivimporter" style="height:100%; width:100%; border:1px solid lightgray"></div>
+                             </td>
+                        </tr>
+                    </table>
+                </div>
             </center>
             <br/>
          <br/>

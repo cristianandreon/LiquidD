@@ -287,3 +287,91 @@ path:hover {
 
 
 
+
+ .css_transform { 
+     perspective: 200px;
+     -webkit-perspective: 200px;
+
+     -webkit-transform: rotateX(4deg) rotateY(3deg);
+        -moz-transform: rotateX(4deg) rotateY(3deg);
+             transform: rotateX(4deg) rotateY(3deg);
+
+     -webkit-transform-origin: 0% 50% 0px;
+        -moz-transform-origin: 0% 50% 0px;
+             transform-origin: 0% 50% 0px;
+             
+     -webkit-animation: T-animation 5s ease-in-out infinite alternate;
+        -moz-animation: T-animation 5s ease-in-out infinite alternate;
+             animation: T-animation 5s ease-in-out infinite alternate;
+             
+    transition: width 0.5s, height 1s, transform 0.5s;
+ } 
+
+
+
+  
+ .css_transform2 { 
+     -webkit-transform: rotateX(-10deg) rotateY(5deg);
+        -moz-transform: rotateX(-10deg) rotateY(5deg);
+             transform: rotateX(-10deg) rotateY(5deg);
+
+     -webkit-transform-origin: 100% 50% 0px;
+        -moz-transform-origin: 100% 50% 0px;
+             transform-origin: 100% 50% 0px;
+             
+    transition: width 1.9s, height 1.9s, transform 1.9s;
+
+ } 
+
+   @-webkit-keyframes T-animation {
+      0% {
+        -webkit-transform: rotateX(-6deg) rotateY(3deg);
+      }
+      100% {
+        -webkit-transform: rotateX(-6deg) rotateY(3deg);
+      }
+  }
+  @-moz-keyframes T-animation {
+      0% {
+        -moz-transform: rotateX(-6deg) rotateY(3deg);
+      }
+      100% {
+        -moz-transform: rotateX(-10deg) rotateY(5deg);
+      }
+  }
+  @keyframes T-animation {
+      0% {
+        transform: rotateX(-6deg) rotateY(3deg);
+      }
+      100% {
+        transform: rotateX(-10deg) rotateY(5deg);
+      }
+  }
+  
+  
+ 
+  .css_transform2:hover { 
+     -webkit-transform: rotateX(0deg) rotateY(0deg);
+        -moz-transform: rotateX(0deg) rotateY(0deg);
+             transform: rotateX(0deg) rotateY(0deg);
+
+     -webkit-transform-origin: 100% 50% 0px;
+        -moz-transform-origin: 100% 50% 0px;
+             transform-origin: 100% 50% 0px;
+             
+     -webkit-animation: none;
+        -moz-animation: none;
+             animation: none;
+             
+    transition: width 0.2s, height 0.2s, transform 0.2s;
+ } 
+  
+  .reflect {
+    -webkit-box-reflect: below -10px -webkit-gradient(linear, left top, left bottom,  from(transparent), color-stop(50%, transparent), to(rgba(255, 255, 255, 0.26)));
+
+    /* position: absolute; */
+    /* font-size: 50px; */
+    /* color: #000000; */
+    /* font-weight:bold; */
+    /* font-family: Arial, Helvetica, sans-serif; */
+}
