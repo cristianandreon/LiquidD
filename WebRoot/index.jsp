@@ -318,7 +318,6 @@ public class connection {
             <br/>
             <br/>
             <ul> 
-                    <li>Show waiters</li>
                     <li>Upload resume</li>
                     <li>Notifications</li>
             </ul>
