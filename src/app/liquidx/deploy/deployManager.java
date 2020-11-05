@@ -104,6 +104,16 @@ public class deployManager {
                         int checkWaitTime = (int) utility.get(deplpoyBean, "checkWaitTime");
                         String notifyEmails = (String) utility.get(deplpoyBean, "notifyEmails");
 
+                        
+                        // format the mthl fields
+                        sourceFile = utility.decodeHtml(sourceFile);
+                        deployFolder = utility.decodeHtml(deployFolder);
+                        copyFolder = utility.decodeHtml(copyFolder);
+                        backupFolder = utility.decodeHtml(backupFolder);
+                        webAppWAR = utility.decodeHtml(webAppWAR);
+                        webAppURL = utility.decodeHtml(webAppURL);
+                        
+                        
                         // Nome del WAR
                         webAppWAR = webAppWAR != null && !webAppWAR.isEmpty() ? webAppWAR : fileName;
 
@@ -126,7 +136,7 @@ public class deployManager {
                         InputStream sourceFileIS = null;
 
                         if (sourceFile != null && !sourceFile.isEmpty()) {
-                            // direct acess local file
+                            
                             File f = new File(sourceFile);
                             if (f != null) {
                                 sourceFileIS = new FileInputStream(new File(sourceFile));
