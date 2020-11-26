@@ -14,7 +14,7 @@ import com.liquid.db;
 public class connection {
     
     static String driver = "postgres";
-    static String host = "cnconline";
+    static String host = "";
 
     static String database = "LiquidX";
     static String user = "liquid";

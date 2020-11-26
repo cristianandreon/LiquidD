@@ -479,9 +479,9 @@ public class connection {
             <br/>
             <center>
                 <div style="perspective:1500px;-webkit-perspective: 1500px">
-                    <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:calc(100% - 50px); height:250px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
+                    <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:calc(100% - 50px); height:500px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
                         <tr>
-                            <td colspan="1" style="height:200px; width:100%; ">
+                            <td colspan="1" style="height:450px; width:100%; ">
                                 <div id="importer" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
                                 </div>
                              </td>
@@ -495,7 +495,7 @@ public class connection {
                 </div>
             </center>
             <br/>
-         <br/>
+            <br/>
             <br/>
             <br/>            
             <br/>
