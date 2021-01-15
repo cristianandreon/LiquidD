@@ -111,7 +111,13 @@
                 Liquid.startPopup('machine_schema', '<%=workspace.get_file_content(request, "/project/machine_schema.json")%>');
                 Liquid.startPopup('fields', '<%=workspace.get_file_content(request, "/project/fields.json")%>');
             }
-            
+
+            function startSqlExecuter() {
+                Liquid.startPopup('sql_machines', '<%=workspace.get_file_content(request, "/sqlExecuter/sql_machines.json")%>');
+                Liquid.startPopup('sql_schemas', '<%=workspace.get_file_content(request, "/sqlExecuter/sql_schemas.json")%>');
+                Liquid.startPopup('sql_machine_schema', '<%=workspace.get_file_content(request, "/sqlExecuter/sql_machine_schema.json")%>');
+            }
+
             function startImporter() {
                 Liquid.startPopup('importer', '<%=workspace.get_file_content(request, "/importer/importer.json")%>');
             }
@@ -130,6 +136,9 @@
             function importerDownloading(liquid, data, clientData, parameter, event) {
                 document.getElementById("outDivimporter").innerHTML = ""+data;
             }
+            function sqlExecuterDownloading(liquid, data, clientData, parameter, event) {
+                document.getElementById("outDivSqlexecuter").innerHTML = ""+data;
+            }
 
             function onExecuted(liquid, param) {
                 if(param) {
@@ -144,11 +153,15 @@
                     }
                 }
             }
-
+            
+            function execSQL(liquid, param) {
+                Liquid.onButtonFromString(this, "{\"server\":\"app.liquidx.sql.sqlExecuter.execute\",\"name\":\"exec\",\"client\":\"\",\"params\":[\"formSQL\"],\"onDownloading\":\"sqlExecuterDownloading\"}");
+            }
+                
         </script>
     </head>
     
-    <body onload="onLoad(); startDeploysCfg(); startProjectHelper(); startImporter();">
+    <body onload="onLoad(); startDeploysCfg(); startProjectHelper(); startImporter(); startSqlExecuter();">
         <div id="bg" style="width:100%; height:100%;"><img src="./images/kupka3.jpg" style="width:100%; height:100%; -webkit-filter:opacity(7);opacity:0.07; -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=7)'; filter: alpha(opacity=7); -khtml-opacity: 0.07;"/></div>
 
         
@@ -163,6 +176,7 @@
                 <li id="deployFrameTab" class="liquidTabSel"><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Deployer</a></li>
                 <li id="projectFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Project Helper</a></li>
                 <li id="importerFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Importer</a></li>
+                <li id="sqlExecuterFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">SQL Exec</a></li>
             </ul>
         </div>                        
 
@@ -171,24 +185,39 @@
                 if(obj.parentNode.id === 'deployFrameTab') {
                     jQ1124('#projectFrame').slideUp("fast");
                     jQ1124('#importerFrame').slideUp("fast");
+                    jQ1124('#sqlExecuterFrame').slideUp("fast");
                     jQ1124('#deployFrame').slideDown("normal");
                     document.getElementById('projectFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "";
+                    document.getElementById('sqlExecuterFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "liquidTabSel";
                 } else if(obj.parentNode.id === 'projectFrameTab') {
                     jQ1124('#deployFrame').slideUp("fast");
                     jQ1124('#importerFrame').slideUp("fast");
+                    jQ1124('#sqlExecuterFrame').slideUp("fast");
                     jQ1124('#projectFrame').slideDown("normal");
                     document.getElementById('projectFrameTab').className = "liquidTabSel";
                     document.getElementById('importerFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "";
+                    document.getElementById('sqlExecuterFrameTab').className = "";
                 } else if(obj.parentNode.id === 'importerFrameTab') {
                     jQ1124('#projectFrame').slideUp("fast");
                     jQ1124('#deployFrame').slideUp("fast");
+                    jQ1124('#sqlExecuterFrame').slideUp("fast");
                     jQ1124('#importerFrame').slideDown( "normal", function () { Liquid.onVisible('importerFrame') } );
                     document.getElementById('projectFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "liquidTabSel";
                     document.getElementById('deployFrameTab').className = "";
+                    document.getElementById('sqlExecuterFrameTab').className = "";
+                } else if(obj.parentNode.id === 'sqlExecuterFrameTab') {
+                    jQ1124('#projectFrame').slideUp("fast");
+                    jQ1124('#deployFrame').slideUp("fast");
+                    jQ1124('#importerFrame').slideUp("fast");
+                    jQ1124('#sqlExecuterFrame').slideDown( "normal", function () { Liquid.onVisible('sqlExecuterFrameTab') } );
+                    document.getElementById('projectFrameTab').className = "";
+                    document.getElementById('importerFrameTab').className = "";
+                    document.getElementById('deployFrameTab').className = "";
+                    document.getElementById('sqlExecuterFrameTab').className = "liquidTabSel";
                 }                    
             }
         </script>
@@ -503,7 +532,115 @@ public class connection {
             <br/>
         </div>
         
-        
+
+
+        <!-- -------------- -->
+        <!-- SQL EXECUTER -->
+        <!-- -------------- -->
+        <div id="sqlExecuterFrame" style="display:none" class="demoContent">
+            <br/>
+            <br/>
+            <br/>
+            <div class="title1">SQL executer - <span style="font-size:80%">execute sql in multiple target</span></div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <center>
+                <div style="perspective:1500px;-webkit-perspective: 1500px">
+                    <form id="formSQL" onsubmit="">
+                        <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:calc(100% - 50px); height:450px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="height:50px;">
+                                    <textarea id="sql" type="" style="padding:10px; height:300px; width:100%; " ></textarea>
+                                 </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    <input id="confirm" type="checkbox" style="padding:10px; height:30px; width:30px; " checked >Confirmation</input>
+                                 </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    <button 
+                                        style="padding:10px; height:50px; width:300px; "
+                                        onclick="execSQL(); return false;"
+                                        >Execute</button>
+                                 </td>
+                            </tr>
+                        <tr>
+                            <td colspan="1" style="height:50px;">
+                                <div id="outDivSqlexecuter" style="height:100%; width:100%; border:1px solid lightgray"></div>
+                             </td>
+                             
+                        </tr>
+                        </table>
+                    </form>
+                </div>
+            </center>
+            <br/>
+            <div id="htmlResult" style="display:none; width:calc(100% - 50px); border:1px solid lightgray"></div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div class="title1">Machines</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:800px; font-size:9pt; table-layout:auto;  -webkit-box-shadow: 4px 4px 8px 1px #636363;">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="sql_machines" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        </div>
+                     </td>
+                </tr>
+            </table>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+            <div class="title1">Schemas</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="sql_schemas" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        </div>
+                     </td>
+                </tr>
+            </table>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+            <div class="title1">Machine's schemas</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="sql_machine_schema" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        </div>
+                     </td>
+                </tr>
+            </table>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+        </div>
+                
         
     </body>
 </html>
