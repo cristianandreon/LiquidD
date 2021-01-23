@@ -95,7 +95,9 @@ public class projectManager {
                                     if(bExecuteSQL) {
                                         Callback.send("Connectiong to " + ip + " ("+engine+") ...");
                                         try {
-                                            conn = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
+                                            Object [] connResult = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
+                                            conn = (Connection)connResult[0];
+                                            String connError = (String)connResult[1];
                                         } catch (Throwable th) {
                                             String err = "Error:" + th.getLocalizedMessage();
                                             Callback.send("<span style=\"color:red\">Error connectiong to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");

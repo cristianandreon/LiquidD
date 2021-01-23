@@ -10,32 +10,39 @@
     ,{"size":256,"nullable":true,"name":"user","typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"visible":false,"size":256,"nullable":true,"name":"password","typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"size":512,"nullable":true,"name":"sourceFile","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
-    ,{"size":512,"nullable":true,"name":"deployFolder","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
-    ,{"size":512,"nullable":true,"name":"copyFolder","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
-    ,{"size":512,"nullable":true,"name":"backupFolder","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
-    ,{"size":256,"nullable":true,"name":"webAppWAR","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
-    ,{"size":256,"nullable":true,"name":"webAppURL","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":4096,"nullable":true,"name":"deployFolder","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":4096,"nullable":true,"name":"copyFolder","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":4096,"nullable":true,"name":"logFolder","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":512,"nullable":true,"name":"logFile","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":4096,"nullable":true,"name":"backupFolder","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":4096,"nullable":true,"name":"webAppWAR","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":4096,"nullable":true,"name":"webAppURL","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
     ,{"size":10,"nullable":true,"name":"undeployWaitTime","typeName":"int4","digits":0,"type":"4"}
     ,{"size":10,"nullable":true,"name":"checkWaitTime","typeName":"int4","digits":0,"type":"4"}
     ,{"size":2147483647,"nullable":true,"name":"notifyEmails","typeName":"text","digits":0,"type":"12"}
+    ,{"size":256,"nullable":true,"name":"protocol","typeName":"varchar","digits":0,"type":"12","required":true, "values":["sftp","scp"]}
+    
 ]
 ,"grids":[
-        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":5,"nCols":3
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":6,"nCols":3
             ,"columns":[
                 {"name":"id","tooltip":"","label":"id","row":0,"col":0}
                 ,{"name":"name","tooltip":"Configuration name","label":"name","row":0,"col":1}
                 ,{"name":"host","tooltip":"Ip of host where deploy","label":"host","row":0,"col":2}
                 ,{"name":"user","tooltip":"User name for login sftp/ssh","label":"user","row":1,"col":0}
                 ,{"name":"password","tooltip":"password for login sftp/ssh","label":"password","row":1,"col":1}
-                ,{"name":"deployFolder","tooltip":"Where deploty the .war file","label":"deployFolder","row":1,"col":2 }
-                ,{"name":"copyFolder","tooltip":"Where to copy (upload) the .war to deploy","label":"copyFolder","row":2,"col":0 }
-                ,{"name":"backupFolder","tooltip":"Where to save current reunning .war file","label":"backupFolder","row":2,"col":1 }
-                ,{"name":"undeployWaitTime","tooltip":"How many milliseconds to wait before install new .war file","label":"undeployWaitTime","row":2,"col":2}
-                ,{"name":"checkWaitTime","tooltip":"How many milliseconds to wait before check new installed .war file","label":"checkWaitTime","row":3,"col":0}
-                ,{"name":"notifyEmails","tooltip":"Email address of notified users","label":"notifyEmails","row":3,"col":1}
+                ,{"name":"deployFolder","tooltip":"Where deploty the .war file","label":"deploy Folder","row":1,"col":2 }
+                ,{"name":"copyFolder","tooltip":"Where to copy (upload) the .war to deploy","label":"copy Folder","row":2,"col":0 }
+                ,{"name":"backupFolder","tooltip":"Where to save current reunning .war file","label":"backup Folder","row":2,"col":1 }
+                ,{"name":"undeployWaitTime","tooltip":"How many milliseconds to wait before install new .war file","label":"undeploy Wait Time","row":2,"col":2}
+                ,{"name":"checkWaitTime","tooltip":"How many milliseconds to wait before check new installed .war file","label":"check Wait Time","row":3,"col":0}
+                ,{"name":"notifyEmails","tooltip":"Email address of notified users","label":"notify Emails","row":3,"col":1}
                 ,{"name":"webAppWAR","tooltip":"The war file name","label":"webAppWAR","row":3,"col":2}
-                ,{"name":"webAppURL","tooltip":"The URL of the app deployed","label":"webAppURL","row":4,"col":0}
-                ,{"name":"sourceFile","tooltip":"Define here local file to deploy","label":"sourceFile","row":4,"col":1}
+                ,{"name":"webAppURL","tooltip":"The URL of the app deployed","label":"web App URL","row":4,"col":0}
+                ,{"name":"sourceFile","tooltip":"Define here local file to deploy","label":"source File","row":4,"col":1}
+                ,{"name":"logFolder","tooltip":"Where to get the log","label":"log Folder","row":5,"col":0 }
+                ,{"name":"logFile","tooltip":"the log file name","label":"log File","row":5,"col":1 }
+                ,{"name":"protocol","tooltip":"upload/download protocol","label":"upload/download protocol","row":5,"col":2 }
             ]
         }
     ]

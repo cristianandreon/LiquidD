@@ -15,9 +15,72 @@
 
 %><%
 
+    String driver = "postgres";
+    String host = "database.liquidd.com";
+    String database = "LiquidX";
+    String user = "liquid";
+    String password = "liquid";
+    String port = "";
+    String service = "";
+
     String hostName = InetAddress.getLocalHost().getHostName();
+    String setupMessage = "nothing went wrong";
+    
+    String overloadDriver = request.getParameter("driver");
+    String overloadHost = request.getParameter("host");
+    String overloadPort = request.getParameter("port");
+    String overloadUser = request.getParameter("user");
+    String overloadPassword = request.getParameter("password");
+    String overloadDatabase = request.getParameter("database");
+    String overloadService = request.getParameter("service");
+    
+
+    if(overloadDriver != null && !overloadDriver.isEmpty()) {
+        driver = overloadDriver;
+    }
+    if(overloadHost != null && !overloadHost.isEmpty()) {
+        host = overloadHost;
+    }
+    if(overloadUser != null && !overloadUser.isEmpty()) {
+        user = overloadUser;
+    }
+    if(overloadPassword != null && !overloadPassword.isEmpty()) {
+        password = overloadPassword;
+    }
+    if(overloadDatabase != null && !overloadDatabase.isEmpty()) {
+        database = overloadDatabase;
+    }
+    if(overloadPort != null && !overloadPort.isEmpty()) {
+        port = overloadPort;
+    }
+    if(overloadService != null && !overloadService.isEmpty()) {
+        service = overloadService;
+    }
+
+ 
+    if(host != null && !host.isEmpty()) {
+        try {
+            InetAddress address = InetAddress.getByName(host);
+            boolean reachable = address.isReachable(3000);
+            if(!reachable) {
+                setupMessage = "host "+host+" : cannot reach";
+                host = "localhost";
+            }
+        } catch (Exception e){
+            setupMessage = "error in host "+host+" : "+e.getMessage();
+            host = "localhost";
+        }
+    }
+    
+    try {
+        com.liquid.connection.resetLiquidDBConnection( );
+        com.liquid.connection.addLiquidDBConnection( driver, host, port, database, user, password, service );
+    } catch (Exception e){
+        e.printStackTrace();
+    }
 
 %>
+
 <%-- 
     Document   : index
     Created on : Mar 20, 2020, 12:19:08 PM
@@ -100,6 +163,7 @@
 
             function startDeploysCfg() {
                 Liquid.startControl('deploysCfg', '<%=workspace.get_file_content(request, "/deploy/deploysCfg.json")%>');
+                Liquid.startControl('getLogsCfg', '<%=workspace.get_file_content(request, "/getLog/getLogsCfg.json")%>');
                 Liquid.projectMode = true;
             }
 
@@ -130,6 +194,9 @@
             function deployDownloading(liquid, data, clientData, parameter, event) {
                 document.getElementById("outDiv").innerHTML = ""+data;
             }                        
+            function getLogDownloading(liquid, data, clientData, parameter, event) {
+                document.getElementById("outDivGetLog").innerHTML = ""+data;
+            }                        
             function projectDownloading(liquid, data, clientData, parameter, event) {
                 document.getElementById("outDivProject").innerHTML = ""+data;
             }
@@ -157,6 +224,12 @@
             function execSQL(liquid, param) {
                 Liquid.onButtonFromString(this, "{\"server\":\"app.liquidx.sql.sqlExecuter.execute\",\"name\":\"exec\",\"client\":\"\",\"params\":[\"formSQL\"],\"onDownloading\":\"sqlExecuterDownloading\"}");
             }
+            
+            function showLog(logFileName, webApp) {
+                if(logFileName) {
+                    window.open("file:///"+logFileName, webApp);
+                }
+            }
                 
         </script>
     </head>
@@ -173,7 +246,9 @@
         <br/>        
         <div class="liquidForeignTables" style="border-bottom: 1px solid lightgrey" class="demoContent">
             <ul>
-                <li id="deployFrameTab" class="liquidTabSel"><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Deployer</a></li>
+                <li id="welcomeFrameTab" class="liquidTabSel"><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Welcome</a></li>
+                <li id="deployFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Deployer</a></li>
+                <li id="logFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Web App Log</a></li>
                 <li id="projectFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Project Helper</a></li>
                 <li id="importerFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">Importer</a></li>
                 <li id="sqlExecuterFrameTab" class=""><a href="javascript:void(0)" class="liquidTab liquidForeignTableEnabled" onClick="onMainTab(this)">SQL Exec</a></li>
@@ -182,48 +257,187 @@
 
         <script>
             function onMainTab(obj) {
-                if(obj.parentNode.id === 'deployFrameTab') {
+                if(obj.parentNode.id === 'welcomeFrameTab') {
+                    jQ1124('#deployFrame').slideUp("fast");
+                    jQ1124('#logFrame').slideUp("fast");
+                    jQ1124('#projectFrame').slideUp("fast");
+                    jQ1124('#importerFrame').slideUp("fast");
+                    jQ1124('#sqlExecuterFrame').slideUp("fast");
+                    jQ1124('#welcomeFrame').slideDown("normal");
+                    document.getElementById('welcomeFrameTab').className = "liquidTabSel";
+                    document.getElementById('logFrameTab').className = "";
+                    document.getElementById('projectFrameTab').className = "";
+                    document.getElementById('importerFrameTab').className = "";
+                    document.getElementById('sqlExecuterFrameTab').className = "";
+                    document.getElementById('deployFrameTab').className = "";
+                } else if(obj.parentNode.id === 'deployFrameTab') {
+                    jQ1124('#welcomeFrame').slideUp("fast");
+                    jQ1124('#logFrame').slideUp("fast");
                     jQ1124('#projectFrame').slideUp("fast");
                     jQ1124('#importerFrame').slideUp("fast");
                     jQ1124('#sqlExecuterFrame').slideUp("fast");
                     jQ1124('#deployFrame').slideDown("normal");
+                    document.getElementById('welcomeFrameTab').className = "";
+                    document.getElementById('logFrameTab').className = "";
                     document.getElementById('projectFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "liquidTabSel";
                 } else if(obj.parentNode.id === 'projectFrameTab') {
+                    jQ1124('#welcomeFrame').slideUp("fast");
+                    jQ1124('#logFrame').slideUp("fast");
                     jQ1124('#deployFrame').slideUp("fast");
                     jQ1124('#importerFrame').slideUp("fast");
                     jQ1124('#sqlExecuterFrame').slideUp("fast");
                     jQ1124('#projectFrame').slideDown("normal");
+                    document.getElementById('welcomeFrameTab').className = "";
                     document.getElementById('projectFrameTab').className = "liquidTabSel";
+                    document.getElementById('logFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "";
                 } else if(obj.parentNode.id === 'importerFrameTab') {
+                    jQ1124('#welcomeFrame').slideUp("fast");
+                    jQ1124('#logFrame').slideUp("fast");
                     jQ1124('#projectFrame').slideUp("fast");
                     jQ1124('#deployFrame').slideUp("fast");
                     jQ1124('#sqlExecuterFrame').slideUp("fast");
                     jQ1124('#importerFrame').slideDown( "normal", function () { Liquid.onVisible('importerFrame') } );
+                    document.getElementById('welcomeFrameTab').className = "";
                     document.getElementById('projectFrameTab').className = "";
+                    document.getElementById('logFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "liquidTabSel";
                     document.getElementById('deployFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "";
                 } else if(obj.parentNode.id === 'sqlExecuterFrameTab') {
+                    jQ1124('#welcomeFrame').slideUp("fast");
+                    jQ1124('#logFrame').slideUp("fast");
                     jQ1124('#projectFrame').slideUp("fast");
                     jQ1124('#deployFrame').slideUp("fast");
                     jQ1124('#importerFrame').slideUp("fast");
                     jQ1124('#sqlExecuterFrame').slideDown( "normal", function () { Liquid.onVisible('sqlExecuterFrameTab') } );
+                    document.getElementById('welcomeFrameTab').className = "";
                     document.getElementById('projectFrameTab').className = "";
+                    document.getElementById('logFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "liquidTabSel";
+                } else if(obj.parentNode.id === 'logFrameTab') {
+                    jQ1124('#welcomeFrame').slideUp("fast");
+                    jQ1124('#sqlExecuterFrame').slideUp("fast");
+                    jQ1124('#projectFrame').slideUp("fast");
+                    jQ1124('#deployFrame').slideUp("fast");
+                    jQ1124('#importerFrame').slideUp("fast");
+                    jQ1124('#logFrame').slideDown( "normal", function () { Liquid.onVisible('logFrame') } );
+                    document.getElementById('welcomeFrameTab').className = "";
+                    document.getElementById('projectFrameTab').className = "";
+                    document.getElementById('importerFrameTab').className = "";
+                    document.getElementById('deployFrameTab').className = "";
+                    document.getElementById('sqlExecuterFrameTab').className = "";
+                    document.getElementById('logFrameTab').className = "liquidTabSel";
                 }                    
             }
         </script>
+        
+
+
+        <!-- WELCOME -->
+        <div id="welcomeFrame" style="display:block" class="demoContent">
+            <br/>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <div class="title1">LiquidD is a Web Application for the Developers .. by LiquidD you can : </div>
+            <div class="spacer"></div>
+            <br/>
+            <div class="title1"></div>
+            <br/>
+            <br/>
+            <ul> 
+                <li>Deploy your web application</li>
+                <li>Easily download applitations server log</li>
+                <li>add fields in multiple database</li>
+                <li>Copy cascade rows from a data source to any other</li>
+                <li>Execute SQL command in multiple targets</li>
+            </ul>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <div class="title1">Geting Started :</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>            
+            <br/>            
+            Startup default parameters :</br></br>
+            <div class="code1" id="codeSample1">
+                <pre class="code">
+                    <code class="java">
+    driver = <b>"postgres";</b>
+    host = <b>"database.liquidd.com";</b>
+    database = <b>"LiquidX";</b>
+    user = <b>"liquid";</b>
+    password = <b>"liquid";</b>
+    service = <b>"orcl";</b>
+                    </code>
+                </pre>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            Current parameters are so defined :</br></br>
+            <div class="code1" id="codeSample1">
+                <pre class="code">
+                    <code class="java">
+    driver = <b>"<%=driver %>";</b>
+    host = <b>"<%=host %>";</b>
+    port = <b>"<%=port %>";</b>
+    database = <b>"<%=database %>";</b>
+    user = <b>"<%=user %>";</b>
+    service = <b>"<%=service %>";</b>
+    <br/>
+    note : <b><%=setupMessage%></b>
+                    </code>
+                </pre>
+            </div>
+            <br/>
+            <br/>
+            These parameters define the LiquidD configuration, that is store in a database (Oracle/PostgreSQL/MySQL/SQLServer)
+            <br/>
+            <br/>
+            Please note : if the host "database.liquidd.com" wasn't reachable it'll be replaced by "localhost"
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            You can define the host "database.liquidd.com" by setting it inside your host file
+            <br/>
+            <br/>
+            If you want to replace any other parameters you can pass it in the url .. ex :
+            <br/>
+            <br/>
+            <div class="code1" id="codeSample1">
+                <pre class="code">
+                    <code class="html">
+                        localhost:8080/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1532&database=myLiquidDatabase&user=myLiquidUser&password=myLiquidPassword&service=myService</b>
+                    </code>
+                </pre>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+        </div>   
+
+        
 
         <!-- DEPLOY MANAGER -->
-        <div id="deployFrame" style="display:block" class="demoContent">
+        <div id="deployFrame" style="display:none" class="demoContent">
             <br/>
             <br/>
             <br/>
@@ -318,21 +532,9 @@
             LiquidD need a database connection in order to store persistent data (the deploy's configuration detail)
             <br/>
             <br/>
-            Under the package <b>app.liquid.dbx</b> in the <b>public class connection </b> you should define :
+            Please see in the <a href="javascript:void(0)" onlick='document.getElementById("welcomeFrameTab").children[0].click();'>Welcome tab</a> how to do that ...
             <br/>
             <br/>
-            <div class="code1" id="codeSample1">
-                <pre class="code">
-                    <code class="java">
-public class connection {
-&#x9;&#x9;&#x9;   static String driver = &#x22;postgres&#x22; // or &#x22;oracle&#x22; or &#x22;mysql&#x22; or &#x22;sqlserver&#x22;;
-&#x9;&#x9;&#x9;   static String host = &#x22;your host name&#x22;;
-&#x9;&#x9;&#x9;   static String database = &#x22;your database&#x22;;
-&#x9;&#x9;&#x9;   static String user = &#x22;your user name&#x22;;
-&#x9;&#x9;&#x9;   static String password = &#x22;your password&#x22;;
-                    </code>
-                </pre>
-            </div>
             <br/>
             N.B.: You don't need to create any tables inside your database/schema, Liquid create its for you            
             <br/>
@@ -353,6 +555,70 @@ public class connection {
         </div>
 
 
+        
+        
+        <!-- GET LOGs MANAGER -->
+        <div id="logFrame" style="display:none" class="demoContent">
+            <br/>
+            <br/>
+            <br/>
+            <div class="title1">Web App Log downloader</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <center>
+                <div style="perspective:1500px;-webkit-perspective: 1500px">
+                    <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:1024px; height:auto; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
+                        <tr>
+                            <td colspan="1">
+                                <div id="getLogsCfg" style="height:560px; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                                </div>
+                             </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1">
+                                <div id="outDivGetLog" style="height:50px; width:100%; border-bottom:1px solid lightgray"></div>
+                             </td>
+                        </tr>
+                    </table>
+                </div>
+            </center>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>            
+            <br/>
+            <div class="title1">How to get a log :</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>            
+            <br/>            
+            simply double click in the row ... </br></br>
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+            Allowing the browser to open local file for mac:
+
+                <dir>open -a Google\ Chrome --args --disable-web-security -–allow-file-access-from-files</dir>
+
+            <br/>
+            <br/>
+            .. and for windows:
+
+                <dir>"C:\PathTo\Chrome.exe" –allow-file-access-from-files -disable-web-security</dir>
+            <br/>
+            <br/>
+            <br/>
+        </div>
+        
 
 
         <!-- -------------- -->

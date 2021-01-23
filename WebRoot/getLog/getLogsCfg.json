@@ -1,0 +1,48 @@
+{ 
+ "database":"LiquidX"
+,"schema":"liquidx"
+,"table":"deploysCfg"
+,"primaryKey":"id"
+,"columns":[
+     { "visible":false,"nullable":false,"typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"deploysCfg_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"name":"id","width":"50","digits":0}
+    ,{"size":256,"nullable":true,"name":"name","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":256,"nullable":true,"name":"host","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"visible":false,"size":256,"nullable":true,"name":"user","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"visible":false,"size":256,"nullable":true,"name":"password","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"size":4096,"nullable":true,"name":"logFolder","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":512,"nullable":true,"name":"logFile","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":4096,"nullable":true,"name":"webAppWAR","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":256,"nullable":true,"name":"protocol","typeName":"varchar","digits":0,"type":"12","required":true, "values":["sftp","scp"]}
+]
+,"grids":[
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":6,"nCols":1
+            ,"columns":[
+                {"name":"id","tooltip":"","label":"id","row":0,"col":0}
+                ,{"name":"name","tooltip":"Configuration name","label":"name","row":1,"col":0}
+                ,{"name":"host","tooltip":"Ip of host where deploy","label":"host","row":2,"col":0}
+                ,{"name":"logFolder","tooltip":"Where to get the log","label":"log Folder","row":3,"col":0 }
+                ,{"name":"logFile","tooltip":"the log file name","label":"log File","row":4,"col":0 }
+                ,{"name":"protocol","tooltip":"upload/download protocol","label":"upload/download protocol","row":5,"col":0 }
+            ]
+        }
+    ]
+,"editable":false
+,"createTableIfMissing":true
+,"navVisible":true
+,"autoInsert":false
+,"listTabVisible":true
+,"owner":"app.liquidx.deploy.event"
+,"events":[
+      { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
+     ,{ "name":"onRowDoubleClicked", "server":"app.liquidx.getLogs.logsManager.getLog", "params":["doBackup","askConfirmation"], "client":"Liquid.startWaiting('getLogsCfg')", "onDownloading":"getLogDownloading" }
+    ]
+,"commands":[
+ 	 { "name":"insert"}
+	,{ "name":"update"}
+	,{ "name":"delete"}
+	,{ "name":"copy"}
+	,{ "name":"paste"}
+	,{ "name":"next"}
+	,{ "name":"previous"}
+]
+}

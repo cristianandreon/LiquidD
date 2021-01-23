@@ -15,6 +15,7 @@ import com.liquid.Callback;
 import com.liquid.Messagebox;
 import com.liquid.db;
 import com.liquid.emailer;
+import com.liquid.scpManager;
 import com.liquid.utility;
 
 import java.io.ByteArrayInputStream;
@@ -54,7 +55,7 @@ public class deployManager {
         String retVal = "{ \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
         try {
             if (params != null) {
-                // {"params":[{"formX":[{"1":"","2":"","3":""}]},{"name":"deploy"}]}
+                // {"params":[{"data":{"1":"38","2":"SIA to site","3":"192.168.0.116","4":"sysadmin","5":"geiadmin01","6":"<p>/Users/administrator/Workspaces/workspacevl/deploy_site_geisoft_org/webapp-zipped/sia.war</p>","7":"/opt/applicativi/jboss-4.0.5.GA/server/all_co-1/deploy","8":"<p>function getFolderDateName() {</p><p>var date = new Date(); var d = date.getDate(); var m = date.getMonth() + 1; var y = date.getFullYear();</p><p>var dateString = String(y) + String(m &lt;= 9 ? '0' + m : m) + String(d &lt;= 9 ? '0' + d : d);</p><p>return dateString;</p><p>}</p><p>\"/home/%user%/rilasci/%webApp%/\"+getFolderDateName()</p>","9":"<p>function getFolderDateName() {</p><p>var date = new Date(); var d = date.getDate(); var m = date.getMonth() + 1; var y = date.getFullYear();</p><p>var dateString = String(y) + String(m &lt;= 9 ? '0' + m : m) + String(d &lt;= 9 ? '0' + d : d);</p><p>return dateString;</p><p>}</p><p>\"/home/%user%/rilasci/%webApp%/\"+getFolderDateName()+\"/BACKUP\"</p>","10":"<p>sia.war</p>","11":"<p>http://site.geisoft.org/sia</p>","12":"10000","13":"10000","14":"''cristian.andreon@geisoft.com,info@cristiannadreon.eu"}},{"name":"doBackup","data":"true"},{"name":"askConfirmation","data":"false"},{"name":"deploysCfg","sel":["38"]}]}
                 Object nameParam = com.liquid.event.getObject(params, "name");
                 JSONArray rowsData = com.liquid.event.getJSONArray(params, "formX");
                 String cfgId = null, cfgName = null, fileName = null, fileSize = null, file = null;
@@ -103,6 +104,8 @@ public class deployManager {
                         int undeployWaitTime = (int) utility.get(deplpoyBean, "undeployWaitTime");
                         int checkWaitTime = (int) utility.get(deplpoyBean, "checkWaitTime");
                         String notifyEmails = (String) utility.get(deplpoyBean, "notifyEmails");
+                        String protocol = (String) utility.get(deplpoyBean, "protocol");
+                        
 
                         
                         // format the mthl fields
@@ -137,8 +140,16 @@ public class deployManager {
 
                         if (sourceFile != null && !sourceFile.isEmpty()) {
                             
+
                             File f = new File(sourceFile);
                             if (f != null) {
+
+                                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm:ss");
+                                sourceFileLDate = dateFormat.format(f.lastModified());
+                                BasicFileAttributes attrs = Files.readAttributes(f.toPath(), BasicFileAttributes.class);
+                                FileTime time = attrs.creationTime();
+                                sourceFileCDate = dateFormat.format(new Date(time.toMillis()));
+
                                 sourceFileIS = new FileInputStream(new File(sourceFile));
                                 if (sourceFileIS != null) {
                                     bDataDecoded = true;
@@ -148,19 +159,15 @@ public class deployManager {
                                 glSourceFile = sourceFile;
                                 glFileSize = f.length();
 
-                                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm:ss");
-                                sourceFileLDate = dateFormat.format(f.lastModified());
-                                BasicFileAttributes attrs = Files.readAttributes(f.toPath(), BasicFileAttributes.class);
-                                FileTime time = attrs.creationTime();
-                                sourceFileCDate = dateFormat.format(new Date(time.toMillis()));
-
                             } else {
                                 String err = "source file not accessible";
                                 Callback.send("1&deg; - Deploy of " + cfgName + "failed, <span style=\"color:red\">" + err + "<span>");
                                 return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode(err) + "\" }";
                             }
+                            
                         } else {
                             // uploaded from a form
+                            /*
                             Callback.send("1&deg; - Uploading " + fileName + " " + fileSize + "bytes...");
                             if (file != null && !file.isEmpty()) {
                                 int index = file.indexOf("binaryData,");
@@ -189,6 +196,7 @@ public class deployManager {
                                     }
                                 }
                             }
+                            */
                         }
 
                         if (bDataDecoded) {
@@ -202,7 +210,7 @@ public class deployManager {
                                     var y = date.getFullYear(); 
                                     var dateString = String(y) + (m <= 9 ? '0' + m : m) + (d <= 9 ? '0' + d : d); return dateString; }
                                 "/home/%user%/rilasci/%webApp%/getFolderDateName();
-                             */
+                            */
                             
                             // InputStream inputStream = new FileInputStream(filePath);
                             String ver = (String) utility.getArchiveXMLTag(sourceFile, "WEB-INF/product.xml", "product/version");
@@ -262,51 +270,69 @@ public class deployManager {
 
                             if (Messagebox.show(message, "LiquidD", Messagebox.QUESTION + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
 
+                                //
                                 // 1° upload
-                                sftpManager sftp = new sftpManager();                               
+                                //
+                                
+                                long currentFileSize = 0;
                                 long lRetVal = 0;
                                 
-                                try {
-                                    Object[] result = sftp.upload(host, user, password, glSourceFile, sourceFileIS, copyFolder + "/" + webAppWAR);
-                                    lRetVal = (long) result[0];
-                                    doBackup = (boolean) result[1];
-                                    if (lRetVal > 0) {
-                                        if (fileSize != null && !fileSize.isEmpty()) {
-                                            if (Long.parseLong(fileSize) != lRetVal) {
-                                                long currentFileSize = sftp.getRemoteFileSize(host, user, password, copyFolder + "/" + webAppWAR);
-                                                if (Long.parseLong(fileSize) == currentFileSize) {
-                                                    lRetVal = currentFileSize;
-                                                }
-                                            }
+                                if("scp".equalsIgnoreCase(protocol)) {
 
-                                            if (Long.parseLong(fileSize) == lRetVal) {
+                                    uploadFileOk = scpManager.uploadFile(user, password, host, 22, copyFolder + "/" + webAppWAR, glSourceFile);
+                                    
+                                    currentFileSize = lRetVal;
+
+                                } else {
+                                
+                                    sftpManager sftp = new sftpManager();
+
+                                    try {
+                                        Object[] result = sftp.upload(host, user, password, glSourceFile, sourceFileIS, copyFolder + "/" + webAppWAR);
+                                        lRetVal = (long) result[0];
+                                        doBackup = (boolean) result[1];
+                                        if (lRetVal > 0) {
+                                            if (fileSize != null && !fileSize.isEmpty()) {
+                                                if (Long.parseLong(fileSize) != lRetVal) {
+                                                    currentFileSize = sftp.getRemoteFileSize(host, user, password, copyFolder + "/" + webAppWAR);
+                                                    if (Long.parseLong(fileSize) == currentFileSize) {
+                                                        lRetVal = currentFileSize;
+                                                    }
+                                                }
+
+                                                if (Long.parseLong(fileSize) == lRetVal) {
+                                                    uploadFileOk = true;
+                                                    // upload descriptor
+                                                    InputStream descFileIS = new ByteArrayInputStream(desc_content.getBytes());
+                                                    sftp.upload(host, user, password, null, descFileIS, copyFolder + "/" + (desc_file));
+                                                }
+                                            } else {
                                                 uploadFileOk = true;
-                                                // upload descriptor
-                                                InputStream descFileIS = new ByteArrayInputStream(desc_content.getBytes());
-                                                sftp.upload(host, user, password, null, descFileIS, copyFolder + "/" + (desc_file));
                                             }
                                         } else {
-                                            uploadFileOk = true;
+                                            uploadFileError = "File has zero size";
                                         }
-                                    } else {
-                                        uploadFileError = "File has zero size";
+                                    } catch (JSchException ex) {
+                                        java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
+                                        String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
+                                        Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+                                        return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                                    } catch (SftpException ex) {
+                                        java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
+                                        uploadFileError += ex.getLocalizedMessage();
+                                        String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
+                                        Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+                                        return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                                    } catch (Exception e) {
+                                        String err = "Error:" + e.getLocalizedMessage()+ " Check Network/VPN";
+                                        Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+                                        return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
                                     }
-                                } catch (JSchException ex) {
-                                    java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
-                                    String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
-                                    Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
-                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
-                                } catch (SftpException ex) {
-                                    java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
-                                    uploadFileError += ex.getLocalizedMessage();
-                                    String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
-                                    Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
-                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
-                                } catch (Exception e) {
-                                    String err = "Error:" + e.getLocalizedMessage()+ " Check Network/VPN";
-                                    Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
-                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                                
+                                    currentFileSize = sftp.getRemoteFileSize(host, user, password, copyFolder + "/" + webAppWAR);    
                                 }
+                                
+                                
 
                                 String recipients[] = notifyEmails != null && !notifyEmails.isEmpty() ? notifyEmails.split(",") : null;
 
@@ -315,7 +341,6 @@ public class deployManager {
                                     // Verifica del file caricato
                                     //
                                     Callback.send("1&deg;/5 - Checking uploaded file...");
-                                    long currentFileSize = sftp.getRemoteFileSize(host, user, password, copyFolder + "/" + webAppWAR);
                                     if (currentFileSize != lRetVal) {
                                         msg = "Error :Failed to upload current war (" + copyFolder + "/" + webAppWAR + ")<br/><br/>... size mismath : " + currentFileSize + "/" + retVal + "";
                                         Callback.send(msg);
@@ -340,6 +365,10 @@ public class deployManager {
                                     String cmd = "sudo su -";
                                     ssh.cmd(cmd, password);
 
+                                    
+                                    ssh.removeLastCommand();
+                                    
+                                            
                                     // 2° backup
                                     //
                                     // Backup file attualmente in prod
@@ -371,7 +400,7 @@ public class deployManager {
                                     ssh.cmd(cmd, password);
 
                                     Thread.sleep(1000);
-                                    currentFileSize = sftp.getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR);
+                                    currentFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR, protocol);
                                     if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
 
                                         Thread.sleep(1000);
@@ -382,7 +411,7 @@ public class deployManager {
 
                                         Thread.sleep(1000);
 
-                                        currentFileSize = sftp.getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR);
+                                        currentFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR, protocol);
                                         if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
 
                                             msg = "Error :Failed to remove current war (" + deployFolder + "/" + webAppWAR + ")<br/><br/>... maybe file was locked ";
@@ -504,7 +533,7 @@ public class deployManager {
                                         Thread.sleep(5000);
                                     }
 
-                                    long copiedFileSize = sftp.getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR);
+                                    long copiedFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR, protocol);
                                     if (copiedFileSize != glFileSize) {
                                         msg = "WARNING : remote file deployed size : " + copiedFileSize + " / uploaded file size : " + glFileSize;
                                         msg += " <br/> may be cp command failed :";
@@ -535,7 +564,7 @@ public class deployManager {
                                             }
                                         }
                                         if (installedSuccesfully) {
-                                            long remoteFileSize = sftp.getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR + "");
+                                            long remoteFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR + "", protocol);
                                             if (remoteFileSize == glFileSize) {
                                                 msg_for_notity = "Deploy of " + cfgName + " done, checked and online";
                                                 msg = "Deploy of " + cfgName + " <span style=\"color:darkGreen\">done, checked and online</span>";
@@ -605,6 +634,15 @@ public class deployManager {
         return (Object)retVal;
     }
 
+    public static long getRemoteFileSize(String host, String user, String password, String remoteFileName, String protocol) throws Exception {
+        if("scp".equalsIgnoreCase(protocol)) {
+            return scpManager.getRemoteFileSize(user, password, host, 22, remoteFileName);
+        } else {
+            return sftpManager.getRemoteFileSize(host, user, password, remoteFileName);
+        }
+    }
+                                            
+    
     public static String solve_variable_field(String expr, String user, String webApp) throws Exception {
         if (expr != null && !expr.isEmpty()) {
             // expr = expr.replaceAll("<!--.*?-->", "").replaceAll("<[^>]+>", "");
