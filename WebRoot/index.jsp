@@ -425,13 +425,37 @@
             <div class="code1" id="codeSample1">
                 <pre class="code">
                     <code class="html">
-                        localhost:8080/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1532&database=myLiquidDatabase&user=myLiquidUser&password=myLiquidPassword&service=myService</b>
+    localhost:8080/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1532&database=myLiquidDatabase&user=myLiquidUser&password=myLiquidPassword&service=myService</b>
                     </code>
                 </pre>
             </div>
             <br/>
             <br/>
             <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            Run docker image :
+            <br/>
+            <div class="code1" id="codeSample1">
+                <pre class="code">
+                    <code class="bash">
+    docker pull liquidd/webapp
+
+    docker run -p 90:8080 liquidd/webapp
+
+                    </code>
+                </pre>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            
+
         </div>   
 
         

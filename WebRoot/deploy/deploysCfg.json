@@ -20,7 +20,7 @@
     ,{"size":10,"nullable":true,"name":"undeployWaitTime","typeName":"int4","digits":0,"type":"4"}
     ,{"size":10,"nullable":true,"name":"checkWaitTime","typeName":"int4","digits":0,"type":"4"}
     ,{"size":2147483647,"nullable":true,"name":"notifyEmails","typeName":"text","digits":0,"type":"12"}
-    ,{"size":256,"nullable":true,"name":"protocol","typeName":"varchar","digits":0,"type":"12","required":true, "values":["sftp","scp"]}
+    ,{"size":256,"nullable":true,"name":"protocol","typeName":"varchar","digits":0,"type":"12","required":false, "values":["sftp","scp"]}
     
 ]
 ,"grids":[
