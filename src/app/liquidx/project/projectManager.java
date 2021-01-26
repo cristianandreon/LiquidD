@@ -36,6 +36,7 @@ public class projectManager {
             if (params != null) {
                 // {"params":[{"formX":[{"1":"","2":"","3":""}]},{"name":"deploy"}]}
                 // JSONArray rowsData = com.liquid.event.getJSONArray(params, "name");
+                String exepts = null;
                 String projectId = null;
                 String allSQL = "";
                 String allHBM = "";
@@ -140,7 +141,28 @@ public class projectManager {
                                                 String hibFieldName = nameSpacer.DB2Hibernate(fieldName);
                                                 String controlType = "TEXTBOX"; // LISTBOX";
                                                 String valuesList = ""; // "S=Si,N=No"
+                                                int ifieldSize = 0;
+                                                String whCode = "";
+                                                String htCode = "";
 
+                                                
+                                                try {
+                                                    ifieldSize = Integer.parseInt(fieldSize);
+                                                } catch(Exception e) {}
+                                                        
+                                                if("DATE".equalsIgnoreCase(fieldType)) {
+                                                    controlType = "DATEBOX";
+                                                } else if("NUMBER".equalsIgnoreCase(fieldType)) {
+                                                    controlType = "NMERICBOX";
+                                                } else {
+                                                    if(ifieldSize >= 2000) {
+                                                        controlType = "TEXTAREA";
+                                                        whCode = "<widthControllo>400px</widthControllo>";
+                                                        htCode = "<heightControllo>200px</heightControllo>";
+                                                    } else if(ifieldSize == 1) {
+                                                        valuesList = "S=Si,N=No";
+                                                    }
+                                                }
 
 
 
@@ -149,17 +171,21 @@ public class projectManager {
                                                 // execute sql
                                                 if(bExecuteSQL) {
                                                     if(conn != null) {
-                                                        Statement stmt = conn.createStatement();
-                                                        boolean res = stmt.execute(sqlCode);
-                                                        if(!res) {
-                                                            ResultSet rs = stmt.getResultSet();
-                                                            if(rs != null) {
-                                                                if(rs.next()) {
-                                                                    String result = rs.getString(1);
-                                                                    if(result != null) {
+                                                        try {
+                                                            Statement stmt = conn.createStatement();
+                                                            boolean res = stmt.execute(sqlCode);
+                                                            if(!res) {
+                                                                ResultSet rs = stmt.getResultSet();
+                                                                if(rs != null) {
+                                                                    if(rs.next()) {
+                                                                        String result = rs.getString(1);
+                                                                        if(result != null) {
+                                                                        }
                                                                     }
                                                                 }
                                                             }
+                                                        } catch (Exception ex) {
+                                                            exepts += "[ SQL:"+sqlCode+"<br/>Error:"+ex.getMessage()+"]";
                                                         }
                                                     }
                                                 }
@@ -211,12 +237,13 @@ public class projectManager {
                                                     String javaVarCode = "private String "+hibFieldName+";"+newLine;
                                                     allJAVAVar += javaVarCode;
 
+                                                    String getSethibFieldName = hibFieldName.substring(0, 1).toLowerCase()  + hibFieldName.substring(1, -1);
                                                     String javaCode = 
-                                                            "public String get"+hibFieldName+"() {"+newLine
+                                                            "public String get"+getSethibFieldName+"() {"+newLine
                                                             +"\treturn this."+hibFieldName+";"+newLine
                                                             +"}"+newLine
                                                             +""+newLine
-                                                            +"public void set"+hibFieldName+"(String "+hibFieldName+") {"+newLine
+                                                            +"public void set"+getSethibFieldName+"(String "+hibFieldName+") {"+newLine
                                                             +"\tthis."+hibFieldName+" = "+hibFieldName+";"+newLine
                                                             +"}"+newLine
                                                             +""+newLine;
@@ -230,10 +257,12 @@ public class projectManager {
                                                     // Generate zk panels .xml
                                                     //
                                                     String zkCode = "" +
-                                                            utility.htmlEncode("<!-- "+hibFieldName+" -->", true) +newLine+
+                                                            utility.htmlEncode("<!-- "+fieldName+" / " + label+" / "+hibFieldName+" -->", true) +newLine+
                                                             utility.htmlEncode("<property name=\""+hibFieldName+"\">", true) +newLine+
                                                             utility.htmlEncode("<etichetta>"+label+"</etichetta>", true) +newLine+
                                                             utility.htmlEncode("<tipoControllo>"+controlType+"</tipoControllo>", true) +newLine+
+                                                            (whCode != null ? utility.htmlEncode(whCode) +newLine : "")+
+                                                            (htCode != null ? utility.htmlEncode(htCode) +newLine : "")+
                                                             utility.htmlEncode("<elencoValori>"+valuesList+"</elencoValori>", true) +newLine+
                                                             utility.htmlEncode("<posX>0</posX>", true) +newLine+
                                                             utility.htmlEncode("<posY>0</posY>", true) +newLine+
@@ -241,7 +270,6 @@ public class projectManager {
                                                             "";
 
                                                     allXML += newLine+newLine;
-                                                    allXML += "// "+fieldName+" / " + label;
                                                     allXML += zkCode;
 
                                                     // Generale Liquid .json     
@@ -282,6 +310,7 @@ public class projectManager {
                                         +"</br></br></br>"
                                         +"<span style=\"font-size:20px\">"+"ZK Panel .XML"+"</span>"
                                         +allXML
+                                        + ( exepts != null ? "</br></br></br>" +  "<span style=\"font-size:20px; color:darkRed\">"+"Exceptions"+"</span>"+exepts : "" )
                                         +"</div>"
                                         ;
                                 return (Object) "{ \"client\":\"onExecuted\", \"result\":1, \"data\":\"" + utility.base64Encode(result) + "\" }";

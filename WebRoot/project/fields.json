@@ -17,13 +17,14 @@
         "editor":{ "type":"values", "values":["VARCHAR2", "DATE", "TIMESTAMP", "NUMBER", "BLOB" ] }
     }
     ,{ "name":"size", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
+    ,{ "name":"scale", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
     ,{ "name":"nullable","size":1,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true, "default":"'y'" }
     ,{ "name":"def","nullable":true,"typeName":"varchar","digits":0,"type":"12","required":false }
     ,{ "name":"remarks","nullable":true,"typeName":"varchar","digits":0,"type":"12","required":false }
     ,{ "name":"label","nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
 ]
 ,"grids":[
-        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":10,"nCols":1
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":11,"nCols":1
             ,"columns":[
                 {"name":"id","tooltip":"","label":"id","row":0,"col":0}
                 ,{"name":"project","tooltip":"Project name","label":"Project","row":1,"col":0}
@@ -31,10 +32,11 @@
                 ,{"name":"field","tooltip":"Field's name","label":"Field name","row":3,"col":0}
                 ,{"name":"type","tooltip":"Field's data type","label":"Type","row":4,"col":0}
                 ,{"name":"size","tooltip":"Field's size","label":"Size","row":5,"col":0}
-                ,{"name":"nullable","tooltip":"Field's nullable","label":"Nullable","row":6,"col":0}
-                ,{"name":"def","tooltip":"Field's default value","label":"Default","row":7,"col":0}
-                ,{"name":"remarks","tooltip":"Field's comment","label":"Remarks","row":8,"col":0}
-                ,{"name":"label","tooltip":"Label on the panels","label":"Label","row":9,"col":0}
+                ,{"name":"size","tooltip":"Field's size","label":"Size","row":6,"col":0}
+                ,{"name":"nullable","tooltip":"Field's nullable","label":"Nullable","row":7,"col":0}
+                ,{"name":"def","tooltip":"Field's default value","label":"Default","row":8,"col":0}
+                ,{"name":"remarks","tooltip":"Field's comment","label":"Remarks","row":9,"col":0}
+                ,{"name":"label","tooltip":"Label on the panels","label":"Label","row":10,"col":0}
             ]
         }
     ]
