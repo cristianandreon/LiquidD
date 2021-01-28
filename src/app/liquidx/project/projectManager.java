@@ -94,11 +94,23 @@ public class projectManager {
                                     Connection conn = null;
 
                                     if(bExecuteSQL) {
-                                        Callback.send("Connectiong to " + ip + " ("+engine+") ...");
+                                        
+                                        if("oracle".equalsIgnoreCase(engine)) {
+                                            if(user != null && !user.isEmpty()) {                                                
+                                            } else {
+                                                // user = ...
+                                            }
+                                        }
+                                                
+                                        Callback.send("Connecting to " + ip + " ("+engine+") ...");
                                         try {
                                             Object [] connResult = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
                                             conn = (Connection)connResult[0];
                                             String connError = (String)connResult[1];
+                                            if(conn == null) {
+                                                Callback.send("<span style=\"color:red\">Error connectiong to " + ip + "("+engine+") : "+connError+"</span>");
+                                                Thread.sleep(5000);
+                                            }
                                         } catch (Throwable th) {
                                             String err = "Error:" + th.getLocalizedMessage();
                                             Callback.send("<span style=\"color:red\">Error connectiong to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");
@@ -171,9 +183,12 @@ public class projectManager {
                                                 // execute sql
                                                 if(bExecuteSQL) {
                                                     if(conn != null) {
+                                                        String fSqlCode = sqlCode.replace("\n", " ");
+                                                        fSqlCode = fSqlCode.trim();
+                                                        if(fSqlCode.endsWith(";")) fSqlCode = fSqlCode.substring(0, fSqlCode.length()-1);
                                                         try {
                                                             Statement stmt = conn.createStatement();
-                                                            boolean res = stmt.execute(sqlCode);
+                                                            boolean res = stmt.execute(fSqlCode);
                                                             if(!res) {
                                                                 ResultSet rs = stmt.getResultSet();
                                                                 if(rs != null) {
@@ -185,7 +200,7 @@ public class projectManager {
                                                                 }
                                                             }
                                                         } catch (Exception ex) {
-                                                            exepts += "[ SQL:"+sqlCode+"<br/>Error:"+ex.getMessage()+"]";
+                                                            exepts += "[ SQL:"+fSqlCode+"<br/>Error:"+ex.getMessage()+"]";
                                                         }
                                                     }
                                                 }
@@ -237,7 +252,7 @@ public class projectManager {
                                                     String javaVarCode = "private String "+hibFieldName+";"+newLine;
                                                     allJAVAVar += javaVarCode;
 
-                                                    String getSethibFieldName = hibFieldName.substring(0, 1).toLowerCase()  + hibFieldName.substring(1, -1);
+                                                    String getSethibFieldName = hibFieldName.substring(0, 1).toLowerCase()  + hibFieldName.substring(1);
                                                     String javaCode = 
                                                             "public String get"+getSethibFieldName+"() {"+newLine
                                                             +"\treturn this."+hibFieldName+";"+newLine

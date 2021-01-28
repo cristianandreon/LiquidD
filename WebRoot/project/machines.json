@@ -21,7 +21,7 @@
                 ,{"name":"name","tooltip":"Machine's name","label":"machine name","row":1,"col":0}
                 ,{"name":"ip","tooltip":"Machine's ip address","label":"machine Ip","row":1,"col":1}
                 ,{"name":"user","tooltip":"User name for login sftp/ssh","label":"User","row":2,"col":0}
-                ,{"name":"password","tooltip":"password for login sftp/ssh","label":"Password","row":2,"col":1}
+                ,{"name":"password","tooltip":"password for login","label":"Password","row":2,"col":1}
                 ,{"name":"engine","tooltip":"Engine type","label":"Engine","row":3,"col":0}
                 ,{"name":"database","tooltip":"Database","label":"Database","row":3,"col":1}
                 ,{"name":"port","tooltip":"Listening port","label":"Port","row":4,"col":0}
