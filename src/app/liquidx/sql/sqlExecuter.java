@@ -83,7 +83,7 @@ public class sqlExecuter {
 
                                     if(bExecuteSQL) {
                                         Callback.send("Connectiong to " + ip + " ("+engine+") ...");
-                                        System.out.println("Connectiong to " + ip + " ("+engine+") ...");
+                                        System.out.println("Connecting to " + ip + " ("+engine+") ...");
                                         try {
                                             Object [] connResult = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
                                             conn = (Connection)connResult[0];
@@ -91,7 +91,7 @@ public class sqlExecuter {
                                         } catch (Throwable th) {
                                             String err = "Error:" + th.getLocalizedMessage();
                                             System.out.println("Error connectiong to " + ip + "("+engine+") : "+th.getLocalizedMessage());
-                                            Callback.send("<span style=\"color:red\">Error connectiong to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");
+                                            Callback.send("<span style=\"color:red\">Error  to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");
                                             Thread.sleep(5000);
                                         }
                                     }

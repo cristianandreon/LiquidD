@@ -1,0 +1,68 @@
+{ 
+ "database":"LiquidX"
+,"schema":"liquidx"
+,"table":"syncronizer_data"
+,"primaryKey":"id"
+,"columns":[
+     { "name":"id", "visible":true,"nullable":false,"width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"fields_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
+    ,{ "name":"machine_id", "visible":false,"size":10,"nullable":true,"typeName":"varchar","digits":0,"type":"4","required":true }
+    ,{ "name":"machine", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true,
+        "lookup":"sincronizer_machine","options":{
+            "lookupField":"name","targetColumn":"machine_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200", "commands":[]
+        }
+    }
+    ,{ "name":"schema", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
+    ,{ "name":"table", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
+    ,{ "name":"target_machine_id", "visible":false,"size":10,"nullable":true,"typeName":"varchar","digits":0,"type":"4","required":true }
+    ,{ "name":"target_machine", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true,
+        "lookup":"sincronizer_machine","options":{
+            "lookupField":"name","targetColumn":"target_machine_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200", "commands":[]
+        }
+    }
+    ,{ "name":"target_schema", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
+    ,{ "name":"target_table", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
+]
+,"grids":[
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":11,"nCols":1
+            ,"columns":[
+                {"name":"id","tooltip":"","label":"id","row":0,"col":0}
+                ,{"name":"machine","tooltip":"Source machine","label":"Source machine","row":1,"col":0}
+                ,{"name":"schema","tooltip":"Source schema","label":"Source schema","row":2,"col":0}
+                ,{"name":"table","tooltip":"Source table","label":"Source table","row":3,"col":0}
+                ,{"name":"target_machine","tooltip":"Target machine","label":"Target machine","row":4,"col":0}
+                ,{"name":"target_schema","tooltip":"Target schema","label":"Target schema","row":5,"col":0}
+                ,{"name":"target_table","tooltip":"Target table","label":"Target table","row":6,"col":0}
+            ]
+        }
+    ]
+,"filters":[
+        {"name":"Project","nRows":1,"nCols":1
+            ,"columns":[
+                {"name":"machine","tooltip":"machine name","label":"name","row":0,"col":0}
+            ]
+        }
+    ]
+,"owner":"app.liquidx.syncronizer.syncronizerManager"
+,"events":[
+      { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
+     ,{ "name":"onRowDoubleClicked--", "server":"app.liquidx.project.projectManager.XXX", "params":[], "client":"", "onDownloading":"projectDownloading" }
+    ]
+,"commands":[
+ 	 { "name":"insert"}
+	,{ "name":"update"}
+	,{ "name":"delete"}
+	,{ "name":"copy"}
+	,{ "name":"paste"}
+	,{ "name":"next"}
+	,{ "name":"previous"}
+        ,{ "name":"exec", "img":"gear.png", "size":20, "server":"app.liquidx.syncronizer.syncronizerManager.execute", "params":["executeSQL"], "onDownloading":"syncronizerDownloading" }
+        
+]
+,"editable":true
+,"createTableIfMissing":true
+,"navVisible":true
+,"autoInsert":false
+,"listTabVisible":true
+,"rowSelection":"multiple"
+,"autoSizeColumns":true
+}

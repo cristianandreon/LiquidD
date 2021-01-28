@@ -36,7 +36,7 @@ public class projectManager {
             if (params != null) {
                 // {"params":[{"formX":[{"1":"","2":"","3":""}]},{"name":"deploy"}]}
                 // JSONArray rowsData = com.liquid.event.getJSONArray(params, "name");
-                String exepts = null;
+                String exepts = "";
                 String projectId = null;
                 String allSQL = "";
                 String allHBM = "";
@@ -108,12 +108,12 @@ public class projectManager {
                                             conn = (Connection)connResult[0];
                                             String connError = (String)connResult[1];
                                             if(conn == null) {
-                                                Callback.send("<span style=\"color:red\">Error connectiong to " + ip + "("+engine+") : "+connError+"</span>");
+                                                Callback.send("<span style=\"color:red\">Error connecting to " + ip + "("+engine+") : "+connError+"</span>");
                                                 Thread.sleep(5000);
                                             }
                                         } catch (Throwable th) {
                                             String err = "Error:" + th.getLocalizedMessage();
-                                            Callback.send("<span style=\"color:red\">Error connectiong to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");
+                                            Callback.send("<span style=\"color:red\">Error connecting to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");
                                             Thread.sleep(5000);
                                         }
                                     }
@@ -325,7 +325,7 @@ public class projectManager {
                                         +"</br></br></br>"
                                         +"<span style=\"font-size:20px\">"+"ZK Panel .XML"+"</span>"
                                         +allXML
-                                        + ( exepts != null ? "</br></br></br>" +  "<span style=\"font-size:20px; color:darkRed\">"+"Exceptions"+"</span>"+exepts : "" )
+                                        + ( exepts != null && !exepts.isEmpty() ? "</br></br></br>" +  "<span style=\"font-size:20px; color:darkRed\">"+"Exceptions"+"</span>"+exepts : "" )
                                         +"</div>"
                                         ;
                                 return (Object) "{ \"client\":\"onExecuted\", \"result\":1, \"data\":\"" + utility.base64Encode(result) + "\" }";

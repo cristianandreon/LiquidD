@@ -1,0 +1,54 @@
+{ 
+ "database":"LiquidX"
+,"schema":"liquidx"
+,"table":"syncronizer_machines"
+,"primaryKey":"id"
+,"columns":[
+     {"name":"id","visible":false,"nullable":false,"width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"machines_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
+    ,{"name":"name","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"name":"user","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"name":"password","visible":false,"size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"name":"ip","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
+    ,{"name":"engine","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true, "values":["Oracle","Postgres","MySQL","SQLServer","MariaDB"] }
+    ,{"name":"database","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"name":"port","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"name":"service","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true}
+]
+,"grids":[
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":5,"nCols":2
+            ,"columns":[
+                {"name":"id","tooltip":"","label":"id","row":0,"col":0}
+                ,{"name":"name","tooltip":"Machine's name","label":"machine name","row":1,"col":0}
+                ,{"name":"ip","tooltip":"Machine's ip address","label":"machine Ip","row":1,"col":1}
+                ,{"name":"user","tooltip":"User name for login sftp/ssh","label":"User","row":2,"col":0}
+                ,{"name":"password","tooltip":"password for login sftp/ssh","label":"Password","row":2,"col":1}
+                ,{"name":"engine","tooltip":"Engine type","label":"Engine","row":3,"col":0}
+                ,{"name":"database","tooltip":"Database","label":"Database","row":3,"col":1}
+                ,{"name":"port","tooltip":"Listening port","label":"Port","row":4,"col":0}
+                ,{"name":"service","tooltip":"Service ID","label":"Service ID","row":4,"col":1}
+            ]
+        }
+    ]
+,"mode":"combo"
+,"combo": { "height":25, "field":"name", "status":"close" }
+,"editable":true
+,"createTableIfMissing":true
+,"navVisible":true
+,"autoInsert":false
+,"listTabVisible":true
+,"autoSizeColumns":true
+,"owner":"app.liquidx.project.event"
+,"events":[
+      { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
+     ,{ "name":"onRowDoubleClicked--", "server":"app.liquidx.deploy.projectManager.XXX", "params":[], "client":"", "onDownloading":"projectDownloading" }
+    ]
+,"commands":[
+ 	 { "name":"insert"}
+	,{ "name":"update"}
+	,{ "name":"delete"}
+	,{ "name":"copy"}
+	,{ "name":"paste"}
+	,{ "name":"next"}
+	,{ "name":"previous"}
+]
+}
