@@ -46,8 +46,8 @@ public class syncronizerManager {
                 // JSONObject sSQLSON = com.liquid.event.getJSONObject(params, "data", "sql");
                 // String sSQL = sSQLSON.getString("sql");
 
-                JSONObject executeSQLSON = com.liquid.event.getJSONObject(params, "data", "congirm");
-                boolean bExecuteSQL = "true".equalsIgnoreCase( executeSQLSON.getString("confirm")) ? true : false;
+                JSONObject previewSyncronizerSON = com.liquid.event.getJSONObject(params, "data", "previewSyncronizer");
+                boolean bPreviewSyncronizer = "true".equalsIgnoreCase( previewSyncronizerSON.getString("data")) ? true : false;
                 
                 {
 
@@ -55,15 +55,26 @@ public class syncronizerManager {
 
                     {
                         {
-                            ArrayList<Object> syncronizeBean = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "syncronize_data", null, "*", "where 1=1", 0);
-                            if (syncronizeBean != null) {
-                                for(int im=0; im<syncronizeBean.size(); im++) {
-                                    Object mBean = syncronizeBean.get(im);
+                            ArrayList<Object> syncronizeBeans = null;
+                            
+                            long selCount = db.getSelectionCount(tbl_wrk, params);
+                            if(selCount == 0) {
+                                // all rows
+                                syncronizeBeans = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "syncronizer_data", null, "*", "where 1=1", 0);
+                            } else {
+                                // selected rows
+                                syncronizeBeans = (ArrayList<Object>) db.get_bean((HttpServletRequest) requestParam, db.getSelection(tbl_wrk, params), "bean", "*", 0);
+                            }
+
+                
+                            if (syncronizeBeans != null) {
+                                for(int im=0; im<syncronizeBeans.size(); im++) {
+                                    Object mBean = syncronizeBeans.get(im);
                                     String machineId = (String)utility.get(mBean, "machine_id");
                                     String schema = (String)utility.get(mBean, "schema");
                                     String table = (String)utility.get(mBean, "table");
 
-                                    Object machineBean = (Object)db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.machines", "*", machineId);
+                                    Object machineBean = (Object)db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.syncronizer_machines", "*", machineId);
 
                                     String engine = (String)utility.get(machineBean, "engine");
                                     String ip = (String)utility.get(machineBean, "ip");
@@ -77,7 +88,7 @@ public class syncronizerManager {
                                     String targetSchema = (String)utility.get(mBean, "target_schema");
                                     String targetTable = (String)utility.get(mBean, "target_table");
 
-                                    Object targetMachineBean = (Object)db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.machines", "*", targetMachineId);
+                                    Object targetMachineBean = (Object)db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.syncronizer_machines", "*", targetMachineId);
 
                                     String targetEngine = (String)utility.get(targetMachineBean, "engine");
                                     String targetIp = (String)utility.get(targetMachineBean, "ip");
@@ -101,6 +112,12 @@ public class syncronizerManager {
                                         Object [] connResult = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
                                         sconn = (Connection)connResult[0];
                                         String connError = (String)connResult[1];                                            
+                                        if(sconn != null) {
+                                            sconn.setAutoCommit(false);
+                                        } else {
+                                            System.out.println("Error connecting to " + ip + "("+engine+") : "+connError);
+                                            Callback.send("<span style=\"color:red\">Error connecting to " + ip + "("+engine+") : "+connError+"</span>");                                            
+                                        }
                                     } catch (Throwable th) {
                                         String err = "Error:" + th.getLocalizedMessage();
                                         System.out.println("Error connecting to " + ip + "("+engine+") : "+th.getLocalizedMessage());
@@ -113,20 +130,22 @@ public class syncronizerManager {
                                     System.out.println("Connecting to " + targetIp + " ("+targetEngine+") ...");
                                     try {
                                         Object [] connResult = com.liquid.connection.getLiquidDBConnection(null, targetEngine, targetIp, targetPort, targetDatabase, targetUser, targetPassword, targetService);
-                                        sconn = (Connection)connResult[0];
+                                        tconn = (Connection)connResult[0];
                                         String connError = (String)connResult[1];                                            
+                                        if(tconn != null) {
+                                            tconn.setAutoCommit(false);
+                                        } else {
+                                            System.out.println("Error connecting to " + targetIp + "("+targetEngine+") : "+connError);
+                                            Callback.send("<span style=\"color:red\">Error connecting to " + targetIp + "("+targetEngine+") : "+connError+"</span>");                                            
+                                        }
                                     } catch (Throwable th) {
                                         String err = "Error:" + th.getLocalizedMessage();
-                                        System.out.println("Error connecting to " + ip + "("+engine+") : "+th.getLocalizedMessage());
-                                        Callback.send("<span style=\"color:red\">Error connecting to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");
+                                        System.out.println("Error connecting to " + targetIp + "("+targetEngine+") : "+th.getLocalizedMessage());
+                                        Callback.send("<span style=\"color:red\">Error connecting to " + targetIp + "("+targetEngine+") : "+th.getLocalizedMessage()+"</span>");
                                         Thread.sleep(5000);
                                     }
                                                                         
                                     try {
-                                        
-                                        if(tconn != null) {
-                                            tconn.setAutoCommit(false);
-                                        }
                                     
  
                                         //
@@ -136,7 +155,7 @@ public class syncronizerManager {
                                             
 
                                             // execute sql
-                                            if(bExecuteSQL) {
+                                            {
                                                 if(sconn != null && tconn != null) {
 
                                                     if(!db.setSchema(sconn, engine, schema)) {
@@ -151,14 +170,35 @@ public class syncronizerManager {
                                                             
                                                         } else {
                                                             
-                                                            String syncRes = db.syncronizeTableMetadata( database+"."+schema+"."+table, targetDatabase+"."+targetSchema+"."+targetTable, sconn, tconn, "mirror");
+                                                            String syncRes = db.syncronizeTableMetadata( 
+                                                                    database+"."+schema+"."+table, targetDatabase+"."+targetSchema+"."+targetTable, 
+                                                                    sconn, tconn, 
+                                                                    bPreviewSyncronizer ? "preview" : "mirror"
+                                                            );
                                                             
                                                             JSONObject syncJSON = new JSONObject(syncRes);
+                                                            
+                                                            String preview = syncJSON.getString("preview");
                                                                     
-                                                            sReport += "<span style=\"font-size:20px\">"
-                                                                    +"Deleting columns:"+syncJSON.getJSONArray("deletingColumns")
-                                                                    +"Adding columns:"+syncJSON.getJSONArray("addingColumns")
-                                                                    +"</span>";
+                                                            sReport += 
+                                                                    "<span style=\"font-size:20px\">"
+                                                                    +"From <b>"+database+"."+schema+"."+table+"@"+ip+"</b>"+"<br/>to <b>"+database+"."+schema+"."+table+"@"+targetIp+"</b>"
+                                                                    +"<br/>"
+                                                                    +"<br/>"
+                                                                    +"<span style=\"font-size:17px\">"
+                                                                    + (preview.length() > 0 ? "<span style=\"color:darkGray\">"+utility.base64Decode(preview).replace("\n", "<br/>")+"</span>" : "")
+                                                                    +"</span>"
+                                                                    +"<br/>"
+                                                                    +"<span style=\"font-size:15px\">"
+                                                                    + (syncJSON.getJSONArray("deletingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Deleting columns:"+syncJSON.getJSONArray("deletingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing column in "+ip+"</span>")
+                                                                    +"<br/>"
+                                                                    +"<br/>"
+                                                                    + (syncJSON.getJSONArray("addingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Adding columns:"+syncJSON.getJSONArray("addingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing columns in "+targetIp+"</span>")
+                                                                    +"</span>"
+                                                                    +"<br/>"
+                                                                    +"<br/>"
+                                                                    +"<br/>"
+                                                                    ;
                                                         }
                                                     }
                                                 }
@@ -193,6 +233,8 @@ public class syncronizerManager {
                                 String result = "<div>"
                                         +"<span style=\"font-size:30px\">"
                                         +"Report:"
+                                        +"<br/>"
+                                        +"<br/>"
                                         +sReport
                                         +"</span>"
                                         +"</br></br></br>"

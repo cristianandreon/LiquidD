@@ -308,6 +308,9 @@ path:hover {
  } 
 
 
+  
+  
+ /*
 
   
  .css_transform2 { 
@@ -348,8 +351,6 @@ path:hover {
       }
   }
   
-  
- 
   .css_transform2:hover { 
      -webkit-transform: rotateX(0deg) rotateY(0deg);
         -moz-transform: rotateX(0deg) rotateY(0deg);
@@ -365,7 +366,9 @@ path:hover {
              
     transition: width 0.2s, height 0.2s, transform 0.2s;
  } 
-  
+ 
+ */
+ 
   .reflect {
     -webkit-box-reflect: below -10px -webkit-gradient(linear, left top, left bottom,  from(transparent), color-stop(50%, transparent), to(rgba(255, 255, 255, 0.26)));
 

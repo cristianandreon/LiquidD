@@ -183,8 +183,7 @@
             }
 
             function startSyncronyzer() {
-                Liquid.startPopup('syncronizer_machines', '<%=workspace.get_file_content(request, "/sqlExecuter/sql_machines.json")%>');
-                Liquid.startPopup('syncronizer_schemas', '<%=workspace.get_file_content(request, "/sqlExecuter/sql_schemas.json")%>');
+                Liquid.startPopup('syncronizer_machines', '<%=workspace.get_file_content(request, "/syncronizer/syncronizer_machines.json")%>');
                 Liquid.startPopup('syncronizer_data', '<%=workspace.get_file_content(request, "/syncronizer/syncronizer_data.json")%>');
             }
 
@@ -296,7 +295,7 @@
                     document.getElementById('logFrameTab').className = "";
                     document.getElementById('projectFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "";
-                    document.getElementById('syncronizeFrameTab').className = "";
+                    document.getElementById('syncronizerFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "";
                 } else if(obj.parentNode.id === 'deployFrameTab') {
@@ -311,7 +310,7 @@
                     document.getElementById('logFrameTab').className = "";
                     document.getElementById('projectFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "";
-                    document.getElementById('syncronizeFrameTab').className = "";
+                    document.getElementById('syncronizerFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "liquidTabSel";
                 } else if(obj.parentNode.id === 'projectFrameTab') {
@@ -327,7 +326,7 @@
                     document.getElementById('logFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "";
-                    document.getElementById('syncronizeFrameTab').className = "";
+                    document.getElementById('syncronizerFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "";
                 } else if(obj.parentNode.id === 'importerFrameTab') {
                     jQ1124('#welcomeFrame').slideUp("fast");
@@ -342,7 +341,7 @@
                     document.getElementById('logFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "liquidTabSel";
                     document.getElementById('deployFrameTab').className = "";
-                    document.getElementById('syncronizeFrameTab').className = "";
+                    document.getElementById('syncronizerFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "";
                 } else if(obj.parentNode.id === 'sqlExecuterFrameTab') {
                     jQ1124('#welcomeFrame').slideUp("fast");
@@ -357,7 +356,7 @@
                     document.getElementById('logFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "";
-                    document.getElementById('syncronizeFrameTab').className = "";
+                    document.getElementById('syncronizerFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "liquidTabSel";
                 } else if(obj.parentNode.id === 'logFrameTab') {
                     jQ1124('#welcomeFrame').slideUp("fast");
@@ -371,24 +370,24 @@
                     document.getElementById('projectFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "";
-                    document.getElementById('syncronizeFrameTab').className = "";
+                    document.getElementById('syncronizerFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "";
                     document.getElementById('logFrameTab').className = "liquidTabSel";
-                } else if(obj.parentNode.id === 'syncronizeFrameTab') {
+                } else if(obj.parentNode.id === 'syncronizerFrameTab') {
                     jQ1124('#welcomeFrame').slideUp("fast");
                     jQ1124('#projectFrame').slideUp("fast");
                     jQ1124('#deployFrame').slideUp("fast");
-                    jQ1124('#syncronizerFrame').slideUp("fast");
+                    jQ1124('#sqlExecuterFrame').slideUp("fast");
                     jQ1124('#logFrame').slideUp("fast");
                     jQ1124('#importerFrame').slideUp("fast");
-                    jQ1124('#sqlExecuterFrame').slideDown( "normal", function () { Liquid.onVisible('logFrame') } );
+                    jQ1124('#syncronizerFrame').slideDown( "normal", function () { Liquid.onVisible('syncronizerFrame') } );
                     document.getElementById('welcomeFrameTab').className = "";
                     document.getElementById('projectFrameTab').className = "";
                     document.getElementById('importerFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "";
                     document.getElementById('sqlExecuterFrameTab').className = "";
                     document.getElementById('logFrameTab').className = "";
-                    document.getElementById('syncronizeFrameTab').className = "liquidTabSel";
+                    document.getElementById('syncronizerFrameTab').className = "liquidTabSel";
                 }                    
             }
         </script>
@@ -410,9 +409,10 @@
             <br/>
             <ul> 
                 <li>Deploy your web application</li>
-                <li>Easily download applitations server log</li>
-                <li>add fields in multiple database</li>
-                <li>Copy cascade rows from a data source to any other</li>
+                <li>Quickly download application's server log</li>
+                <li>Add fields in multiple database at once</li>
+                <li>Copy cascade rows from a data source to any others</li>
+                <li>Syncronize table metadata from a data source to any others</li>
                 <li>Execute SQL command in multiple targets</li>
             </ul>
             <br/>
@@ -635,7 +635,9 @@
 
         
         
+        <!-- ---------------- -->
         <!-- GET LOGs MANAGER -->
+        <!-- ---------------- -->
         <div id="logFrame" style="display:none" class="demoContent">
             <br/>
             <br/>
@@ -903,7 +905,7 @@
                             </tr>
                             <tr>
                                 <td colspan="1">
-                                    <input id="confirm" type="checkbox" style="padding:10px; height:30px; width:30px; " checked >Confirmation</input>
+                                    <input id="previewSyncronizer" type="checkbox" style="padding:10px; height:30px; width:30px; " checked >Preview</input>
                                  </td>
                             </tr>
                         <tr>
@@ -922,6 +924,9 @@
             <br/>
             <br/>
             <br/>
+            <br/>
+            <br/>
+            <br/>
             <div class="title1">Machines</div>
             <div class="spacer"></div>
             <br/>
@@ -935,16 +940,15 @@
                 </tr>
             </table>
             <br/>
+            <br/>
             <br/>            
-            <br/>
-            <br/>
             <br/>
         </div>
                 
 
 
         <!-- -------------- -->
-        <!-- SQL EXECUTER -->
+        <!--  SQL EXECUTER  -->
         <!-- -------------- -->
         <div id="sqlExecuterFrame" style="display:none" class="demoContent">
             <br/>

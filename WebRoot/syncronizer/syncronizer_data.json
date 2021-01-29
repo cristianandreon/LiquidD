@@ -4,10 +4,10 @@
 ,"table":"syncronizer_data"
 ,"primaryKey":"id"
 ,"columns":[
-     { "name":"id", "visible":true,"nullable":false,"width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"fields_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
+     { "name":"id", "visible":true,"nullable":false,"width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"syncronized_data_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}
     ,{ "name":"machine_id", "visible":false,"size":10,"nullable":true,"typeName":"varchar","digits":0,"type":"4","required":true }
     ,{ "name":"machine", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true,
-        "lookup":"sincronizer_machine","options":{
+        "lookup":"syncronizer_machines","options":{
             "lookupField":"name","targetColumn":"machine_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200", "commands":[]
         }
     }
@@ -15,7 +15,7 @@
     ,{ "name":"table", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
     ,{ "name":"target_machine_id", "visible":false,"size":10,"nullable":true,"typeName":"varchar","digits":0,"type":"4","required":true }
     ,{ "name":"target_machine", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true,
-        "lookup":"sincronizer_machine","options":{
+        "lookup":"syncronizer_machines","options":{
             "lookupField":"name","targetColumn":"target_machine_id","idColumn":"id","navVisible":true, "autoSelect":false, "status":"closed","width":"250px","height":"200", "commands":[]
         }
     }
@@ -36,9 +36,14 @@
         }
     ]
 ,"filters":[
-        {"name":"Project","nRows":1,"nCols":1
+        {"name":"Project","nRows":2,"nCols":3
             ,"columns":[
-                {"name":"machine","tooltip":"machine name","label":"name","row":0,"col":0}
+                 {"name":"machine","tooltip":"machine name","label":"source machine","row":0,"col":0}
+                ,{"name":"schema","tooltip":"machine name","label":"source schema","row":0,"col":1}
+                ,{"name":"table","tooltip":"machine name","label":"source table","row":0,"col":2}
+                ,{"name":"target_machine","tooltip":"target_machine","label":"target machine","row":1,"col":0}
+                ,{"name":"target_schema","tooltip":"target schema","label":"target schema","row":1,"col":1}
+                ,{"name":"target_table","tooltip":"target table","label":"target table","row":1,"col":2}
             ]
         }
     ]
@@ -55,7 +60,7 @@
 	,{ "name":"paste"}
 	,{ "name":"next"}
 	,{ "name":"previous"}
-        ,{ "name":"exec", "img":"gear.png", "size":20, "server":"app.liquidx.syncronizer.syncronizerManager.execute", "params":["executeSQL"], "onDownloading":"syncronizerDownloading" }
+        ,{ "name":"exec", "img":"gear.png", "size":20, "server":"app.liquidx.syncronizer.syncronizerManager.execute", "params":["previewSyncronizer"], "onDownloading":"syncronizerDownloading" }
         
 ]
 ,"editable":true
