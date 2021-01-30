@@ -11,6 +11,7 @@ import app.liquidx.sql.*;
 import com.liquid.Callback;
 import com.liquid.connection;
 import com.liquid.db;
+import com.liquid.metadata;
 import com.liquid.utility;
 
 import java.sql.Connection;
@@ -18,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,6 +50,10 @@ public class syncronizerManager {
 
                 JSONObject previewSyncronizerSON = com.liquid.event.getJSONObject(params, "data", "previewSyncronizer");
                 boolean bPreviewSyncronizer = "true".equalsIgnoreCase( previewSyncronizerSON.getString("data")) ? true : false;
+                
+                
+                JSONObject deepModeSON = com.liquid.event.getJSONObject(params, "data", "deepMode");
+                boolean bDeepMode = "true".equalsIgnoreCase( deepModeSON.getString("data")) ? true : false;
                 
                 {
 
@@ -146,8 +152,7 @@ public class syncronizerManager {
                                     }
                                                                         
                                     try {
-                                    
- 
+                                        
                                         //
                                         //  Process the sql for the schema
                                         //
@@ -158,47 +163,98 @@ public class syncronizerManager {
                                             {
                                                 if(sconn != null && tconn != null) {
 
+                                                    Callback.send("setting schema to " + schema + "...");
+                                                    
                                                     if(!db.setSchema(sconn, engine, schema)) {
                                                         String msg = "Error setting schema '"+schema+"' on machine:"+ip+" engine:"+engine;
                                                         Callback.send("Process failed, <span style=\"color:red\">"+msg+"<span>");
 
                                                     } else {
 
+                                                        Callback.send("setting schema to " + targetSchema + "...");
+                                                        
                                                         if(!db.setSchema(tconn, targetEngine, targetSchema)) {
                                                             String msg = "Error setting schema '"+targetSchema+"' on machine:"+ip+" engine:"+engine;
                                                             Callback.send("Process failed, <span style=\"color:red\">"+msg+"<span>");
                                                             
                                                         } else {
+                                                            int iTable, nTables = 0;
+                                                            ArrayList<String> tables = null, targetTables = null;
                                                             
-                                                            String syncRes = db.syncronizeTableMetadata( 
-                                                                    database+"."+schema+"."+table, targetDatabase+"."+targetSchema+"."+targetTable, 
-                                                                    sconn, tconn, 
-                                                                    bPreviewSyncronizer ? "preview" : "mirror"
-                                                            );
+                                                            if(table.indexOf("*") != -1) {
+                                                                Callback.send("Reading multiple tables <span style=\"color:darkred\">"+table+"<span>");
+                                                                Object[] result = metadata.getAllTables(database, schema, table, null, sconn, false);
+                                                                if(result != null) {
+                                                                    if(result[0] != null) {
+                                                                        JSONObject tablesJSON = new JSONObject("{\"tables\":"+(String)result[0]+"}");
+                                                                        if(tablesJSON != null) {
+                                                                            tables = new ArrayList<String>();
+                                                                            targetTables = new ArrayList<String>();
+                                                                            JSONArray tablesJSONarray = tablesJSON.getJSONArray("tables");
+                                                                            String patternString = utility.createRegexFromGlob(table);
+                                                                            for (int ct = 0; ct < tablesJSONarray.length(); ct++) {
+                                                                                table = tablesJSONarray.getJSONObject(ct).getString("TABLE");
+                                                                                if(table.matches(patternString)) {
+                                                                                    tables.add(table);
+                                                                                    targetTables.add(table);
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            } else {
+                                                                tables = new ArrayList<String>();
+                                                                tables.add(table);
+                                                                targetTables = new ArrayList<String>();
+                                                                targetTables.add(table);
+                                                            }
                                                             
-                                                            JSONObject syncJSON = new JSONObject(syncRes);
-                                                            
-                                                            String preview = syncJSON.getString("preview");
-                                                                    
-                                                            sReport += 
-                                                                    "<span style=\"font-size:20px\">"
-                                                                    +"From <b>"+database+"."+schema+"."+table+"@"+ip+"</b>"+"<br/>to <b>"+database+"."+schema+"."+table+"@"+targetIp+"</b>"
-                                                                    +"<br/>"
-                                                                    +"<br/>"
-                                                                    +"<span style=\"font-size:17px\">"
-                                                                    + (preview.length() > 0 ? "<span style=\"color:darkGray\">"+utility.base64Decode(preview).replace("\n", "<br/>")+"</span>" : "")
-                                                                    +"</span>"
-                                                                    +"<br/>"
-                                                                    +"<span style=\"font-size:15px\">"
-                                                                    + (syncJSON.getJSONArray("deletingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Deleting columns:"+syncJSON.getJSONArray("deletingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing column in "+ip+"</span>")
-                                                                    +"<br/>"
-                                                                    +"<br/>"
-                                                                    + (syncJSON.getJSONArray("addingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Adding columns:"+syncJSON.getJSONArray("addingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing columns in "+targetIp+"</span>")
-                                                                    +"</span>"
-                                                                    +"<br/>"
-                                                                    +"<br/>"
-                                                                    +"<br/>"
-                                                                    ;
+                                                            nTables = tables.size();
+                                                            if(nTables > 0) {
+                                                                for(iTable=0; iTable<nTables; iTable++) {
+                                                                    table = tables.get(iTable);
+                                                                    targetTable = targetTables.get(iTable);
+
+                                                                    Callback.send("Resetting metadata cache...");
+                                                                    metadata.resetTableMetadata(database, schema, table);
+                                                                    metadata.resetTableMetadata(targetDatabase, targetSchema, targetTable);
+
+                                                                    Callback.send("analyzing table " +(iTable+1)+"/"+nTables+" " + table + "...");
+
+                                                                    String syncRes = db.syncronizeTableMetadata( 
+                                                                            database+"."+schema+"."+table, targetDatabase+"."+targetSchema+"."+targetTable, 
+                                                                            sconn, tconn, 
+                                                                            (bPreviewSyncronizer ? "preview" : "mirror") + (bDeepMode ? " deepMode" : "") + " callback"
+                                                                    );
+
+                                                                    JSONObject syncJSON = new JSONObject(syncRes);
+
+                                                                    String preview = syncJSON.has("preview") ? utility.base64Decode(syncJSON.getString("preview")) : "";
+
+
+                                                                    sReport += 
+                                                                            "<span style=\"font-size:20px\">"
+                                                                            +"From <b>"+database+"."+schema+"."+table+"@"+ip+"</b>"+"<br/>to <b>"+database+"."+schema+"."+targetTable+"@"+targetIp+"</b>"
+                                                                            +"<br/>"
+                                                                            +"<br/>"
+                                                                            +"<span style=\"font-size:17px\">"
+                                                                            + (preview != null && preview.length() > 0 ? "<span style=\"color:darkGray\">"+preview.replace("\n", "<br/>")+"</span>" : "")
+                                                                            +"</span>"
+                                                                            +"<br/>"
+                                                                            +"<span style=\"font-size:15px\">"
+                                                                            + (syncJSON.getJSONArray("deletingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Deleting columns from "+targetIp+" ("+syncJSON.getJSONArray("deletingColumns").length()+") : "+syncJSON.getJSONArray("deletingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing column in "+ip+"</span>")
+                                                                            +"<br/>"
+                                                                            +"<br/>"
+                                                                            + (syncJSON.getJSONArray("addingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Adding columns to "+targetIp+" ("+syncJSON.getJSONArray("addingColumns").length()+") : "+syncJSON.getJSONArray("addingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing columns in "+targetIp+"</span>")
+                                                                            +"</span>"
+                                                                            +"<br/>"
+                                                                            +"<br/>"
+                                                                            +"<br/>"
+                                                                            ;
+                                                                }
+                                                            } else {
+                                                                Callback.send("No table to process...");
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -229,6 +285,7 @@ public class syncronizerManager {
                                     }                                    
                                 }
 
+                                Callback.send("Done...");
 
                                 String result = "<div>"
                                         +"<span style=\"font-size:30px\">"

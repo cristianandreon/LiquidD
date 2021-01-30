@@ -60,7 +60,7 @@
 	,{ "name":"paste"}
 	,{ "name":"next"}
 	,{ "name":"previous"}
-        ,{ "name":"exec", "img":"gear.png", "size":20, "server":"app.liquidx.syncronizer.syncronizerManager.execute", "params":["previewSyncronizer"], "onDownloading":"syncronizerDownloading" }
+        ,{ "name":"exec", "img":"gear.png", "size":20, "server":"app.liquidx.syncronizer.syncronizerManager.execute", "params":["previewSyncronizer", "deepMode"], "onDownloading":"syncronizerDownloading" }
         
 ]
 ,"editable":true

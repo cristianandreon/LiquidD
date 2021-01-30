@@ -891,6 +891,8 @@
             <div class="spacer"></div>
             <br/>
             <br/>
+            <br/>
+            <br/>
             <center>
                 <div style="perspective:1500px;-webkit-perspective: 1500px">
                     <form id="syncronizerSQL" onsubmit="">
@@ -898,7 +900,7 @@
                             <tr>
                             </tr>
                             <tr>
-                                <td colspan="1" style="height:50px;">
+                                <td colspan="1" style="height:70px;">
                                     <div id="syncronizer_data" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
                                     </div>
                                  </td>
@@ -908,6 +910,16 @@
                                     <input id="previewSyncronizer" type="checkbox" style="padding:10px; height:30px; width:30px; " checked >Preview</input>
                                  </td>
                             </tr>
+                            <tr>
+                                <td colspan="1">
+                                    <input id="deepMode" type="checkbox" style="padding:10px; height:30px; width:30px; " checked >Deep mode</input>
+                                 </td>
+                            </tr>
+                        <tr>
+                            <td colspan="1" style="height:10px;">
+                             </td>
+                             
+                        </tr>
                         <tr>
                             <td colspan="1" style="height:50px;">
                                 <div id="outDivSyncronizer" style="height:100%; width:100%; border:1px solid lightgray"></div>
@@ -919,6 +931,19 @@
                 </div>
             </center>
             <br/>
+            <br/>
+            <br/>
+            <b>Preview</b> : show differences and the updating sql without execute any actions
+            <br/>
+            <b>DeepMode</b> : compare matching fields by checking data type, size, default, remarks
+            <br/>
+            <br/>
+            <b>N.B.</b> : you can syncronize multiple tables by wilcard (es.: <b>myTable*</b> in the source table field)
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>            
             <div id="syncronizerHtmlResult" style="display:none; width:calc(100% - 50px); border:1px solid lightgray"></div>
             <br/>
             <br/>

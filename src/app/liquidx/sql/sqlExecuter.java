@@ -46,7 +46,7 @@ public class sqlExecuter {
                 String newLine = "<br/>";
                 
                 JSONObject sSQLSON = com.liquid.event.getJSONObject(params, "data", "sql");
-                String sSQL = sSQLSON.getString("sql");
+                String sSQL = utility.base64Decode( sSQLSON.getString("sql") );
 
                 JSONObject executeSQLSON = com.liquid.event.getJSONObject(params, "data", "congirm");
                 boolean bExecuteSQL = "true".equalsIgnoreCase( executeSQLSON.getString("confirm")) ? true : false;
@@ -64,7 +64,7 @@ public class sqlExecuter {
                                     String machineId = (String)utility.get(mBean, "machine_id");
                                     String schema = (String)utility.get(mBean, "schema");
 
-                                    Object machineBean = (Object)db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.machines", "*", machineId);
+                                    Object machineBean = (Object)db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.sql_machines", "*", machineId);
 
                                     String engine = (String)utility.get(machineBean, "engine");
                                     String ip = (String)utility.get(machineBean, "ip");
@@ -80,6 +80,7 @@ public class sqlExecuter {
                                     // Connect
                                     //
                                     Connection conn = null;
+                                    Statement stmt = null;
 
                                     if(bExecuteSQL) {
                                         Callback.send("Connectiong to " + ip + " ("+engine+") ...");
@@ -129,7 +130,7 @@ public class sqlExecuter {
                                                             
                                                         } else {
                                                         
-                                                            Statement stmt = conn.createStatement();
+                                                            stmt = conn.createStatement();
                                                             boolean res = stmt.execute(sSQL);
                                                             if(!res) {
                                                                 ResultSet rs = stmt.getResultSet();
@@ -155,11 +156,15 @@ public class sqlExecuter {
                                             conn.rollback();
                                         }
                                     } finally {
+                                        if(stmt != null) {
+                                            stmt.close();
+                                        }
                                         if(conn != null) {
                                             conn.close();
                                         }
                                     }                                    
                                 }
+                                
 
 
                                 String result = "<div>"
