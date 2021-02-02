@@ -8,11 +8,13 @@ package app.liquidx.sql;
 
 
 import com.liquid.Callback;
+import com.liquid.Messagebox;
 import com.liquid.db;
 import com.liquid.utility;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -44,12 +46,13 @@ public class sqlExecuter {
                 String hibernateHBMFile = "";
                 String hibernatJavaFile = "";
                 String newLine = "<br/>";
+                String sReport = "";
                 
                 JSONObject sSQLSON = com.liquid.event.getJSONObject(params, "data", "sql");
                 String sSQL = utility.base64Decode( sSQLSON.getString("sql") );
 
-                JSONObject executeSQLSON = com.liquid.event.getJSONObject(params, "data", "congirm");
-                boolean bExecuteSQL = "true".equalsIgnoreCase( executeSQLSON.getString("confirm")) ? true : false;
+                JSONObject confirmSQLSON = com.liquid.event.getJSONObject(params, "data", "congirm");
+                boolean bConfirmSQL = "true".equalsIgnoreCase( confirmSQLSON.getString("confirm")) ? true : false;
                 
                 if (sSQLSON != null) {
 
@@ -82,8 +85,8 @@ public class sqlExecuter {
                                     Connection conn = null;
                                     Statement stmt = null;
 
-                                    if(bExecuteSQL) {
-                                        Callback.send("Connectiong to " + ip + " ("+engine+") ...");
+                                    {
+                                        Callback.send("Connecting to " + ip + " ("+engine+") ...");
                                         System.out.println("Connecting to " + ip + " ("+engine+") ...");
                                         try {
                                             Object [] connResult = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
@@ -91,7 +94,7 @@ public class sqlExecuter {
                                             String connError = (String)connResult[1];                                            
                                         } catch (Throwable th) {
                                             String err = "Error:" + th.getLocalizedMessage();
-                                            System.out.println("Error connectiong to " + ip + "("+engine+") : "+th.getLocalizedMessage());
+                                            System.out.println("Error connecting to " + ip + "("+engine+") : "+th.getLocalizedMessage());
                                             Callback.send("<span style=\"color:red\">Error  to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");
                                             Thread.sleep(5000);
                                         }
@@ -115,9 +118,28 @@ public class sqlExecuter {
                                             allSQL += "<span style=\"font-size:15px\">"+" - Machine "+ip+" ("+engine+")</span>";                                            
                                             allSQL += newLine;
                                             
-                                           
+                                           boolean bExecuteSQL = true;
                                             
 
+                                           if(bConfirmSQL) {
+                                                bExecuteSQL = false;
+                                                String message = " Executing sql on <b>" + schema + "@" + ip + " - " + engine + "</b></br>"
+                                                        + "</br>"
+                                                        + "</br>"
+                                                        + "</br>"
+                                                        + "<span style=\"font-size:85%; left:50px; position: relative;\">"
+                                                        + "sql : <b>" + sSQL + "</b></br>"
+                                                        + "</br>"
+                                                        + "</span>";
+
+                                                if (Messagebox.show(message, "LiquidD", Messagebox.QUESTION + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {                                                    
+                                                    bExecuteSQL = true;
+                                                }                                           
+                                            }
+                                           
+                                           
+                                           
+        
                                             {
                                                 // execute sql
                                                 if(bExecuteSQL) {
@@ -130,17 +152,42 @@ public class sqlExecuter {
                                                             
                                                         } else {
                                                         
-                                                            stmt = conn.createStatement();
-                                                            boolean res = stmt.execute(sSQL);
-                                                            if(!res) {
-                                                                ResultSet rs = stmt.getResultSet();
-                                                                if(rs != null) {
-                                                                    if(rs.next()) {
-                                                                        String result = rs.getString(1);
-                                                                        if(result != null) {
+                                                            String [] sSQLs = sSQL.split(";");
+                                                                
+                                                            for(int is=0; is<sSQLs.length; is++) {
+                                                                
+                                                                Callback.send("<span style=\"\">Exetuting:<b>" + sSQLs[is] + "</b><span>");
+                                                                
+                                                                try {
+                                                                    stmt = conn.createStatement();
+                                                                    boolean res = stmt.execute(sSQLs[is]);
+                                                                    if(res) {
+                                                                        ResultSet rs = stmt.getResultSet();
+                                                                        if(rs != null) {
+                                                                            if(rs.next()) {
+                                                                                String result = rs.getString(1);
+                                                                                if(result != null) {
+                                                                                }
+                                                                            }
                                                                         }
+                                                                    } else {
+                                                                        SQLWarning w = stmt.getWarnings();
+                                                                        String err = "SQL FAILED : "+sSQLs[is] + ( w != null ? " - "+w.getMessage() : "" );
+                                                                        Callback.send("<span style=\"color:red\">" + err + "<span>");
+                                                                        sReport += "Sql failed : "+sSQLs[is]+"<br/><br/>";
+                                                                        Thread.sleep(3000);
                                                                     }
+                                                                    
+                                                                } catch (Throwable th) {
+                                                                    String err = "Error in : "+sSQLs[is]+" : "+th.getMessage();
+                                                                    Callback.send("<span style=\"color:red\">" + err + "<span>");
+                                                                    sReport += "Error in : "+sSQLs[is]+" : "+th.getMessage() + "<br/><br/>";
+                                                                    Thread.sleep(3000);
                                                                 }
+                                                                if(stmt != null) {
+                                                                    stmt.close();
+                                                                }
+                                                                stmt = null;
                                                             }
                                                         }
                                                     }
@@ -166,10 +213,12 @@ public class sqlExecuter {
                                 }
                                 
 
+                                Callback.send("Done...");
 
                                 String result = "<div>"
                                         +"<span style=\"font-size:30px\">"
                                         +"Report:"
+                                        +sReport
                                         +"</span>"
                                         +"</br></br></br>"
                                         +"</div>"
@@ -189,7 +238,7 @@ public class sqlExecuter {
             }
         } catch (Throwable th) {
             String err = "Error:" + th.getLocalizedMessage();
-            Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+            Callback.send("Sql failed, <span style=\"color:red\">" + err + "<span>");
             return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\" }";
         }
         

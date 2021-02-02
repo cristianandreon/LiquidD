@@ -37,24 +37,52 @@
 
     if(overloadDriver != null && !overloadDriver.isEmpty()) {
         driver = overloadDriver;
+        session.setAttribute("driver", driver);
+    } else {
+        if(session.getAttribute("driver") != null) 
+            driver = (String)session.getAttribute("driver");
     }
     if(overloadHost != null && !overloadHost.isEmpty()) {
         host = overloadHost;
+        session.setAttribute("host", host);
+    } else {
+        if(session.getAttribute("host") != null) 
+            host = (String)session.getAttribute("host");
     }
     if(overloadUser != null && !overloadUser.isEmpty()) {
         user = overloadUser;
+        session.setAttribute("user", user);
+    } else {
+        if(session.getAttribute("user") != null) 
+            user = (String)session.getAttribute("user");
     }
     if(overloadPassword != null && !overloadPassword.isEmpty()) {
         password = overloadPassword;
+        session.setAttribute("password", password);
+    } else {
+        if(session.getAttribute("password") != null) 
+            password = (String)session.getAttribute("password");
     }
     if(overloadDatabase != null && !overloadDatabase.isEmpty()) {
         database = overloadDatabase;
+        session.setAttribute("database", database);
+    } else {
+        if(session.getAttribute("database") != null) 
+            database = (String)session.getAttribute("database");
     }
     if(overloadPort != null && !overloadPort.isEmpty()) {
         port = overloadPort;
+        session.setAttribute("port", port);
+    } else {
+        if(session.getAttribute("port") != null) 
+            port = (String)session.getAttribute("port");
     }
     if(overloadService != null && !overloadService.isEmpty()) {
         service = overloadService;
+        session.setAttribute("service", service);
+    } else {
+        if(session.getAttribute("service") != null) 
+            service = (String)session.getAttribute("service");
     }
 
  
@@ -78,6 +106,9 @@
     } catch (Exception e){
         e.printStackTrace();
     }
+    
+    // Test locale VPS GS
+    // http://localhost:90/LiquidD/?host=192.168.0.90&port=5432&user=postgres&password=postgres
 
 %>
 
@@ -257,6 +288,12 @@
 
 
         </script>
+        
+        
+        <script type='text/javascript'>
+            if(history.replaceState) history.replaceState({}, "", "/LiquidD");
+        </script>
+
     </head>
     
     <body onload="onLoad(); startDeploysCfg(); startProjectHelper(); startImporter(); startSyncronyzer(); startSqlExecuter();">
@@ -433,7 +470,7 @@
     database = <b>"LiquidX";</b>
     user = <b>"liquid";</b>
     password = <b>"liquid";</b>
-    service = <b>"orcl";</b>
+    service = <b>"";</b>
                     </code>
                 </pre>
             </div>
@@ -473,13 +510,14 @@
             You can define the host "database.liquidd.com" by setting it inside your host file
             <br/>
             <br/>
+            Geting Started :
             If you want to replace any other parameters you can pass it in the url .. ex :
             <br/>
             <br/>
             <div class="code1" id="codeSample1">
                 <pre class="code">
                     <code class="html">
-    localhost:8080/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1532&database=myLiquidDatabase&user=myLiquidUser&password=myLiquidPassword&service=myService</b>
+localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiquidDatabase&user=myLiquidUser&password=myLiquidPassword&service=myService</b>
                     </code>
                 </pre>
             </div>
@@ -493,11 +531,12 @@
             <br/>
             <br/>
             <br/>
-            Run docker image :
+            Run docker image (in the terminal) :
             <br/>
             <div class="code1" id="codeSample1">
                 <pre class="code">
                     <code class="bash">
+                        
     docker pull liquidd/webapp
 
     docker run -p 90:8080 liquidd/webapp
@@ -508,7 +547,98 @@
             <br/>
             <br/>
             <br/>
-            
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            Build docker image (in the terminal) :
+            <br/>
+            <div class="code1" id="codeSample1">
+                <pre class="code">
+                    <code class="bash">
+    
+    cd /Users/administrator/LiquiDDocked/web
+    docker image build -t liquidd/webapp ./
+
+                    </code>
+                </pre>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            Run web app by typing in your browser :
+            <br/>
+            <div class="code1" id="codeSample1">
+                <pre class="code">
+                    <code class="bash">
+                        
+    http://localhost:90/LiquidD/?host=192.168.0.90&port=5432&user=postgres&password=...
+
+                    </code>
+                </pre>
+            </div>
+            <br/>
+            N.B.: you need to define a data source outside docker
+            N.B.: once the parameters was recived they'll be stored in session and hidden from the url
+            <br/>
+            <br/>            
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            If you need to export/import docker image :
+            <br/>
+            <div class="code1" id="codeSample1">
+                <pre class="code">
+                    <code class="bash">
+                        
+    docker save liquidd/webapp > /tmp/liquidd-webapp.tar
+    
+    docker load < /tmp/liquidd-webapp.tar
+
+                    </code>
+                </pre>
+            </div>
+            <br/>
+            N.B.: you need to define a data source outside docker
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            If you need to push docker image into the hub:
+            <br/>
+            <div class="code1" id="codeSample1">
+                <pre class="code">
+                    <code class="bash">
+                        
+    docker login -u liquidframework
+    
+    // FCK : Error saving credentials: error storing credentials - err: exit status 1, out: `Unable to obtain authorization for this operation.`
+    
+    docker push liquidd/webapp
+                    </code>
+                </pre>
+            </div>
+            <br/>
+            <br/>
+            <br/>
 
         </div>   
 

@@ -440,11 +440,12 @@ public class deployManager {
                                                 + "</span>"
                                                 + "</br>"
                                                 + "<span style=\"font-size:80%; left:50px; position: relative;\">"
-                                                + "</br> - Deploy app to <b>" + deployFolder + "/" + webAppWAR + "</b></br>"
                                                 + "</br>"
+                                                + " - Deploy app from <b>" + deployFolder + "/" + webAppWAR + "</b></br>"
                                                 + "</br>"
-                                                + "<span style=\"font-size:110%; left:50px; position: relative;\">"
-                                                + "</br>Deploy app to <b>" + deployFolder + "/" + webAppWAR + "</b></br>"
+                                                + "<span style=\"font-size:80%; left:50px; position: relative;\">"
+                                                + "</br>"
+                                                + " to <b>" + deployFolder + "/" + webAppWAR + "</b></br>"
                                                 + "</span>";
                                         if (Messagebox.show(message, "LiquidD", Messagebox.QUESTION + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
                                         } else {
