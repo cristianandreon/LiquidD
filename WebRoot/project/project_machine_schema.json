@@ -1,7 +1,7 @@
 { 
  "database":"LiquidX"
 ,"schema":"liquidx"
-,"table":"machine_schema"
+,"table":"project_machine_schema"
 ,"primaryKey":"id"
 ,"columns":[
      { "visible":false,"nullable":false,"name":"id","width":"50","typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"machine_schema_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"digits":0}

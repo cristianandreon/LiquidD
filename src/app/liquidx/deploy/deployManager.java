@@ -450,6 +450,7 @@ public class deployManager {
                                         if (Messagebox.show(message, "LiquidD", Messagebox.QUESTION + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
                                         } else {
                                             // Stop here
+                                            Callback.send("Deploy not completed : operation not confirmed by user");
                                             return retVal;
                                         }
                                     }

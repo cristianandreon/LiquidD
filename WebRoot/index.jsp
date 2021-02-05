@@ -202,8 +202,7 @@
                 Liquid.startPopup('projects', '<%=workspace.get_file_content(request, "/project/projects.json")%>');
                 Liquid.startPopup('machines', '<%=workspace.get_file_content(request, "/project/machines.json")%>');
                 Liquid.startPopup('schemas', '<%=workspace.get_file_content(request, "/project/schemas.json")%>');
-                Liquid.startPopup('project_machine', '<%=workspace.get_file_content(request, "/project/project_machine.json")%>');
-                Liquid.startPopup('machine_schema', '<%=workspace.get_file_content(request, "/project/machine_schema.json")%>');
+                Liquid.startPopup('project_machine_schema', '<%=workspace.get_file_content(request, "/project/project_machine_schema.json")%>');
                 Liquid.startPopup('fields', '<%=workspace.get_file_content(request, "/project/fields.json")%>');
             }
 
@@ -924,23 +923,6 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             <br/>
             <br/>
-            <div class="title1">Project's machines</div>
-            <div class="spacer"></div>
-            <br/>
-            <br/>
-            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
-                <tr>
-                    <td colspan="1" style="">
-                        <div id="project_machine" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
-                        </div>
-                     </td>
-                </tr>
-            </table>
-            <br/>
-            <br/>
-            <br/>            
-            <br/>
-            <br/>
             <br/>
             <div class="title1">Project's Machine's schemas</div>
             <div class="spacer"></div>
@@ -949,7 +931,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="machine_schema" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="project_machine_schema" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
                         </div>
                      </td>
                 </tr>

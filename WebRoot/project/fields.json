@@ -32,7 +32,7 @@
                 ,{"name":"field","tooltip":"Field's name","label":"Field name","row":3,"col":0}
                 ,{"name":"type","tooltip":"Field's data type","label":"Type","row":4,"col":0}
                 ,{"name":"size","tooltip":"Field's size","label":"Size","row":5,"col":0}
-                ,{"name":"size","tooltip":"Field's size","label":"Size","row":6,"col":0}
+                ,{"name":"scale","tooltip":"Field's scale","label":"Scale","row":6,"col":0}
                 ,{"name":"nullable","tooltip":"Field's nullable","label":"Nullable","row":7,"col":0}
                 ,{"name":"def","tooltip":"Field's default value","label":"Default","row":8,"col":0}
                 ,{"name":"remarks","tooltip":"Field's comment","label":"Remarks","row":9,"col":0}

@@ -58,6 +58,7 @@ public class projectManager {
                 
                 JSONObject executeSQLSON = com.liquid.event.getJSONObject(params, "data", "executeSQL");
                 boolean bExecuteSQL = "true".equalsIgnoreCase( executeSQLSON.getString("data")) ? true : false;
+                ArrayList<String> schemaProcessed = new ArrayList<String>();
                 
                 if (fieldsBean != null) {
                     projectId = (String)utility.get(fieldsBean.get(0),"project_id");
@@ -66,15 +67,17 @@ public class projectManager {
 
                     // Lettura del bean macchine
                     if (projectId != null && !projectId.isEmpty()) {
+                        
                         Object projectBean = db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.projects", "*", projectId);
                         String folder = (String)utility.get(projectBean, "folder");
                         String project = (String)utility.get(projectBean, "name");
                         if (projectBean != null) {
-                            ArrayList<Object>  machinesBean = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "project_machine", null, "*", "where project_id='"+projectId+"'", 0);
-                            if (machinesBean != null) {
-                                for(int im=0; im<machinesBean.size(); im++) {
-                                    Object mBean = machinesBean.get(im);
+                            ArrayList<Object>  projectMachineSchemasBean = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "project_machine_schema", null, "*", "where project_id='"+projectId+"'", 0);
+                            if (projectMachineSchemasBean != null) {
+                                for(int ims=0; ims<projectMachineSchemasBean.size(); ims++) {
+                                    Object mBean = projectMachineSchemasBean.get(ims);
                                     String machineId = (String)utility.get(mBean, "machine_id");
+                                    String schema = (String)utility.get(mBean, "schema");
 
                                     Object machineBean = (Object)db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.machines", "*", machineId);
 
@@ -126,12 +129,9 @@ public class projectManager {
                                     
  
                                         //
-                                        //  Process the sql for every schema
+                                        //  Process the sql for this schema
                                         //
-                                        ArrayList<Object>  schemasBean = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "machine_schema", null, "*", "where machine_id='"+machineId+"' and project_id='"+projectId+"'", 0);
-                                        for(int is=0; is<schemasBean.size(); is++) {
-                                            Object schemaBean = schemasBean.get(is);
-                                            String schema = (String)utility.get(schemaBean, "schema");
+                                        if(schema != null && !schema.isEmpty()) {
 
                                             allSQL += newLine;
                                             allSQL += newLine;
@@ -200,7 +200,7 @@ public class projectManager {
                                                                 }
                                                             }
                                                         } catch (Exception ex) {
-                                                            exepts += "[ SQL:"+fSqlCode+"<br/>Error:"+ex.getMessage()+"]";
+                                                            exepts += "[ machine:"+ip+" schema:"+schema+" SQL:"+fSqlCode+"<br/>Error:"+ex.getMessage()+"]";
                                                         }
                                                     }
                                                 }
@@ -213,7 +213,7 @@ public class projectManager {
                                                 }
 
 
-                                                if(is == 0 && im == 0) { // only at first cycle
+                                                if(utility.contains(schemaProcessed, schema)) { // only at first cycle
 
                                                     hibernateHBMFile = nameSpacer.DB2Hibernate(fieldTable) + ".hbm.xml";
                                                     hibernatJavaFile = nameSpacer.DB2Hibernate(fieldTable) + ".java";
@@ -288,6 +288,8 @@ public class projectManager {
                                                     allXML += zkCode;
 
                                                     // Generale Liquid .json     
+                                                } else {                                                
+                                                    schemaProcessed.add(schema);
                                                 }
                                             }
                                         }
