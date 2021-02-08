@@ -271,17 +271,62 @@ public class deployManager {
                             if (Messagebox.show(message, "LiquidD", Messagebox.QUESTION + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
 
                                 //
+                                // Apertura sessione ssh
+                                //
+                                Callback.send("1&deg;/5 - Open ssh session ...");
+                                sshManager ssh = new sshManager();
+                                ssh.connect(host, user, password);
+
+                                Callback.send("1&deg;/5 - Logging as root...");
+
+                                /*
+                                // Carica anche .session .login
+                                String cmd = "sudo -i";
+                                ssh.cmd(cmd, password);
+                                */
+
+                                // impersona solamente l'utente root senza altre azioni di login
+                                String cmd = "sudo su -";
+                                ssh.cmd(cmd, password);
+
+
+                                ssh.removeLastCommand();
+
+
+
+                                
+                                //
                                 // 1° upload
                                 //
                                 
                                 long currentFileSize = 0;
                                 long lRetVal = 0;
                                 
+                                Callback.send("1&deg;/5 - Uploading file...");
+                                
                                 if("scp".equalsIgnoreCase(protocol)) {
-
-                                    uploadFileOk = scpManager.uploadFile(user, password, host, 22, copyFolder + "/" + webAppWAR, glSourceFile);
                                     
-                                    currentFileSize = lRetVal;
+                                    //
+                                    // make dir by ssh .. even scp fails if folder doesn't exist
+                                    //
+                                    if(!ssh.create_folders(copyFolder, user)) {
+                                        String err = "Failed to create folder " + copyFolder + "...";
+                                        java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, err);
+                                        Callback.send("Error: <span style=\"color:red\">" + err + "<span>");
+                                    }
+
+                                    try {
+                                    
+                                        uploadFileOk = scpManager.uploadFile(user, password, host, 22, copyFolder + "/" + webAppWAR, glSourceFile);
+                                    
+                                        currentFileSize = lRetVal;
+                                        
+                                    } catch (Exception ex) {
+                                        java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
+                                        String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
+                                        Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+                                        return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                                    }
 
                                 } else {
                                 
@@ -342,31 +387,13 @@ public class deployManager {
                                     //
                                     Callback.send("1&deg;/5 - Checking uploaded file...");
                                     if (currentFileSize != lRetVal) {
-                                        msg = "Error :Failed to upload current war (" + copyFolder + "/" + webAppWAR + ")<br/><br/>... size mismath : " + currentFileSize + "/" + retVal + "";
+                                        msg = "Error : Failed to upload current war (" + copyFolder + "/" + webAppWAR + ")<br/><br/>... size mismath : " + currentFileSize + "/" + retVal + "";
                                         Callback.send(msg);
                                         Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
                                         return retVal;
                                     }
 
-                                    //
-                                    // Apertura sessione ssh
-                                    //
-                                    Callback.send("1&deg;/5 - Open ssh session ...");
-                                    sshManager ssh = new sshManager();
-                                    ssh.connect(host, user, password);
 
-                                    Callback.send("1&deg;/5 - Logging as root...");
-                                    
-                                    /*
-                                    String cmd = "sudo -i";
-                                    ssh.cmd(cmd, password);
-                                    */
-
-                                    String cmd = "sudo su -";
-                                    ssh.cmd(cmd, password);
-
-                                    
-                                    ssh.removeLastCommand();
                                     
                                             
                                     // 2° backup
@@ -375,17 +402,45 @@ public class deployManager {
                                     //
                                     if (doBackup) {
                                         Callback.send("2&deg;/5 - Backup file (only if missing or older)...");
-                                        cmd = "mkdir -p " + backupFolder;
-                                        ssh.cmd(cmd);
+                                        
+                                        if(!ssh.create_folders(backupFolder, user)) {
+                                            String err = "Failed to create folder " + backupFolder + "...";
+                                            java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, err);
+                                            Callback.send("Error: <span style=\"color:red\">" + err + "<span>");
+                                        }
+                                        
                                         cmd = "cp " + deployFolder + "/" + webAppWAR + " " + backupFolder + " -u";
                                         ssh.cmd(cmd);
 
+
+                                        Thread.sleep(500);
+
                                         //
-                                        // Verifica file copiato ?
+                                        // Verifica file copiato ...
                                         //
                                         Callback.send("2&deg;/5 - Checking backup file in " + backupFolder + "...");
-                                        cmd = "ls " + backupFolder + "/" + webAppWAR + " -al";
-                                        ssh.cmd(cmd);
+                                        currentFileSize = getRemoteFileSize(host, user, password, backupFolder + "/" + webAppWAR, protocol);
+                                        if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {                                            
+
+                                            Thread.sleep(1000);
+
+                                            Callback.send("3&deg;/5 - Retry to copy current file to " + backupFolder + "...");
+                                            cmd = "sudo mkdir -p " + backupFolder;
+                                            ssh.cmd(cmd);
+                                            cmd = "sudo cp " + deployFolder + "/" + webAppWAR + " " + backupFolder + " -u";
+                                            ssh.cmd(cmd);
+
+                                            Thread.sleep(1000);
+
+                                            currentFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR, protocol);
+                                            if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
+                                                msg = "Error : Failed to backup current war (" + backupFolder + "/" + webAppWAR + ")<br/><br/>... maybe file was locked, not enough space or insufficient privileges...";
+                                                Callback.send(msg);
+                                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
+                                                return retVal;
+                                            }
+                                        }
+                                        
                                     } else {
                                         Callback.send("2&deg;/5 - Backup skipped, remote file is up to date...");
                                         Thread.sleep(3000);
@@ -414,7 +469,7 @@ public class deployManager {
                                         currentFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR, protocol);
                                         if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
 
-                                            msg = "Error :Failed to remove current war (" + deployFolder + "/" + webAppWAR + ")<br/><br/>... maybe file was locked ";
+                                            msg = "Error : Failed to remove current war (" + deployFolder + "/" + webAppWAR + ")<br/><br/>... maybe file was locked ";
                                             Callback.send(msg);
                                             Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
                                             return retVal;
@@ -537,14 +592,20 @@ public class deployManager {
 
                                     long copiedFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR, protocol);
                                     if (copiedFileSize != glFileSize) {
-                                        msg = "WARNING : remote file deployed size : " + copiedFileSize + " / uploaded file size : " + glFileSize;
-                                        msg += " <br/> may be cp command failed :";
-                                        msg += " <br/></b> " + cmd + "</b>";
-                                        Callback.send(msg);
-                                        Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.WARNING);
-                                        // return null;
+                                        
+                                        if("scp".equalsIgnoreCase(protocol)) {
+                                            // scp cannot get file size in deploy folder, that is root owned
+                                        } else {                                        
+                                            msg = "WARNING : remote file deployed size : " + copiedFileSize + " / uploaded file size : " + glFileSize;
+                                            msg += " <br/> may be cp command failed :";
+                                            msg += " <br/></b> " + cmd + "</b>";
+                                            Callback.send(msg);
+                                            Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.WARNING);
+                                            // return null;
+                                        }
                                     }
 
+                                    //
                                     // 5° check web app	                            
                                     //
                                     // verifica risposta
@@ -572,9 +633,16 @@ public class deployManager {
                                                 msg = "Deploy of " + cfgName + " <span style=\"color:darkGreen\">done, checked and online</span>";
                                                 Callback.send("5&deg; - " + msg);
                                             } else {
-                                                msg_for_notity = "Deploy of " + cfgName + "deployed file's size mismath (" + remoteFileSize + "/" + glFileSize;
-                                                msg = "Deploy of " + cfgName + " <span style=\"color:red\">deployed file's size mismath (" + remoteFileSize + "/" + glFileSize + ")<span>";
-                                                Callback.send("5&deg; - " + msg);
+                                                if("scp".equalsIgnoreCase(protocol)) {
+                                                    // scp cannot get file size in deploy folder, that is root owned
+                                                    msg_for_notity = "Deploy of " + cfgName + "deployed file's size bot checked (scp doesn't allow to get file size)";
+                                                    msg = "Deploy of " + cfgName + " <span style=\"color:rdarked\">deployed file's size mismath (" + remoteFileSize + "/" + glFileSize + ")<span>";
+                                                    Callback.send("5&deg; - " + msg);
+                                                } else {                                        
+                                                    msg_for_notity = "Deploy of " + cfgName + "deployed file's size mismath (" + remoteFileSize + "/" + glFileSize+")";
+                                                    msg = "Deploy of " + cfgName + " <span style=\"color:red\">deployed file's size mismath (" + remoteFileSize + "/" + glFileSize + ")<span>";
+                                                    Callback.send("5&deg; - " + msg);
+                                                }
                                             }
                                         } else {
                                             msg_for_notity = "Deploy of " + cfgName + " done but web app " + webAppWAR + " not running";
