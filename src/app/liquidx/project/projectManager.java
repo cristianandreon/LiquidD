@@ -58,7 +58,7 @@ public class projectManager {
                 
                 JSONObject executeSQLSON = com.liquid.event.getJSONObject(params, "data", "executeSQL");
                 boolean bExecuteSQL = "true".equalsIgnoreCase( executeSQLSON.getString("data")) ? true : false;
-                ArrayList<String> schemaProcessed = new ArrayList<String>();
+                ArrayList<String> projectsProcessed = new ArrayList<String>();
                 
                 if (fieldsBean != null) {
                     projectId = (String)utility.get(fieldsBean.get(0),"project_id");
@@ -213,7 +213,7 @@ public class projectManager {
                                                 }
 
 
-                                                if(utility.contains(schemaProcessed, schema)) { // only at first cycle
+                                                if(!utility.contains(projectsProcessed, project)) { // only at first cycle
 
                                                     hibernateHBMFile = nameSpacer.DB2Hibernate(fieldTable) + ".hbm.xml";
                                                     hibernatJavaFile = nameSpacer.DB2Hibernate(fieldTable) + ".java";
@@ -252,7 +252,7 @@ public class projectManager {
                                                     String javaVarCode = "private String "+hibFieldName+";"+newLine;
                                                     allJAVAVar += javaVarCode;
 
-                                                    String getSethibFieldName = hibFieldName.substring(0, 1).toLowerCase()  + hibFieldName.substring(1);
+                                                    String getSethibFieldName = hibFieldName.substring(0, 1).toUpperCase()  + hibFieldName.substring(1);
                                                     String javaCode = 
                                                             "public String get"+getSethibFieldName+"() {"+newLine
                                                             +"\treturn this."+hibFieldName+";"+newLine
@@ -288,8 +288,7 @@ public class projectManager {
                                                     allXML += zkCode;
 
                                                     // Generale Liquid .json     
-                                                } else {                                                
-                                                    schemaProcessed.add(schema);
+                                                    projectsProcessed.add(project);
                                                 }
                                             }
                                         }
