@@ -172,10 +172,12 @@ public class sqlExecuter {
                                                                         }
                                                                     } else {
                                                                         SQLWarning w = stmt.getWarnings();
-                                                                        String err = "SQL FAILED : "+sSQLs[is] + ( w != null ? " - "+w.getMessage() : "" );
-                                                                        Callback.send("<span style=\"color:red\">" + err + "<span>");
-                                                                        sReport += "Sql failed : "+sSQLs[is]+"<br/><br/>";
-                                                                        Thread.sleep(3000);
+                                                                        if(w != null) {
+                                                                            String err = "SQL WARNING : "+sSQLs[is] + ( w != null ? " - "+w.getMessage() : "" );
+                                                                            Callback.send("<span style=\"color:orange\">" + err + "<span>");
+                                                                            sReport += "Sql warning : "+sSQLs[is]+"<br/><br/>";
+                                                                            Thread.sleep(3000);
+                                                                        }
                                                                     }
                                                                     
                                                                 } catch (Throwable th) {

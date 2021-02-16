@@ -286,7 +286,7 @@ public class deployManager {
                                 */
 
                                 // impersona solamente l'utente root senza altre azioni di login
-                                String cmd = "sudo su -";
+                                String cmd = " sudo su -";
                                 ssh.cmd(cmd, password);
 
 
@@ -335,7 +335,7 @@ public class deployManager {
                                     try {
                                         Object[] result = sftp.upload(host, user, password, glSourceFile, sourceFileIS, copyFolder + "/" + webAppWAR);
                                         lRetVal = (long) result[0];
-                                        doBackup = (boolean) result[1];
+                                        if(doBackup) doBackup = (boolean) result[1];
                                         if (lRetVal > 0) {
                                             if (fileSize != null && !fileSize.isEmpty()) {
                                                 if (Long.parseLong(fileSize) != lRetVal) {
@@ -425,7 +425,7 @@ public class deployManager {
                                             Thread.sleep(1000);
 
                                             Callback.send("3&deg;/5 - Retry to copy current file to " + backupFolder + "...");
-                                            cmd = "sudo mkdir -p " + backupFolder;
+                                            cmd = " sudo mkdir -p " + backupFolder;
                                             ssh.cmd(cmd);
                                             cmd = "sudo cp " + deployFolder + "/" + webAppWAR + " " + backupFolder + " -u";
                                             ssh.cmd(cmd);

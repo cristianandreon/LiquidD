@@ -245,7 +245,7 @@ public class syncronizerManager {
                                                                             + (syncJSON.getJSONArray("deletingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Deleting columns from "+targetIp+" ("+syncJSON.getJSONArray("deletingColumns").length()+") : "+syncJSON.getJSONArray("deletingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing column in "+ip+"</span>")
                                                                             +"<br/>"
                                                                             +"<br/>"
-                                                                            + (syncJSON.getJSONArray("addingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Adding columns to "+targetIp+" ("+syncJSON.getJSONArray("addingColumns").length()+") : "+syncJSON.getJSONArray("addingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing columns in "+targetIp+"</span>")
+                                                                            + (syncJSON.getJSONArray("addingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Missing columns in "+targetIp+" ("+syncJSON.getJSONArray("addingColumns").length()+") : "+syncJSON.getJSONArray("addingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing columns in "+targetIp+"</span>")
                                                                             +"</span>"
                                                                             +"<br/>"
                                                                             +"<br/>"

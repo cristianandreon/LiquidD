@@ -211,9 +211,11 @@ public class projectManager {
                                                     if(conn != null) {
                                                     }
                                                 }
+                                                
+                                                String key = project+"."+fieldName;
 
 
-                                                if(!utility.contains(projectsProcessed, project)) { // only at first cycle
+                                                if(!utility.contains(projectsProcessed, key)) { // only at first cycle
 
                                                     hibernateHBMFile = nameSpacer.DB2Hibernate(fieldTable) + ".hbm.xml";
                                                     hibernatJavaFile = nameSpacer.DB2Hibernate(fieldTable) + ".java";
@@ -287,8 +289,7 @@ public class projectManager {
                                                     allXML += newLine+newLine;
                                                     allXML += zkCode;
 
-                                                    // Generale Liquid .json     
-                                                    projectsProcessed.add(project);
+                                                    projectsProcessed.add(key);
                                                 }
                                             }
                                         }

@@ -1008,7 +1008,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <center>
                 <div style="perspective:1500px;-webkit-perspective: 1500px">
                     <form id="syncronizerSQL" onsubmit="">
-                        <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:calc(100% - 50px); height:450px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
+                        <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:calc(100% - 50px); height:650px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                             <tr>
                             </tr>
                             <tr>
