@@ -14,7 +14,6 @@ import com.liquid.sftpManager;
 import com.liquid.Callback;
 import com.liquid.Messagebox;
 import com.liquid.db;
-import com.liquid.emailer;
 import com.liquid.scpManager;
 import com.liquid.utility;
 
@@ -23,7 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
@@ -275,8 +273,12 @@ public class deployManager {
                                 //
                                 Callback.send("1&deg;/5 - Open ssh session ...");
                                 sshManager ssh = new sshManager();
-                                ssh.connect(host, user, password);
-
+                                if(!ssh.connect(host, user, password)) {
+                                    String err = "Error: ssh session failed";
+                                    Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+                                    return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                                }
+                                
                                 Callback.send("1&deg;/5 - Logging as root...");
 
                                 /*
@@ -319,7 +321,8 @@ public class deployManager {
                                     
                                         uploadFileOk = scpManager.uploadFile(user, password, host, 22, copyFolder + "/" + webAppWAR, glSourceFile);
                                     
-                                        currentFileSize = lRetVal;
+                                        currentFileSize = getRemoteFileSize(ssh, host, user, password, copyFolder + "/" + webAppWAR, protocol);
+                                        // currentFileSize = lRetVal;
                                         
                                     } catch (Exception ex) {
                                         java.util.logging.Logger.getLogger(deployManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -419,25 +422,30 @@ public class deployManager {
                                         // Verifica file copiato ...
                                         //
                                         Callback.send("2&deg;/5 - Checking backup file in " + backupFolder + "...");
-                                        currentFileSize = getRemoteFileSize(host, user, password, backupFolder + "/" + webAppWAR, protocol);
+                                        currentFileSize = getRemoteFileSize(ssh, host, user, password, backupFolder + "/" + webAppWAR, protocol);
                                         if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {                                            
 
-                                            Thread.sleep(1000);
+                                            if("scp".equalsIgnoreCase(protocol)) {
+                                                // scp cannot get file size in deploy folder, that is root owned
+                                            } else {                                        
+                                            
+                                                Thread.sleep(1000);
 
-                                            Callback.send("3&deg;/5 - Retry to copy current file to " + backupFolder + "...");
-                                            cmd = " sudo mkdir -p " + backupFolder;
-                                            ssh.cmd(cmd);
-                                            cmd = "sudo cp " + deployFolder + "/" + webAppWAR + " " + backupFolder + " -u";
-                                            ssh.cmd(cmd);
+                                                Callback.send("3&deg;/5 - Retry to copy current file to " + backupFolder + "...");
+                                                cmd = " sudo mkdir -p " + backupFolder;
+                                                ssh.cmd(cmd);
+                                                cmd = "sudo cp " + deployFolder + "/" + webAppWAR + " " + backupFolder + " -u";
+                                                ssh.cmd(cmd);
 
-                                            Thread.sleep(1000);
+                                                Thread.sleep(1000);
 
-                                            currentFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR, protocol);
-                                            if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
-                                                msg = "Error : Failed to backup current war (" + backupFolder + "/" + webAppWAR + ")<br/><br/>... maybe file was locked, not enough space or insufficient privileges...";
-                                                Callback.send(msg);
-                                                Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
-                                                return retVal;
+                                                currentFileSize = getRemoteFileSize(ssh, host, user, password, deployFolder + "/" + webAppWAR, protocol);
+                                                if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
+                                                    msg = "Error : Failed to backup current war (" + backupFolder + "/" + webAppWAR + ")<br/><br/>... maybe file was locked, not enough space or insufficient privileges...";
+                                                    Callback.send(msg);
+                                                    Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
+                                                    return retVal;
+                                                }
                                             }
                                         }
                                         
@@ -445,37 +453,9 @@ public class deployManager {
                                         Callback.send("2&deg;/5 - Backup skipped, remote file is up to date...");
                                         Thread.sleep(3000);
                                     }
-
-                                    // 3° remove current war
-                                    //
-                                    // Rimozione file produzione
-                                    //
-                                    Callback.send("3&deg;/5 - Removing current file from " + deployFolder + "...");
-                                    cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
-                                    ssh.cmd(cmd, password);
-
-                                    Thread.sleep(1000);
-                                    currentFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR, protocol);
-                                    if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
-
-                                        Thread.sleep(1000);
-
-                                        Callback.send("3&deg;/5 - Retry to removing current file from " + deployFolder + "...");
-                                        cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
-                                        ssh.cmd(cmd, password);
-
-                                        Thread.sleep(1000);
-
-                                        currentFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR, protocol);
-                                        if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
-
-                                            msg = "Error : Failed to remove current war (" + deployFolder + "/" + webAppWAR + ")<br/><br/>... maybe file was locked ";
-                                            Callback.send(msg);
-                                            Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
-                                            return retVal;
-                                        }
-                                    }
-
+                                    
+                                    
+                                    
                                     
         
                                     if(askConfirmation) {
@@ -509,6 +489,40 @@ public class deployManager {
                                             return retVal;
                                         }
                                     }
+                                    
+
+                                    // 3° remove current war
+                                    //
+                                    // Rimozione file produzione
+                                    //
+                                    Callback.send("3&deg;/5 - Removing current file from " + deployFolder + "...");
+                                    cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
+                                    ssh.cmd(cmd, password);
+
+                                    
+                                    Thread.sleep(1000);
+                                    currentFileSize = getRemoteFileSize(ssh, host, user, password, deployFolder + "/" + webAppWAR, protocol);
+                                    if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
+
+                                        Thread.sleep(1000);
+
+                                        Callback.send("3&deg;/5 - Retry to removing current file from " + deployFolder + "...");
+                                        cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
+                                        ssh.cmd(cmd, password);
+
+                                        Thread.sleep(1000);
+
+                                        currentFileSize = getRemoteFileSize(ssh, host, user, password, deployFolder + "/" + webAppWAR, protocol);
+                                        if (currentFileSize != 0 && currentFileSize < 0xFFFFFFFF - 0xFF) {
+
+                                            msg = "Error : Failed to remove current war (" + deployFolder + "/" + webAppWAR + ")<br/><br/>... maybe file was locked ";
+                                            Callback.send(msg);
+                                            Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
+                                            return retVal;
+                                        }
+                                    }
+
+                                    
         
                                     
                                     //                        
@@ -590,7 +604,7 @@ public class deployManager {
                                         Thread.sleep(5000);
                                     }
 
-                                    long copiedFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR, protocol);
+                                    long copiedFileSize = getRemoteFileSize(ssh, host, user, password, deployFolder + "/" + webAppWAR, protocol);
                                     if (copiedFileSize != glFileSize) {
                                         
                                         if("scp".equalsIgnoreCase(protocol)) {
@@ -627,7 +641,7 @@ public class deployManager {
                                             }
                                         }
                                         if (installedSuccesfully) {
-                                            long remoteFileSize = getRemoteFileSize(host, user, password, deployFolder + "/" + webAppWAR + "", protocol);
+                                            long remoteFileSize = getRemoteFileSize(ssh, host, user, password, deployFolder + "/" + webAppWAR + "", protocol);
                                             if (remoteFileSize == glFileSize) {
                                                 msg_for_notity = "Deploy of " + cfgName + " done, checked and online";
                                                 msg = "Deploy of " + cfgName + " <span style=\"color:darkGreen\">done, checked and online</span>";
@@ -704,9 +718,14 @@ public class deployManager {
         return (Object)retVal;
     }
 
-    public static long getRemoteFileSize(String host, String user, String password, String remoteFileName, String protocol) throws Exception {
+    public static long getRemoteFileSize(sshManager ssh, String host, String user, String password, String remoteFileName, String protocol) throws Exception {
         if("scp".equalsIgnoreCase(protocol)) {
-            return scpManager.getRemoteFileSize(user, password, host, 22, remoteFileName);
+            if(ssh != null) {
+                return ssh.getRemoteFileSize(remoteFileName);
+            } else {
+                // Fail if no user right
+                return scpManager.getRemoteFileSize(user, password, host, 22, remoteFileName);
+            }
         } else {
             return sftpManager.getRemoteFileSize(host, user, password, remoteFileName);
         }

@@ -156,7 +156,7 @@ public class sqlExecuter {
                                                                 
                                                             for(int is=0; is<sSQLs.length; is++) {
                                                                 
-                                                                Callback.send("<span style=\"\">Exetuting:<b>" + sSQLs[is] + "</b><span>");
+                                                                Callback.send("<span style=\"\">Exetuting at "+engine+"@"+ip+" "+schema+ " SQL: <b>" + sSQLs[is] + "</b><span>");
                                                                 
                                                                 try {
                                                                     stmt = conn.createStatement();
