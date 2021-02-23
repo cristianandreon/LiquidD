@@ -281,7 +281,7 @@ public class deployManager {
                                 String [] disk_info = ssh.getRemoteDiskInfo();
                                 
                                 if(disk_info != null) {
-                                    if(!disk_info[2].isEmpty()) {
+                                    if(disk_info[2] != null && !disk_info[2].isEmpty()) {
                                         long freeSpace = Long.parseLong(disk_info[2]);
                                         long diskSpace = Long.parseLong(disk_info[0]);
                                         if(freeSpace * 1024 < glFileSize * 3) {

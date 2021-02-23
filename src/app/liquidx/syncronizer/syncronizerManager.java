@@ -76,6 +76,7 @@ public class syncronizerManager {
                             if (syncronizeBeans != null) {
                                 for(int im=0; im<syncronizeBeans.size(); im++) {
                                     Object mBean = syncronizeBeans.get(im);
+                                    String machine = (String)utility.get(mBean, "machine");
                                     String machineId = (String)utility.get(mBean, "machine_id");
                                     String schema = (String)utility.get(mBean, "schema");
                                     String table = (String)utility.get(mBean, "table");
@@ -90,6 +91,7 @@ public class syncronizerManager {
                                     String password = (String)utility.get(machineBean, "password");
                                     String service = (String)utility.get(machineBean, "service");
 
+                                    String targetMachine = (String)utility.get(mBean, "target_machine");
                                     String targetMachineId = (String)utility.get(mBean, "target_machine_id");
                                     String targetSchema = (String)utility.get(mBean, "target_schema");
                                     String targetTable = (String)utility.get(mBean, "target_table");
@@ -112,8 +114,8 @@ public class syncronizerManager {
                                     Connection sconn = null;
                                     Connection tconn = null;
 
-                                    Callback.send("Connecting to " + ip + " ("+engine+") ...");
-                                    System.out.println("Connecting to " + ip + " ("+engine+") ...");
+                                    Callback.send("Connecting to " + ip + " ("+engine+" @ "+machine+") ...");
+                                    System.out.println("Connecting to " + ip + " ("+engine+" @ "+machine+") ...");
                                     try {
                                         Object [] connResult = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
                                         sconn = (Connection)connResult[0];
@@ -132,8 +134,8 @@ public class syncronizerManager {
                                     }
                                     
                                     
-                                    Callback.send("Connecting to " + targetIp + " ("+targetEngine+") ...");
-                                    System.out.println("Connecting to " + targetIp + " ("+targetEngine+") ...");
+                                    Callback.send("Connecting to " + targetIp + " ("+targetEngine+" @ "+targetMachine+") ...");
+                                    System.out.println("Connecting to " + targetIp + " ("+targetEngine+" @ "+targetMachine+") ...");
                                     try {
                                         Object [] connResult = com.liquid.connection.getLiquidDBConnection(null, targetEngine, targetIp, targetPort, targetDatabase, targetUser, targetPassword, targetService);
                                         tconn = (Connection)connResult[0];
@@ -168,6 +170,7 @@ public class syncronizerManager {
                                                     if(!db.setSchema(sconn, engine, schema)) {
                                                         String msg = "Error setting schema '"+schema+"' on machine:"+ip+" engine:"+engine;
                                                         Callback.send("Process failed, <span style=\"color:red\">"+msg+"<span>");
+                                                        return (Object) "{ \"client\":\"onSyncronizerExecuted\", \"result\":1, \"error\":\"" + utility.base64Encode(msg) + "\" }";
 
                                                     } else {
 
@@ -176,6 +179,7 @@ public class syncronizerManager {
                                                         if(!db.setSchema(tconn, targetEngine, targetSchema)) {
                                                             String msg = "Error setting schema '"+targetSchema+"' on machine:"+ip+" engine:"+engine;
                                                             Callback.send("Process failed, <span style=\"color:red\">"+msg+"<span>");
+                                                            return (Object) "{ \"client\":\"onSyncronizerExecuted\", \"result\":1, \"error\":\"" + utility.base64Encode(msg) + "\" }";
                                                             
                                                         } else {
                                                             int iTable, nTables = 0;

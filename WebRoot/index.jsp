@@ -1029,14 +1029,12 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                             </tr>
                         <tr>
                             <td colspan="1" style="height:10px;">
-                             </td>
-                             
+                             </td>                             
                         </tr>
                         <tr>
                             <td colspan="1" style="height:50px;">
                                 <div id="outDivSyncronizer" style="height:100%; width:100%; border:1px solid lightgray"></div>
-                             </td>
-                             
+                             </td>                             
                         </tr>
                         </table>
                     </form>

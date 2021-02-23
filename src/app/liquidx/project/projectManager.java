@@ -256,11 +256,11 @@ public class projectManager {
 
                                                     String getSethibFieldName = hibFieldName.substring(0, 1).toUpperCase()  + hibFieldName.substring(1);
                                                     String javaCode = 
-                                                            "public String get"+getSethibFieldName+"() {"+newLine
+                                                            "public "+sType+" get"+getSethibFieldName+"() {"+newLine
                                                             +"\treturn this."+hibFieldName+";"+newLine
                                                             +"}"+newLine
                                                             +""+newLine
-                                                            +"public void set"+getSethibFieldName+"(String "+hibFieldName+") {"+newLine
+                                                            +"public void set"+getSethibFieldName+"("+sType+" "+hibFieldName+") {"+newLine
                                                             +"\tthis."+hibFieldName+" = "+hibFieldName+";"+newLine
                                                             +"}"+newLine
                                                             +""+newLine;
