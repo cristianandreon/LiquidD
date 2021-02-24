@@ -9,6 +9,7 @@ package app.liquidx.syncronizer;
 
 import app.liquidx.sql.*;
 import com.liquid.Callback;
+import com.liquid.Messagebox;
 import com.liquid.connection;
 import com.liquid.db;
 import com.liquid.metadata;
@@ -210,7 +211,7 @@ public class syncronizerManager {
                                                                 tables = new ArrayList<String>();
                                                                 tables.add(table);
                                                                 targetTables = new ArrayList<String>();
-                                                                targetTables.add(table);
+                                                                targetTables.add(targetTable != null && !targetTable.isEmpty() ? targetTable : table);
                                                             }
                                                             
                                                             nTables = tables.size();
@@ -218,43 +219,63 @@ public class syncronizerManager {
                                                                 for(iTable=0; iTable<nTables; iTable++) {
                                                                     table = tables.get(iTable);
                                                                     targetTable = targetTables.get(iTable);
+                                                                    
+                                                                    boolean proceed = true;
 
-                                                                    Callback.send("Resetting metadata cache...");
-                                                                    metadata.resetTableMetadata(database, schema, table);
-                                                                    metadata.resetTableMetadata(targetDatabase, targetSchema, targetTable);
+                                                                    if(!table.equalsIgnoreCase(targetTable)) {
+                                                                        String message = " Table name mismatch</br>"
+                                                                                + "</br>"
+                                                                                + "</br>"
+                                                                                + "<span style=\"font-size:110%; left:50px; position: relative;\">"
+                                                                                +" Compare table <b>" + table + "</b> with <b>"+targetTable+"</b></br>"
+                                                                                + "</br>"
+                                                                                + "</span>";
+                                                                        if (Messagebox.show(message, "LiquidD", Messagebox.WARNING + Messagebox.YES + Messagebox.NO) == Messagebox.YES) {
+                                                                        } else {
+                                                                            proceed = false;
+                                                                        }
+                                                                    
+                                                                    }
+                                                                    
+                                                                    if(proceed) {
+                                                                    
+                                                                        Callback.send("Resetting metadata cache...");
+                                                                        metadata.resetTableMetadata(database, schema, table);
+                                                                        metadata.resetTableMetadata(targetDatabase, targetSchema, targetTable);
 
-                                                                    Callback.send("analyzing table " +(iTable+1)+"/"+nTables+" " + table + "...");
+                                                                        Callback.send("analyzing table " +(iTable+1)+"/"+nTables+" " + table + "...");
 
-                                                                    String syncRes = db.syncronizeTableMetadata( 
-                                                                            database+"."+schema+"."+table, targetDatabase+"."+targetSchema+"."+targetTable, 
-                                                                            sconn, tconn, 
-                                                                            (bPreviewSyncronizer ? "preview" : "mirror") + (bDeepMode ? " deepMode" : "") + " callback"
-                                                                    );
+                                                                        String syncRes = db.syncronizeTableMetadata( 
+                                                                                database+"."+schema+"."+table, targetDatabase+"."+targetSchema+"."+targetTable, 
+                                                                                sconn, tconn, 
+                                                                                (bPreviewSyncronizer ? "preview" : "mirror") + (bDeepMode ? " deepMode" : "") + " callback"
+                                                                        );
 
-                                                                    JSONObject syncJSON = new JSONObject(syncRes);
+                                                                        JSONObject syncJSON = new JSONObject(syncRes);
 
-                                                                    String preview = syncJSON.has("preview") ? utility.base64Decode(syncJSON.getString("preview")) : "";
+                                                                        String preview = syncJSON.has("preview") ? utility.base64Decode(syncJSON.getString("preview")) : "";
 
 
-                                                                    sReport += 
-                                                                            "<span style=\"font-size:20px\">"
-                                                                            +"From <b>"+database+"."+schema+"."+table+"@"+ip+"</b>"+"<br/>to <b>"+database+"."+schema+"."+targetTable+"@"+targetIp+"</b>"
-                                                                            +"<br/>"
-                                                                            +"<br/>"
-                                                                            +"<span style=\"font-size:17px\">"
-                                                                            + (preview != null && preview.length() > 0 ? "<span style=\"color:darkGray\">"+preview.replace("\n", "<br/>")+"</span>" : "")
-                                                                            +"</span>"
-                                                                            +"<br/>"
-                                                                            +"<span style=\"font-size:15px\">"
-                                                                            + (syncJSON.getJSONArray("deletingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Deleting columns from "+targetIp+" ("+syncJSON.getJSONArray("deletingColumns").length()+") : "+syncJSON.getJSONArray("deletingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing column in "+ip+"</span>")
-                                                                            +"<br/>"
-                                                                            +"<br/>"
-                                                                            + (syncJSON.getJSONArray("addingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Missing columns in "+targetIp+" ("+syncJSON.getJSONArray("addingColumns").length()+") : "+syncJSON.getJSONArray("addingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing columns in "+targetIp+"</span>")
-                                                                            +"</span>"
-                                                                            +"<br/>"
-                                                                            +"<br/>"
-                                                                            +"<br/>"
-                                                                            ;
+                                                                        sReport += 
+                                                                                "<span style=\"font-size:20px\">"
+                                                                                +"From <b>"+database+"."+schema+"."+table+"@"+ip+"</b>"+"<br/>to <b>"+database+"."+targetSchema+"."+targetTable+"@"+targetIp+"</b>"
+                                                                                +"<br/>"
+                                                                                +"<br/>"
+                                                                                +"<span style=\"font-size:17px\">"
+                                                                                + (preview != null && preview.length() > 0 ? "<span style=\"color:darkGray\">"+preview.replace("\n", "<br/>")+"</span>" : "")
+                                                                                +"</span>"
+                                                                                +"<br/>"
+                                                                                +"<span style=\"font-size:15px\">"
+                                                                                + (syncJSON.getJSONArray("deletingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Deleting columns from "+targetIp+" ("+syncJSON.getJSONArray("deletingColumns").length()+") : "+syncJSON.getJSONArray("deletingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing column in "+ip+"</span>")
+                                                                                +"<br/>"
+                                                                                +"<br/>"
+                                                                                + (syncJSON.getJSONArray("addingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Missing columns in "+targetIp+" ("+syncJSON.getJSONArray("addingColumns").length()+") : "+syncJSON.getJSONArray("addingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing columns in "+targetIp+"</span>")
+                                                                                +"</span>"
+                                                                                +"<br/>"
+                                                                                +"<br/>"
+                                                                                +"<br/>"
+                                                                                ;
+                                                                    }
                                                                 }
                                                             } else {
                                                                 Callback.send("No table to process...");

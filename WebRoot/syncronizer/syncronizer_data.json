@@ -20,7 +20,7 @@
         }
     }
     ,{ "name":"target_schema", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
-    ,{ "name":"target_table", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
+    ,{ "name":"target_table", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":false }
 ]
 ,"grids":[
         {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":11,"nCols":1

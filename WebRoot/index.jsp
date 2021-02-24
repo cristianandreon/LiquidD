@@ -676,6 +676,12 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                                 <input id="askConfirmation" type="checkbox" style="margin:10px; height:30px; width:30px; " >Ask confirmation before deploy</input>
                              </td>
                         </tr>
+                        <tr>
+                            <td colspan="1">
+                                <input id="openURL" type="checkbox" style="margin:10px; height:30px; width:30px; " checked >Open URL when done</input>
+                             </td>
+                        </tr>
+                        
                     </table>
                 </div>
             </center>
@@ -1013,7 +1019,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                             </tr>
                             <tr>
                                 <td colspan="1" style="height:70px;">
-                                    <div id="syncronizer_data" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                                    <div id="syncronizer_data" style="height:100%; width:100%; height:560px; background-color: rgba(213, 225, 232, 0.45">
                                     </div>
                                  </td>
                             </tr>

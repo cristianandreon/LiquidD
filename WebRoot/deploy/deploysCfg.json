@@ -54,7 +54,7 @@
 ,"owner":"app.liquidx.deploy.event"
 ,"events":[
       { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
-     ,{ "name":"onRowDoubleClicked", "server":"app.liquidx.deploy.deployManager.deploy", "params":["doBackup","askConfirmation"], "client":"Liquid.startWaiting('deploysCfg')", "onDownloading":"deployDownloading" }     
+     ,{ "name":"onRowDoubleClicked", "server":"app.liquidx.deploy.deployManager.deploy", "params":["doBackup","askConfirmation","openURL"], "client":"Liquid.startWaiting('deploysCfg')", "onDownloading":"deployDownloading" }     
     ]
 ,"commands":[
  	 { "name":"insert"}

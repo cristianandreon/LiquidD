@@ -89,6 +89,7 @@ public class deployManager {
                     
                 JSONObject doBackupJSON = com.liquid.event.getJSONObject(params, "data", "doBackup");
                 JSONObject askConfirmationJSON = com.liquid.event.getJSONObject(params, "data", "askConfirmation");
+                JSONObject openURLJSON = com.liquid.event.getJSONObject(params, "data", "openURL");
                 
 
                     
@@ -218,6 +219,7 @@ public class deployManager {
 
                             boolean doBackup = "true".equalsIgnoreCase( doBackupJSON.getString("data")) ? true : false;
                             boolean askConfirmation = "true".equalsIgnoreCase( askConfirmationJSON.getString("data")) ? true : false;
+                            boolean openURL = "true".equalsIgnoreCase( openURLJSON.getString("data")) ? true : false;
                             
                             String msg = null, msg_for_notity = null;
 
@@ -462,7 +464,7 @@ public class deployManager {
                                     } else {
                                         Callback.send("1&deg;/5 - upload file skipped, remote file is up to date...");
                                         Thread.sleep(1000);
-                                        remoteFileSize = Long.parseLong(sFileSize);
+                                        lRetVal = remoteFileSize = Long.parseLong(sFileSize);
                                         uploadFileOk = true;
                                     }
                                 }
@@ -477,7 +479,7 @@ public class deployManager {
                                     //
                                     Callback.send("1&deg;/5 - Checking uploaded file...");
                                     if (remoteFileSize != lRetVal) {
-                                        msg = "Error : Failed to upload current war (" + copyFolder + "/" + webAppWAR + ")<br/><br/>... size mismath : " + remoteFileSize + "/" + retVal + "";
+                                        msg = "Error : Failed to upload current war (" + copyFolder + "/" + webAppWAR + ")<br/><br/>... size mismath : " + remoteFileSize + "/" + lRetVal + "";
                                         Callback.send(msg);
                                         Messagebox.show(msg, "LiquidD", Messagebox.OK + Messagebox.ERROR);
                                         return retVal;
@@ -778,6 +780,12 @@ public class deployManager {
 
                                 String script = "notifyMessage(\"" + msg_for_notity + "\")";
                                 com.liquid.JSScript.script(script);
+                                
+                                if(openURL) {
+                                    String openScript = "window.open(\"" + webAppURL + "\")";
+                                    com.liquid.JSScript.script(openScript);
+                                }
+                                
 
                             } else {
                                 msg = "1&deg; - Upload of " + cfgName + " <span style=\"color:maroon\">Not confirmed by used<span>";
@@ -848,4 +856,37 @@ public class deployManager {
         return expr;
     }
 
+    
+    
+    
+    void testMe() {
+        int a = 1;
+        
+        // a = a + except();
+        
+        try {
+            
+            a = a + except();
+            
+        } catch (Exception e) {            
+        }
+    }
+    
+    
+    int except() 
+            throws Exception
+    {
+        try {
+            
+            Object a = null;
+            a.notify();
+            return 1;
+            
+        } catch (Exception e) {
+            // throw new Exception();
+        }
+        
+        return 0;
+    }
+    
 }
