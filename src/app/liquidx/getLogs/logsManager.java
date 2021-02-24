@@ -8,30 +8,16 @@ package app.liquidx.getLogs;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
-import com.liquid.sshManager;
 import com.liquid.sftpManager;
 
 import com.liquid.Callback;
-import com.liquid.Messagebox;
 import com.liquid.db;
-import com.liquid.emailer;
 import com.liquid.scpManager;
 import com.liquid.utility;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -107,113 +93,128 @@ public class logsManager {
                         webAppWAR = utility.decodeHtml(webAppWAR);
                         
                         
+                        if(logFolder != null && !logFolder.isEmpty()) {
                         
-                        
-                        // Nome del WAR
-                        webAppWAR = webAppWAR != null && !webAppWAR.isEmpty() ? webAppWAR : fileName;
+                            // Nome del WAR
+                            webAppWAR = webAppWAR != null && !webAppWAR.isEmpty() ? webAppWAR : fileName;
 
-                        String webApp = webAppWAR.substring(0, webAppWAR.lastIndexOf('.'));
-        
-                        // Adattamento webAppName
-                        webAppWAR = webApp + ".war";
+                            String webApp = webAppWAR.substring(0, webAppWAR.lastIndexOf('.'));
 
-                        // Risoluzione backupFolder
-                        logFolder = solve_variable_field(logFolder, user, webApp);
+                            // Adattamento webAppName
+                            webAppWAR = webApp + ".war";
 
-                        // Risoluzione backupFolder
-                        logFile = solve_variable_field(logFile, user, webApp);
+                            // Risoluzione backupFolder
+                            logFolder = solve_variable_field(logFolder, user, webApp);
 
-                        
-                        if(!logFolder.endsWith("/"))
-                            logFolder += "/";
-                                
-                        String logFileName = logFolder + (logFile != null && !logFile.isEmpty() ? ""+logFile : "");
-                        String home = System.getProperty("user.home");
-                        String baseFolder = home+"/Downloads/LiquidD";                        
-                        String localLogFileName = baseFolder + "/" + webApp + ".log";
-
-                        Callback.send("Downloading log '"+logFileName+"' from " + cfgName + " ...");
+                            // Risoluzione backupFolder
+                            logFile = solve_variable_field(logFile, user, webApp);
 
 
-                        utility.createFolder(baseFolder);
-                        
-                        //
-                        // get file from server via SFTP
-                        //
-                        boolean uploadFileOk = false;
-                        String uploadFileError = "";
+                            if(!logFolder.endsWith("/"))
+                                logFolder += "/";
 
-                        boolean bDataDecoded = false;
-                        OutputStream targetFileOS = null;
-
-                        if (localLogFileName != null && !localLogFileName.isEmpty()) {
-                            File f = new File(localLogFileName);
-                            if (f != null) {
-                                if (f.createNewFile()) {
-                                    Callback.send("1&deg; - Downloading " + logFileName + "...");
-                                }
-
+                            String logFileName = logFolder + (logFile != null && !logFile.isEmpty() ? ""+logFile : "");
                             
-                                // boolean doBackup = "true".equalsIgnoreCase( doBackupJSON.getString("data")) ? true : false;
-                                // boolean askConfirmation = "true".equalsIgnoreCase( askConfirmationJSON.getString("data")) ? true : false;
+                            if(logFolder != null && !logFolder.isEmpty()) {
+                            
+                                String home = System.getProperty("user.home");
+                                String baseFolder = home+"/Downloads/LiquidD";                        
+                                String localLogFileName = baseFolder + "/" + webApp + ".log";
 
-                                if("scp".equalsIgnoreCase(protocol)) {
+                                Callback.send("Downloading log '"+logFileName+"' from " + cfgName + " ...");
 
-                                    if(!scpManager.downloadFile(user, password, host, 22, logFileName, localLogFileName)) {
-                                        String err = "Error in download via scp";
-                                        Callback.send("get log, <span style=\"color:red\">" + err + "<span>");
-                                        return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('getLogsCfg')\" }";
-                                    }
 
-                                } else {
-                                
-                                    // 1° upload
-                                    sftpManager sftp = new sftpManager();                               
-                                    long lRetVal = 0;
+                                utility.createFolder(baseFolder);
 
-                                    try {
+                                //
+                                // get file from server via SFTP
+                                //
+                                boolean uploadFileOk = false;
+                                String uploadFileError = "";
 
-                                        targetFileOS = new FileOutputStream(f);
+                                boolean bDataDecoded = false;
+                                OutputStream targetFileOS = null;
 
-                                        Object[] result = sftp.download(host, user, password, logFileName, targetFileOS);
-                                        lRetVal = (long) result[0];
-                                        if (lRetVal > 0) {
-                                            // TODO : visualizzazione del file ...
+                                if (localLogFileName != null && !localLogFileName.isEmpty()) {
+                                    File f = new File(localLogFileName);
+                                    if (f != null) {
+                                        if (f.createNewFile()) {
+                                            Callback.send("1&deg; - Downloading " + logFileName + "...");
                                         }
-                                    
 
-                                    } catch (JSchException ex) {
-                                        java.util.logging.Logger.getLogger(logsManager.class.getName()).log(Level.SEVERE, null, ex);
-                                        String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
-                                        Callback.send("get log failed, <span style=\"color:red\">" + err + "<span>");
-                                        return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('getLogsCfg')\" }";
-                                    } catch (SftpException ex) {
-                                        java.util.logging.Logger.getLogger(logsManager.class.getName()).log(Level.SEVERE, null, ex);
-                                        uploadFileError += ex.getLocalizedMessage();
-                                        String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
-                                        Callback.send("get log, <span style=\"color:red\">" + err + "<span>");
-                                        return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('getLogsCfg')\" }";
-                                    } catch (Exception e) {
-                                        String err = "Error:" + e.getLocalizedMessage()+ " Check Network/VPN";
-                                        Callback.send("get log, <span style=\"color:red\">" + err + "<span>");
-                                        return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('getLogsCfg')\" }";
-                                    } finally {
-                                        targetFileOS.flush();
-                                        targetFileOS.close();
-                                    }
-                                    // String script = "notifyMessage(\"" + msg_for_notity + "\")";
-                                    // com.liquid.JSScript.script(script);
+
+                                        // boolean doBackup = "true".equalsIgnoreCase( doBackupJSON.getString("data")) ? true : false;
+                                        // boolean askConfirmation = "true".equalsIgnoreCase( askConfirmationJSON.getString("data")) ? true : false;
+
+                                        if("scp".equalsIgnoreCase(protocol)) {
+
+                                            if(!scpManager.downloadFile(user, password, host, 22, logFileName, localLogFileName)) {
+                                                String err = "Error in download via scp";
+                                                Callback.send("get log, <span style=\"color:red\">" + err + "<span>");
+                                                return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('getLogsCfg')\" }";
+                                            }
+
+                                        } else {
+
+                                            // 1° upload
+                                            sftpManager sftp = new sftpManager();                               
+                                            long lRetVal = 0;
+
+                                            try {
+
+                                                targetFileOS = new FileOutputStream(f);
+
+                                                Object[] result = sftp.download(host, user, password, logFileName, targetFileOS);
+                                                lRetVal = (long) result[0];
+                                                if (lRetVal > 0) {
+                                                    // TODO : visualizzazione del file ...
+                                                }
+
+
+                                            } catch (JSchException ex) {
+                                                java.util.logging.Logger.getLogger(logsManager.class.getName()).log(Level.SEVERE, null, ex);
+                                                String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
+                                                Callback.send("get log failed, <span style=\"color:red\">" + err + "<span>");
+                                                return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('getLogsCfg')\" }";
+                                            } catch (SftpException ex) {
+                                                java.util.logging.Logger.getLogger(logsManager.class.getName()).log(Level.SEVERE, null, ex);
+                                                uploadFileError += ex.getLocalizedMessage();
+                                                String err = "Error:" + ex.getLocalizedMessage()+ " Check Network/VPN";
+                                                Callback.send("get log, <span style=\"color:red\">" + err + "<span>");
+                                                return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('getLogsCfg')\" }";
+                                            } catch (Exception e) {
+                                                String err = "Error:" + e.getLocalizedMessage()+ " Check Network/VPN";
+                                                Callback.send("get log, <span style=\"color:red\">" + err + "<span>");
+                                                return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('getLogsCfg')\" }";
+                                            } finally {
+                                                targetFileOS.flush();
+                                                targetFileOS.close();
+                                            }
+                                            // String script = "notifyMessage(\"" + msg_for_notity + "\")";
+                                            // com.liquid.JSScript.script(script);
+                                        }
+
+                                        Callback.send("1&deg; - Download of  " + logFileName + " done ... look to local file : <a href=\"file:///"+localLogFileName+"\">"+localLogFileName+"</a>"
+                                                +"<br/><br/>If your browser doesn't allow local file access copy the link and paste it in new tab"
+                                        );
+                                        retVal = "{ \"client\":\"Liquid.stopWaiting('getLogsCfg'); showLog('"+localLogFileName+"', '"+webApp+"')\" }";
+
+                                    } else {
+                                        String err = "log file not accessible";
+                                        Callback.send("1&deg; - get log of " + cfgName + "failed, <span style=\"color:red\">" + err + "<span>");
+                                        return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode(err) + "\" }";
+                                    }                                 
                                 }
-
-                                Callback.send("1&deg; - Download of  " + logFileName + " done ... look to local file : <a href=\"file:///"+localLogFileName+"\">"+localLogFileName+"</a>");
-                                retVal = "{ \"client\":\"Liquid.stopWaiting('getLogsCfg'); showLog('"+localLogFileName+"', '"+webApp+"')\" }";
-                                
                             } else {
-                                String err = "log file not accessible";
+                                String err = "log file not defined";
                                 Callback.send("1&deg; - get log of " + cfgName + "failed, <span style=\"color:red\">" + err + "<span>");
                                 return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode(err) + "\" }";
                             }                                 
-                        }
+                        } else {
+                            String err = "log folfer not defined";
+                            Callback.send("1&deg; - get log of " + cfgName + "failed, <span style=\"color:red\">" + err + "<span>");
+                            return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode(err) + "\" }";
+                        }                                 
 
                     } else {
                         Callback.send("Deploy of " + cfgName + "failed, <span style=\"color:red\">read bean error<span>");
