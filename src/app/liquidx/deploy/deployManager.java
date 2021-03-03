@@ -739,11 +739,11 @@ public class deployManager {
                                             } else {
                                                 if("scp".equalsIgnoreCase(protocol)) {
                                                     // scp cannot get file size in deploy folder, that is root owned
-                                                    msg_for_notity = "Deploy of " + cfgName + "deployed file's size bot checked (scp doesn't allow to get file size)";
+                                                    msg_for_notity = "Deploy of " + cfgName + " done, checked and online ... Note : deployed file's size bot checked (scp doesn't allow to get file size)";
                                                     msg = "Deploy of " + cfgName + " <span style=\"color:rdarked\">deployed file's size mismath (" + remoteFileSize + "/" + glFileSize + ")<span>";
                                                     Callback.send("5&deg; - " + msg);
                                                 } else {                                        
-                                                    msg_for_notity = "Deploy of " + cfgName + "deployed file's size mismath (" + remoteFileSize + "/" + glFileSize+")";
+                                                    msg_for_notity = "Deploy of " + cfgName + " done, checked and online ... Note : deployed file's size mismath (" + remoteFileSize + "/" + glFileSize+")";
                                                     msg = "Deploy of " + cfgName + " <span style=\"color:red\">deployed file's size mismath (" + remoteFileSize + "/" + glFileSize + ")<span>";
                                                     Callback.send("5&deg; - " + msg);
                                                 }

@@ -64,6 +64,7 @@ public class sqlExecuter {
                             if (machinesBean != null) {
                                 for(int im=0; im<machinesBean.size(); im++) {
                                     Object mBean = machinesBean.get(im);
+                                    String machine = (String)utility.get(mBean, "machine");
                                     String machineId = (String)utility.get(mBean, "machine_id");
                                     String schema = (String)utility.get(mBean, "schema");
 
@@ -86,16 +87,16 @@ public class sqlExecuter {
                                     Statement stmt = null;
 
                                     {
-                                        Callback.send("Connecting to " + ip + " ("+engine+") ...");
-                                        System.out.println("Connecting to " + ip + " ("+engine+") ...");
+                                        Callback.send("Connecting to " + machine + " ("+engine+"@"+ip+") ...");
+                                        System.out.println("Connecting to " + machine + " ("+engine+"@"+ip+") ...");
                                         try {
                                             Object [] connResult = com.liquid.connection.getLiquidDBConnection(null, engine, ip, port, database, user, password, service);
                                             conn = (Connection)connResult[0];
                                             String connError = (String)connResult[1];                                            
                                         } catch (Throwable th) {
                                             String err = "Error:" + th.getLocalizedMessage();
-                                            System.out.println("Error connecting to " + ip + "("+engine+") : "+th.getLocalizedMessage());
-                                            Callback.send("<span style=\"color:red\">Error  to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");
+                                            System.out.println("Error connecting to " + machine + "("+engine+"@"+ip+") : "+th.getLocalizedMessage());
+                                            Callback.send("<span style=\"color:red\">Error  to " + machine + "("+engine+"@"+ip+") : "+th.getLocalizedMessage()+"</span>");
                                             Thread.sleep(5000);
                                         }
                                     }
@@ -115,15 +116,17 @@ public class sqlExecuter {
                                             allSQL += newLine;
                                             allSQL += newLine;
                                             allSQL += "<span style=\"font-size:22px\">"+"-- Schema <b>"+schema+"</b></span>";
-                                            allSQL += "<span style=\"font-size:15px\">"+" - Machine "+ip+" ("+engine+")</span>";                                            
+                                            allSQL += "<span style=\"font-size:15px\">"+" - Machine "+machine + " ("+ip+") ["+engine+"]</span>";                                            
                                             allSQL += newLine;
                                             
                                            boolean bExecuteSQL = true;
                                             
 
+                                           String locationDesc = schema + "@" + machine + "("+ip+") ["+engine +"]";
+
                                            if(bConfirmSQL) {
                                                 bExecuteSQL = false;
-                                                String message = " Executing sql on <b>" + schema + "@" + ip + " - " + engine + "</b></br>"
+                                                String message = " Executing sql on <b>" + locationDesc + "</b></br>"
                                                         + "</br>"
                                                         + "</br>"
                                                         + "</br>"
@@ -146,7 +149,7 @@ public class sqlExecuter {
                                                     if(conn != null) {
                                                         
                                                         if(!db.setSchema(conn, engine, schema)) {
-                                                            String msg = "Error setting schema '"+schema+"' on machine:"+ip+" engine:"+engine;
+                                                            String msg = "Error setting schema '"+schema+"' on machine + \"(\"+ip+\") [\"+engine +\"]";
                                                             Callback.send("Process failed, <span style=\"color:red\">"+msg+"<span>");
                                                             allSQL += "<span style=\"font-size:22px; color:red\">"+"***<b>"+msg+"</b></span>";
                                                             
@@ -156,7 +159,7 @@ public class sqlExecuter {
                                                                 
                                                             for(int is=0; is<sSQLs.length; is++) {
                                                                 
-                                                                Callback.send("<span style=\"\">Exetuting at "+engine+"@"+ip+" "+schema+ " SQL: <b>" + sSQLs[is] + "</b><span>");
+                                                                Callback.send("<span style=\"\">Exetuting at "+locationDesc+ " SQL: <b>" + sSQLs[is] + "</b><span>");
                                                                 
                                                                 try {
                                                                     stmt = conn.createStatement();
