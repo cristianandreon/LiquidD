@@ -173,7 +173,7 @@ public class deployManager {
                             }
                             
                         } else {
-                            // uploaded from a form .. obsolete don't care
+                            Messagebox.show("Missing sourc file", "LiquidD", Messagebox.WARNING + Messagebox.OK);
                         }
 
                         if (bDataDecoded) {
@@ -682,7 +682,8 @@ public class deployManager {
                                     } else {
                                         Callback.send("4&deg;/5 - Copying new app to application server (without Web App URL check)...");
                                     }
-                                    cmd = "sudo cp " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
+                                    cmd = "sudo mv " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
+                                    // cmd = "sudo cp " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
                                     ssh.cmd(cmd, password);
 
                                     //
@@ -740,7 +741,7 @@ public class deployManager {
                                                 if("scp".equalsIgnoreCase(protocol)) {
                                                     // scp cannot get file size in deploy folder, that is root owned
                                                     msg_for_notity = "Deploy of " + cfgName + " done, checked and online ... Note : deployed file's size bot checked (scp doesn't allow to get file size)";
-                                                    msg = "Deploy of " + cfgName + " <span style=\"color:rdarked\">deployed file's size mismath (" + remoteFileSize + "/" + glFileSize + ")<span>";
+                                                    msg = "Deploy of " + cfgName + " <span style=\"color:darkGreen\">deployed file's size mismath (" + remoteFileSize + "/" + glFileSize + ")<span>";
                                                     Callback.send("5&deg; - " + msg);
                                                 } else {                                        
                                                     msg_for_notity = "Deploy of " + cfgName + " done, checked and online ... Note : deployed file's size mismath (" + remoteFileSize + "/" + glFileSize+")";
