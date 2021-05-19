@@ -35,7 +35,8 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.Liquid.jar}</file>
+                    <file>${file.reference.jsoup-1.13.1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${reference.Liquid.jar}</file>
