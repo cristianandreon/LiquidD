@@ -586,7 +586,7 @@ public class deployManager {
                                     // Rimozione file produzione
                                     //
                                     Callback.send("3&deg;/5 - Removing current file from " + deployFolder + "...");
-                                    cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
+                                    cmd = "rm " + deployFolder + "/" + webAppWAR + " -f";
                                     ssh.cmd(cmd, password);
 
                                     
@@ -597,7 +597,7 @@ public class deployManager {
                                         Thread.sleep(1000);
 
                                         Callback.send("3&deg;/5 - Retry to removing current file from " + deployFolder + "...");
-                                        cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
+                                        cmd = "sudo rm " + deployFolder + "/" + webAppWAR + " -f";
                                         ssh.cmd(cmd, password);
 
                                         Thread.sleep(1000);
@@ -682,7 +682,7 @@ public class deployManager {
                                     } else {
                                         Callback.send("4&deg;/5 - Copying new app to application server (without Web App URL check)...");
                                     }
-                                    cmd = "sudo mv " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
+                                    cmd = "mv " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
                                     // cmd = "sudo cp " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
                                     ssh.cmd(cmd, password);
 
