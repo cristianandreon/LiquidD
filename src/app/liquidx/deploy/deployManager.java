@@ -42,6 +42,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 
+/*
+faillock --reset --user sergio-xxx
+*/
+
 /**
  *
  * @author root
@@ -592,12 +596,12 @@ public class deployManager {
                                     
                                     Thread.sleep(1000);
                                     remoteFileSize = getRemoteFileSize(ssh, host, user, password, deployFolder + "/" + webAppWAR, protocol);
-                                    if (remoteFileSize != 0 && remoteFileSize < 0xFFFFFFFF - 0xFF) {
+                                    if (remoteFileSize != 0 && remoteFileSize < (long)0xFFFFFFFF - 0xFF) {
 
                                         Thread.sleep(1000);
 
                                         Callback.send("3&deg;/5 - Retry to removing current file from " + deployFolder + "...");
-                                        cmd = "sudo rm " + deployFolder + "/" + webAppWAR + " -f";
+                                        cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
                                         ssh.cmd(cmd, password);
 
                                         Thread.sleep(1000);
@@ -710,6 +714,19 @@ public class deployManager {
                                         }
                                     }
 
+                                    
+                                    
+                                    cmd = "chown root " + deployFolder + "/" + webAppWAR + "";
+                                    ssh.cmd(cmd, password);
+
+                                    cmd = "chgrp root " + deployFolder + "/" + webAppWAR + "";
+                                    ssh.cmd(cmd, password);
+
+                                    cmd = "chmod 771 " + deployFolder + "/" + webAppWAR + "";
+                                    ssh.cmd(cmd, password);
+
+                                    
+                                    
                                     //
                                     // 5° check web app	                            
                                     //

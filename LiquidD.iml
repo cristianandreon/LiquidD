@@ -7,6 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib1" level="project" />
+    <orderEntry type="module" module-name="Liquid" exported="" />
+    <orderEntry type="library" exported="" name="Liquid" level="project" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 8.5.57" level="application_server_libraries" />
   </component>
 </module>

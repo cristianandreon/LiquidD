@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Liquid">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../Liquid/classes/artifacts/Liquid_jar/Liquid.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

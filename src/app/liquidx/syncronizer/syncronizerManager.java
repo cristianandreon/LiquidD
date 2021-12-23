@@ -255,7 +255,19 @@ public class syncronizerManager {
 
                                                                         String preview = syncJSON.has("preview") ? utility.base64Decode(syncJSON.getString("preview")) : "";
 
+                                                                        String error = syncJSON.has("error") ? utility.base64Decode(syncJSON.getString("error")) : "";
+                                                                        
+                                                                        if(error != null && !error.isEmpty()) {
+                                                                            
+                                                                        sReport += 
+                                                                                "<span style=\"font-size:20px; color:red\">"
+                                                                                + error
+                                                                                +"</span>"
+                                                                                +"<br/>"
+                                                                                ;
+                                                                        }
 
+                                                                        
                                                                         sReport += 
                                                                                 "<span style=\"font-size:20px\">"
                                                                                 +"From <b>"+database+"."+schema+"."+table+"@"+ip+"</b>"+"<br/>to <b>"+database+"."+targetSchema+"."+targetTable+"@"+targetIp+"</b>"
