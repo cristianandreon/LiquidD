@@ -8,12 +8,7 @@ package app.liquidx.syncronizer;
 
 
 import app.liquidx.sql.*;
-import com.liquid.Callback;
-import com.liquid.Messagebox;
-import com.liquid.connection;
-import com.liquid.db;
-import com.liquid.metadata;
-import com.liquid.utility;
+import com.liquid.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -67,10 +62,10 @@ public class syncronizerManager {
                             long selCount = db.getSelectionCount(tbl_wrk, params);
                             if(selCount == 0) {
                                 // all rows
-                                syncronizeBeans = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "syncronizer_data", null, "*", "where 1=1", 0);
+                                syncronizeBeans = (ArrayList<Object>)bean.load_beans((HttpServletRequest) requestParam, "syncronizer_data", null, "*", "where 1=1", 0);
                             } else {
                                 // selected rows
-                                syncronizeBeans = (ArrayList<Object>) db.get_bean((HttpServletRequest) requestParam, db.getSelection(tbl_wrk, params), "bean", "*", 0);
+                                syncronizeBeans = (ArrayList<Object>) bean.get_bean((HttpServletRequest) requestParam, db.getSelection(tbl_wrk, params), "bean", "*", 0);
                             }
 
                 
@@ -82,7 +77,7 @@ public class syncronizerManager {
                                     String schema = (String)utility.get(mBean, "schema");
                                     String table = (String)utility.get(mBean, "table");
 
-                                    Object machineBean = (Object)db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.syncronizer_machines", "*", machineId);
+                                    Object machineBean = (Object)bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.syncronizer_machines", "*", machineId);
 
                                     String engine = (String)utility.get(machineBean, "engine");
                                     String ip = (String)utility.get(machineBean, "ip");
@@ -97,7 +92,7 @@ public class syncronizerManager {
                                     String targetSchema = (String)utility.get(mBean, "target_schema");
                                     String targetTable = (String)utility.get(mBean, "target_table");
 
-                                    Object targetMachineBean = (Object)db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.syncronizer_machines", "*", targetMachineId);
+                                    Object targetMachineBean = (Object) bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.syncronizer_machines", "*", targetMachineId);
 
                                     String targetEngine = (String)utility.get(targetMachineBean, "engine");
                                     String targetIp = (String)utility.get(targetMachineBean, "ip");

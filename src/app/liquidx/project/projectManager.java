@@ -8,6 +8,7 @@ package app.liquidx.project;
 
 
 import com.liquid.Callback;
+import com.liquid.bean;
 import com.liquid.db;
 import com.liquid.utility;
 
@@ -50,10 +51,10 @@ public class projectManager {
                 long selCount = db.getSelectionCount(tbl_wrk, params);
                 if(selCount == 0) {
                     // all rows
-                    fieldsBean = (ArrayList<Object>) db.load_beans((HttpServletRequest) requestParam, "fields", null, "*", null, 0);
+                    fieldsBean = (ArrayList<Object>) bean.load_beans((HttpServletRequest) requestParam, "fields", null, "*", null, 0);
                 } else {
                     // selected rows
-                    fieldsBean = (ArrayList<Object>) db.get_bean((HttpServletRequest)requestParam, db.getSelection(tbl_wrk, params), "bean", "*", 0);
+                    fieldsBean = (ArrayList<Object>) bean.get_bean((HttpServletRequest)requestParam, db.getSelection(tbl_wrk, params), "bean", "*", 0);
                 }
                 
                 JSONObject executeSQLSON = com.liquid.event.getJSONObject(params, "data", "executeSQL");
@@ -68,18 +69,18 @@ public class projectManager {
                     // Lettura del bean macchine
                     if (projectId != null && !projectId.isEmpty()) {
                         
-                        Object projectBean = db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.projects", "*", projectId);
+                        Object projectBean = bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.projects", "*", projectId);
                         String folder = (String)utility.get(projectBean, "folder");
                         String project = (String)utility.get(projectBean, "name");
                         if (projectBean != null) {
-                            ArrayList<Object>  projectMachineSchemasBean = (ArrayList<Object>)db.load_beans((HttpServletRequest) requestParam, "project_machine_schema", null, "*", "where project_id='"+projectId+"'", 0);
+                            ArrayList<Object>  projectMachineSchemasBean = (ArrayList<Object>)bean.load_beans((HttpServletRequest) requestParam, "project_machine_schema", null, "*", "where project_id='"+projectId+"'", 0);
                             if (projectMachineSchemasBean != null) {
                                 for(int ims=0; ims<projectMachineSchemasBean.size(); ims++) {
                                     Object mBean = projectMachineSchemasBean.get(ims);
                                     String machineId = (String)utility.get(mBean, "machine_id");
                                     String schema = (String)utility.get(mBean, "schema");
 
-                                    Object machineBean = (Object)db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.machines", "*", machineId);
+                                    Object machineBean = (Object)bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.machines", "*", machineId);
 
                                     String engine = (String)utility.get(machineBean, "engine");
                                     String ip = (String)utility.get(machineBean, "ip");

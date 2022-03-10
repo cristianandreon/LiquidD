@@ -8,12 +8,7 @@ package app.liquidx.getLogs;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
-import com.liquid.sftpManager;
-
-import com.liquid.Callback;
-import com.liquid.db;
-import com.liquid.scpManager;
-import com.liquid.utility;
+import com.liquid.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -77,7 +72,7 @@ public class logsManager {
                 // Lettura del bean di configurazione
                 if (cfgId != null && !cfgId.isEmpty()) {
                     // Object deplpoyBean = db.get_bean(requestParam, controlId, id, null, "*", null, 1);
-                    Object deplpoyBean = db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.getLogsCfg", "*", cfgId);
+                    Object deplpoyBean = bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.getLogsCfg", "*", cfgId);
                     if (deplpoyBean != null) {
                         cfgName = (String) utility.get(deplpoyBean, "name");
                         String host = (String) utility.get(deplpoyBean, "host");

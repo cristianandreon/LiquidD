@@ -6,10 +6,7 @@
  */
 package app.liquidx.importer;
 
-import com.liquid.Callback;
-import com.liquid.db;
-import com.liquid.utility;
-import com.liquid.workspace;
+import com.liquid.*;
 
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -39,10 +36,10 @@ public class importerManager {
                 long selCount = db.getSelectionCount(tbl_wrk, params);
                 if (selCount == 0) {
                     // all rows
-                    importsBean = (ArrayList<Object>) db.load_beans((HttpServletRequest) requestParam, "importer", null, "*", null, 0);
+                    importsBean = (ArrayList<Object>) bean.load_beans((HttpServletRequest) requestParam, "importer", null, "*", null, 0);
                 } else {
                     // selected rows
-                    importsBean = (ArrayList<Object>) db.get_bean((HttpServletRequest) requestParam, db.getSelection(tbl_wrk, params), "bean", "*", 0);
+                    importsBean = (ArrayList<Object>) bean.get_bean((HttpServletRequest) requestParam, db.getSelection(tbl_wrk, params), "bean", "*", 0);
                 }
                 if (importsBean != null) {
                     projectId = (Integer) utility.get(importsBean.get(0), "id");
@@ -135,12 +132,12 @@ public class importerManager {
                             if(rowId != null && !rowId.isEmpty()) {
                                 
                                 Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Loading row "+rowId+"@"+sTable+"...<span>");
-                                Object rowBean = db.load_bean((HttpServletRequest) requestParam, sControlId, "*", rowId);
+                                Object rowBean = bean.load_bean((HttpServletRequest) requestParam, sControlId, "*", rowId);
                                 
                                 if(rowBean != null) {
                                     
                                     Callback.send("Importer of " + projectId + " <span style=\"color:darkGray\">Loading foreign tables of row "+rowId+"@"+sTable+"...<span>");
-                                    Object [] resLoadBeans = db.load_child_bean(rowBean, "*", 0);
+                                    Object [] resLoadBeans = bean.load_child_bean(rowBean, "*", 0, (HttpServletRequest) requestParam);
                                     
                                     if(resLoadBeans != null) {
                                         if(resLoadBeans[0] != null) {

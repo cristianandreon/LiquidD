@@ -8,14 +8,7 @@ package app.liquidx.deploy;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
-import com.liquid.sshManager;
-import com.liquid.sftpManager;
-
-import com.liquid.Callback;
-import com.liquid.Messagebox;
-import com.liquid.db;
-import com.liquid.scpManager;
-import com.liquid.utility;
+import com.liquid.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -100,7 +93,7 @@ public class deployManager {
                 // Lettura del bean di configurazione
                 if (cfgId != null && !cfgId.isEmpty()) {
                     // Object deplpoyBean = db.get_bean(requestParam, controlId, id, null, "*", null, 1);
-                    Object deplpoyBean = db.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.deploysCfg", "*", cfgId);
+                    Object deplpoyBean = bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.deploysCfg", "*", cfgId);
                     if (deplpoyBean != null) {
                         cfgName = (String) utility.get(deplpoyBean, "name");
                         String host = (String) utility.get(deplpoyBean, "host");
