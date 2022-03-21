@@ -7,13 +7,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebRoot/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Liquid/Liquid.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/Liquid.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/Messagebox.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/Messagebox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/wsStreamerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/wsStreamerClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/LiquidD.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/LiquidD.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Liquid.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Liquid.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LiquidD.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LiquidD.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/importer/importer.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/importer/importer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/project/fields.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/fields.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/project/machines.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/machines.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/project/project_machine_schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/project_machine_schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/project/projects.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/projects.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/project/schemas.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/schemas.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_machine_schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_machine_schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_machines.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_machines.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_schemas.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_schemas.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,15 +53,22 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="database.data.extractors.current.export.id" value="SQL Inserts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/WebRoot" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/WebRoot" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="excludedTypes">
@@ -56,7 +77,12 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.59">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 8.5.73">
+    <configuration name="LiquidX_liquidx_machines.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$USER_HOME$/LiquidX_liquidx_machines.sql" />
+      <script-mode>FILE</script-mode>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JBossConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
       <deployment />
       <server-settings>
@@ -143,6 +169,7 @@
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="4175caee-1fcf-44bb-b2c6-fc765b99f043" />
         <option name="DEPLOY_TOMCAT_APPS" value="true" />
+        <option name="HTTP_PORT" value="9090" />
         <option name="PRESERVE_SESSIONS" value="true" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
@@ -152,6 +179,94 @@
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="40695" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="LiquidD" />
+        </option>
+      </method>
+    </configuration>
+    <configuration name="Tomcat 8.5.73" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.73" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <deployment>
+        <artifact name="LiquidD">
+          <settings>
+            <option name="CONTEXT_PATH" value="/LiquidD" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="368bbf7a-3ed1-45a5-a21f-ca8a67c80f10" />
+        <option name="JNDI_PORT" value="1999" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="56510" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -323,9 +438,16 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Database Script.LiquidX_liquidx_machines.sql" />
+      <item itemvalue="Tomcat Server.Tomcat 8.5.73" />
       <item itemvalue="Tomcat Server.Tomcat 8.5.43" />
       <item itemvalue="Tomcat Server.Tomcat 9.0.59" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Database Script.LiquidX_liquidx_machines.sql" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -347,6 +469,7 @@
       <workItem from="1646919163509" duration="331000" />
       <workItem from="1646919926140" duration="958000" />
       <workItem from="1646920897299" duration="694000" />
+      <workItem from="1647871950320" duration="10172000" />
     </task>
     <servers />
   </component>

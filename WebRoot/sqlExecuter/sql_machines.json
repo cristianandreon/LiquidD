@@ -37,7 +37,7 @@
 ,"autoInsert":false
 ,"listTabVisible":true
 ,"autoSizeColumns":true
-,"owner":"app.liquidx.project.event"
+,"owner--":"app.liquidx.project.event"
 ,"events":[
       { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
      ,{ "name":"onRowDoubleClicked--", "server":"app.liquidx.deploy.projectManager.XXX", "params":[], "client":"", "onDownloading":"projectDownloading" }

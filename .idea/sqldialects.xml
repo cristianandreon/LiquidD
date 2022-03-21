@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$USER_HOME$/LiquidX_liquidx_deploysCfg.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_fields.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_importer.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_machines.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_project_machine_schema.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_projects.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_schemas.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_sql_machine_schema.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_sql_machines.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_sql_schemas.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_syncronizer_data.sql" dialect="PostgreSQL" />
+    <file url="file://$USER_HOME$/LiquidX_liquidx_syncronizer_machines.sql" dialect="PostgreSQL" />
+  </component>
+</project>

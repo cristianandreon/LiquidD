@@ -47,7 +47,7 @@
             ]
         }
     ]
-,"owner":"app.liquidx.deploy.projectManager"
+,"owner--":"app.liquidx.deploy.projectManager"
 ,"events":[
       { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
      ,{ "name":"onRowDoubleClicked--", "server":"app.liquidx.project.projectManager.XXX", "params":[], "client":"", "onDownloading":"projectDownloading" }
