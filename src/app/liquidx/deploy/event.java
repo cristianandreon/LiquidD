@@ -20,7 +20,7 @@ import org.json.JSONObject;
  */
 public class event {
             
-    static public Object onInserting(Object tbl_wrk, Object params, Object clientData, Object requestParam ) throws JSONException {
+    static public Object onInserting(Object tbl_wrk, Object params, Object clientData, Object requestParam ) throws Exception {
         if(tbl_wrk != null) {
             if(params != null) {
                 if(clientData != null) {
