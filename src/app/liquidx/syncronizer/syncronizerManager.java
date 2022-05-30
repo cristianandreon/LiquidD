@@ -8,7 +8,13 @@ package app.liquidx.syncronizer;
 
 
 import app.liquidx.sql.*;
-import com.liquid.*;
+import com.liquid.Callback;
+import com.liquid.Messagebox;
+import com.liquid.bean;
+import com.liquid.connection;
+import com.liquid.db;
+import com.liquid.metadata;
+import com.liquid.utility;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -92,7 +98,7 @@ public class syncronizerManager {
                                     String targetSchema = (String)utility.get(mBean, "target_schema");
                                     String targetTable = (String)utility.get(mBean, "target_table");
 
-                                    Object targetMachineBean = (Object) bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.syncronizer_machines", "*", targetMachineId);
+                                    Object targetMachineBean = (Object)bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.syncronizer_machines", "*", targetMachineId);
 
                                     String targetEngine = (String)utility.get(targetMachineBean, "engine");
                                     String targetIp = (String)utility.get(targetMachineBean, "ip");

@@ -132,6 +132,7 @@
         <% if("Cristian-PC".equalsIgnoreCase(hostName)) { // Case of my developing host %>
             <%@ include file="/liquid/liquidXHeader.jsp" %>
             <%@ include file="/liquid/liquidSelector.jsp" %>
+            <%@ include file="/liquid/liquidStreamer.jsp" %>
         <% } else { // Normal case %>
             <%@ include file="/liquid/liquidHeader.jsp" %>
             <%@ include file="/liquid/liquidSelector.jsp" %>
@@ -652,6 +653,9 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <div class="spacer"></div>
             <br/>
             <br/>
+            vpn passw: <b>JH67l%3FFy</b>
+            <br/>
+            <br/>
             <center>
                 <div style="perspective:1500px;-webkit-perspective: 1500px">
                     <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:1024px; height:auto; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
@@ -948,6 +952,20 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             <br/>
             <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div id="spacer" style="height:200px; width:100%; ">
+            </div>
         </div>
         
         

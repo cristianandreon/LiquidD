@@ -7,7 +7,11 @@
 package app.liquidx.sql;
 
 
-import com.liquid.*;
+import com.liquid.Callback;
+import com.liquid.Messagebox;
+import com.liquid.bean;
+import com.liquid.db;
+import com.liquid.utility;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -57,7 +61,7 @@ public class sqlExecuter {
 
                     {
                         {
-                            ArrayList<Object> machinesBean = (ArrayList<Object>) bean.load_beans((HttpServletRequest) requestParam, "sql_machine_schema", null, "*", "where 1=1", 0);
+                            ArrayList<Object> machinesBean = (ArrayList<Object>)bean.load_beans((HttpServletRequest) requestParam, "sql_machine_schema", null, "*", "where 1=1", 0);
                             if (machinesBean != null) {
                                 for(int im=0; im<machinesBean.size(); im++) {
                                     Object mBean = machinesBean.get(im);

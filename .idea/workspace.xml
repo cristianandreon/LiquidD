@@ -6,28 +6,13 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WebRoot/web.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/Liquid.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/Liquid.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/wsStreamerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/wsStreamerClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/LiquidD.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/LiquidD.xml" afterDir="false" />
+    <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiquidD.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LiquidD.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/importer/importer.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/importer/importer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/project/fields.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/fields.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/project/machines.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/machines.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/project/project_machine_schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/project_machine_schema.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/project/projects.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/projects.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/project/schemas.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/schemas.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_machine_schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_machine_schema.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_machines.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_machines.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_schemas.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/sqlExecuter/sql_schemas.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/liquidx/importer/importerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/importer/importerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/liquidx/sql/sqlExecuter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/sql/sqlExecuter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +20,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Liquid" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -64,6 +49,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
+    <property name="two.files.diff.last.used.file" value="$USER_HOME$/NetBeansProjects/LiquidD/WebRoot/index.jsp" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -470,7 +456,18 @@
       <workItem from="1646919926140" duration="958000" />
       <workItem from="1646920897299" duration="694000" />
       <workItem from="1647871950320" duration="10172000" />
+      <workItem from="1647883395452" duration="1112000" />
+      <workItem from="1647947238645" duration="62000" />
+      <workItem from="1653898665662" duration="597000" />
     </task>
+    <task id="LOCAL-00001" summary="+">
+      <created>1647883495892</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1647883495892</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -486,5 +483,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <MESSAGE value="+" />
+    <option name="LAST_COMMIT_MESSAGE" value="+" />
   </component>
 </project>
