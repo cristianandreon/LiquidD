@@ -101,7 +101,7 @@ public class deployManager {
                 // Lettura del bean di configurazione
                 if (cfgId != null && !cfgId.isEmpty()) {
                     // Object deplpoyBean = db.get_bean(requestParam, controlId, id, null, "*", null, 1);
-                    Object deplpoyBean = bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.deploysCfg", "*", cfgId);
+                    Object deplpoyBean = bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.deploysCfg", "*", "id="+cfgId);
                     if (deplpoyBean != null) {
                         cfgName = (String) utility.get(deplpoyBean, "name");
                         String host = (String) utility.get(deplpoyBean, "host");
