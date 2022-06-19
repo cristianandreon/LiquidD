@@ -462,7 +462,7 @@
             <br/>            
             <br/>            
             Startup default parameters :</br></br>
-            <div class="code1" id="codeSample1">
+            <div class="code5" id="codeSample5">
                 <pre class="code">
                     <code class="java">
     driver = <b>"postgres";</b>
@@ -481,7 +481,7 @@
             <br/>
             <br/>
             Current parameters are so defined :</br></br>
-            <div class="code1" id="codeSample1">
+            <div class="code2" id="codeSample2">
                 <pre class="code">
                     <code class="java">
     driver = <b>"<%=driver %>";</b>
@@ -514,7 +514,7 @@
             If you want to replace any other parameters you can pass it in the url .. ex :
             <br/>
             <br/>
-            <div class="code1" id="codeSample1">
+            <div class="code3" id="codeSample3">
                 <pre class="code">
                     <code class="html">
 localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiquidDatabase&user=myLiquidUser&password=myLiquidPassword&service=myService</b>
@@ -533,7 +533,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             Run docker image (in the terminal) :
             <br/>
-            <div class="code1" id="codeSample1">
+            <div class="code4" id="codeSample4">
                 <pre class="code">
                     <code class="bash">
                         
@@ -556,7 +556,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             Build docker image (in the terminal) :
             <br/>
-            <div class="code1" id="codeSample1">
+            <div class="code6" id="codeSample6">
                 <pre class="code">
                     <code class="bash">
     
@@ -577,7 +577,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             Run web app by typing in your browser :
             <br/>
-            <div class="code1" id="codeSample1">
+            <div class="code7" id="codeSample7">
                 <pre class="code">
                     <code class="bash">
                         
@@ -599,7 +599,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             If you need to export/import docker image :
             <br/>
-            <div class="code1" id="codeSample1">
+            <div class="code8" id="codeSample8">
                 <pre class="code">
                     <code class="bash">
                         
@@ -624,7 +624,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             If you need to push docker image into the hub:
             <br/>
-            <div class="code1" id="codeSample1">
+            <div class="code9" id="codeSample9">
                 <pre class="code">
                     <code class="bash">
                         
@@ -661,7 +661,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                     <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:1024px; height:auto; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
                         <tr>
                             <td colspan="1">
-                                <div id="deploysCfg" style="height:560px; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                                <div id="deploysCfg" style="height:560px; width:100%; background-color: rgba(213, 225, 232, 0.45)">
                                 </div>
                              </td>
                         </tr>
@@ -699,7 +699,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                 <table border=0 cellspacing=0 cellpadding=0 style="display:none; width:600px; height:360px; font-size:9pt; table-layout:auto; ">
                     <tr>
                         <td colspan="1" style="width:0%">
-                            <div id="deploy" width="30px" height="30px" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                            <div id="deploy" width="30px" height="30px" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45)">
                             </div>
                          </td>
                     </tr>
@@ -790,7 +790,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                     <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:1024px; height:auto; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
                         <tr>
                             <td colspan="1">
-                                <div id="getLogsCfg" style="height:560px; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                                <div id="getLogsCfg" style="height:560px; width:100%; background-color: rgba(213, 225, 232, 0.45)">
                                 </div>
                              </td>
                         </tr>
@@ -856,7 +856,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                     <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:calc(100% - 50px); height:450px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                         <tr>
                             <td colspan="1" style="height:400px; width:100%; ">
-                                <div id="fields" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                                <div id="fields" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45)">
                                 </div>
                              </td>
                         </tr>
@@ -874,7 +874,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                 </div>
             </center>
             <br/>
-            <div id="htmlResult" style="display:none; width:calc(100% - 50px); border:1px solid lightgray"></div>
+            <div id="htmlResult2" style="display:none; width:calc(100% - 50px); border:1px solid lightgray"></div>
             <br/>
             <br/>
             <br/>
@@ -886,7 +886,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="projects" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="projects" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
                         </div>
                      </td>
                 </tr>
@@ -904,7 +904,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:800px; font-size:9pt; table-layout:auto;  -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="machines" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="machines" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
                         </div>
                      </td>
                 </tr>
@@ -922,7 +922,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="schemas" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="schemas" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
                         </div>
                      </td>
                 </tr>
@@ -941,7 +941,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="project_machine_schema" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="project_machine_schema" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
                         </div>
                      </td>
                 </tr>
@@ -993,7 +993,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                     <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:calc(100% - 50px); height:500px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
                         <tr>
                             <td colspan="1" style="height:450px; width:100%; ">
-                                <div id="importer" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45">
+                                <div id="importer" style="height:100%; width:100%; background-color: rgba(213, 225, 232, 0.45)">
                                 </div>
                              </td>
                         </tr>
@@ -1037,7 +1037,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                             </tr>
                             <tr>
                                 <td colspan="1" style="height:70px;">
-                                    <div id="syncronizer_data" style="height:100%; width:100%; height:560px; background-color: rgba(213, 225, 232, 0.45">
+                                    <div id="syncronizer_data" style="height:100%; width:100%; height:560px; background-color: rgba(213, 225, 232, 0.45)">
                                     </div>
                                  </td>
                             </tr>
@@ -1093,7 +1093,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:800px; font-size:9pt; table-layout:auto;  -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="syncronizer_machines" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="syncronizer_machines" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
                         </div>
                      </td>
                 </tr>
@@ -1152,7 +1152,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                 </div>
             </center>
             <br/>
-            <div id="htmlResult" style="display:none; width:calc(100% - 50px); border:1px solid lightgray"></div>
+            <div id="htmlResult1" style="display:none; width:calc(100% - 50px); border:1px solid lightgray"></div>
             <br/>
             <br/>
             <br/>
@@ -1164,7 +1164,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:800px; font-size:9pt; table-layout:auto;  -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="sql_machines" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="sql_machines" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
                         </div>
                      </td>
                 </tr>
@@ -1182,7 +1182,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="sql_schemas" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="sql_schemas" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
                         </div>
                      </td>
                 </tr>
@@ -1200,7 +1200,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="sql_machine_schema" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45">
+                        <div id="sql_machine_schema" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
                         </div>
                      </td>
                 </tr>

@@ -21,7 +21,8 @@
     ,{"size":10,"nullable":true,"name":"checkWaitTime","typeName":"int4","digits":0,"type":"4"}
     ,{"size":2147483647,"nullable":true,"name":"notifyEmails","typeName":"text","digits":0,"type":"12"}
     ,{"size":256,"nullable":true,"name":"protocol","typeName":"varchar","digits":0,"type":"12","required":false, "values":["sftp","scp"]}
-    
+    ,{"size":512,"nullable":true,"name":"sourceFileAlternative","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+
 ]
 ,"grids":[
         {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":6,"nCols":3
@@ -39,10 +40,11 @@
                 ,{"name":"notifyEmails","tooltip":"Email address of notified users","label":"notify Emails","row":3,"col":1}
                 ,{"name":"webAppWAR","tooltip":"The war file name","label":"webAppWAR","row":3,"col":2}
                 ,{"name":"webAppURL","tooltip":"The URL of the app deployed","label":"web App URL","row":4,"col":0}
-                ,{"name":"sourceFile","tooltip":"Define here local file to deploy","label":"source File","row":4,"col":1}
+                ,{"name":"sourceFile","tooltip":"Define here local file to deploy","label":"Source File","row":4,"col":1}
                 ,{"name":"logFolder","tooltip":"Where to get the log","label":"log Folder","row":5,"col":0 }
                 ,{"name":"logFile","tooltip":"the log file name","label":"log File","row":5,"col":1 }
                 ,{"name":"protocol","tooltip":"upload/download protocol","label":"upload/download protocol","row":5,"col":2 }
+                ,{"name":"sourceFileAlternative","tooltip":"Define alternative local file to deploy","label":"Alternative source file","row":4,"col":2}
             ]
         }
     ]

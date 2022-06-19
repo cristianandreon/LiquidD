@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LiquidD.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LiquidD.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/liquidx/project/projectManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/project/projectManager.java" afterDir="false" />
     </list>
@@ -17,6 +18,12 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseLocalColorSettings">
+    <colors>
+      <entry key="2e1fc6df-04a0-45cd-b1c4-8dc6546abd7d" value="Rose" />
+      <entry key="7efe65a2-4354-4df2-bc9a-4667e9bee89d" value="Green" />
+    </colors>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -49,6 +56,14 @@
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
     <property name="two.files.diff.last.used.file" value="$USER_HOME$/NetBeansProjects/LiquidD/WebRoot/index.jsp" />
   </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/WebRoot" />
@@ -61,7 +76,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 8.5.73">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 8.5.43">
     <configuration name="LiquidX_liquidx_machines.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$USER_HOME$/LiquidX_liquidx_machines.sql" />
       <script-mode>FILE</script-mode>
@@ -154,6 +169,7 @@
         <option name="BASE_DIRECTORY_NAME" value="4175caee-1fcf-44bb-b2c6-fc765b99f043" />
         <option name="DEPLOY_TOMCAT_APPS" value="true" />
         <option name="HTTP_PORT" value="9090" />
+        <option name="JNDI_PORT" value="10999" />
         <option name="PRESERVE_SESSIONS" value="true" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
@@ -320,7 +336,7 @@
       </method>
     </configuration>
     <configuration name="Tomcat 9.0.59" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.59" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8" nameIsGenerated="true">
-      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="LiquidD">
           <settings>
@@ -454,6 +470,11 @@
       <workItem from="1646919926140" duration="958000" />
       <workItem from="1646920897299" duration="694000" />
       <workItem from="1647871950320" duration="10172000" />
+      <workItem from="1647896036455" duration="34000" />
+      <workItem from="1655393065717" duration="596000" />
+      <workItem from="1655394257070" duration="26000" />
+      <workItem from="1655405909782" duration="4924000" />
+      <workItem from="1655653576517" duration="2065000" />
       <workItem from="1647883395452" duration="1112000" />
       <workItem from="1647947238645" duration="62000" />
       <workItem from="1653898665662" duration="845000" />
@@ -465,12 +486,27 @@
       <workItem from="1654527942969" duration="660000" />
     </task>
     <task id="LOCAL-00001" summary="+">
-      <created>1647883495892</created>
+      <created>1655409641882</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1647883495892</updated>
+      <updated>1655409641882</updated>
     </task>
+    <task id="LOCAL-00002" summary="+">
+      <created>1655411444815</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1655411444815</updated>
+    </task>
+    <task id="LOCAL-00003" summary="+">
+      <created>1655653596182</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1655653596183</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <task id="LOCAL-00002" summary="+">
       <created>1653899274091</created>
       <option name="number" value="00002" />
