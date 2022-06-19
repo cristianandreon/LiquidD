@@ -108,6 +108,7 @@ public class deployManager {
                         String user = (String) utility.get(deplpoyBean, "user");
                         String password = (String) utility.get(deplpoyBean, "password");
                         String sourceFile = (String) utility.get(deplpoyBean, "sourceFile");
+                        String sourceFileAlternative = (String) utility.get(deplpoyBean, "sourceFileAlternative");
                         String deployFolder = (String) utility.get(deplpoyBean, "deployFolder");
                         String copyFolder = (String) utility.get(deplpoyBean, "copyFolder");
                         String backupFolder = (String) utility.get(deplpoyBean, "backupFolder");
@@ -122,6 +123,7 @@ public class deployManager {
                         
                         // format the mthl fields
                         sourceFile = utility.decodeHtml(sourceFile);
+                        sourceFileAlternative = utility.decodeHtml(sourceFileAlternative);
                         deployFolder = utility.decodeHtml(deployFolder);
                         copyFolder = utility.decodeHtml(copyFolder);
                         backupFolder = utility.decodeHtml(backupFolder);
@@ -150,10 +152,19 @@ public class deployManager {
                         boolean bDataDecoded = false;
                         InputStream sourceFileIS = null;
 
-                        if (sourceFile != null && !sourceFile.isEmpty()) {
-                            
+                        if (
+                                (sourceFile != null && !sourceFile.isEmpty())
+                                        || (sourceFileAlternative != null && !sourceFileAlternative.isEmpty())
+                        ) {
 
-                            File f = new File(sourceFile);
+                            File f = null;
+                            if(utility.fileExist(sourceFile)) {
+                                f = new File(sourceFile);
+                            } else if(utility.fileExist(sourceFileAlternative)) {
+                                sourceFile = sourceFileAlternative;
+                                f = new File(sourceFile);
+                            }
+
                             if (f != null) {
 
                                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm:ss");
@@ -172,7 +183,7 @@ public class deployManager {
                                 glFileSize = f.length();
 
                             } else {
-                                String err = "source file not accessible";
+                                String err = "source file / alternative source file not accessible";
                                 Callback.send("1&deg; - Deploy of " + cfgName + "failed, <span style=\"color:red\">" + err + "<span>");
                                 return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode(err) + "\" }";
                             }
