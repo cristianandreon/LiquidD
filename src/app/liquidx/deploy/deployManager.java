@@ -268,11 +268,6 @@ public class deployManager {
                                 
                                 Callback.send("1&deg;/5 - Logging as root...");
 
-                                /*
-                                // N.B.: "sudo -i" carica anche .session .login
-                                String cmd = "sudo -i";
-                                ssh.cmd(cmd, password);
-                                */
 
                                 // impersona solamente l'utente root senza altre azioni di login
                                 String cmd = " sudo su -";
@@ -592,7 +587,6 @@ public class deployManager {
                                     //
                                     Callback.send("3&deg;/5 - Removing current file from " + deployFolder + "...");
                                     cmd = "rm " + deployFolder + "/" + webAppWAR + " -f";
-                                    ssh.cmd(cmd, password);
 
                                     
                                     Thread.sleep(1000);
@@ -603,7 +597,6 @@ public class deployManager {
 
                                         Callback.send("3&deg;/5 - Retry to removing current file from " + deployFolder + "...");
                                         cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
-                                        ssh.cmd(cmd, password);
 
                                         Thread.sleep(1000);
 
@@ -689,7 +682,6 @@ public class deployManager {
                                     }
                                     cmd = "mv " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
                                     // cmd = "sudo cp " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
-                                    ssh.cmd(cmd, password);
 
                                     //
                                     // Attesa
@@ -718,13 +710,8 @@ public class deployManager {
                                     
                                     
                                     cmd = "chown root " + deployFolder + "/" + webAppWAR + "";
-                                    ssh.cmd(cmd, password);
-
                                     cmd = "chgrp root " + deployFolder + "/" + webAppWAR + "";
-                                    ssh.cmd(cmd, password);
-
                                     cmd = "chmod 771 " + deployFolder + "/" + webAppWAR + "";
-                                    ssh.cmd(cmd, password);
 
                                     
                                     

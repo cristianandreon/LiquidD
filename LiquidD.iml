@@ -27,7 +27,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Liquid" exported="" />
     <orderEntry type="library" exported="" name="Liquid" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.43" level="application_server_libraries" />
     <orderEntry type="library" name="Liquid-servlet2" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.73" level="application_server_libraries" />
   </component>

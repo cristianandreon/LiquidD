@@ -102,7 +102,7 @@
     
     try {
         com.liquid.connection.resetLiquidDBConnection( );
-        com.liquid.connection.addLiquidDBConnection( driver, host, port, database, user, password, service );
+        com.liquid.connection.addLiquidDBConnection( driver, host, port, database, user, password, service, true );
     } catch (Exception e){
         e.printStackTrace();
     }

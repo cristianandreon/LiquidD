@@ -8,11 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LiquidD.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LiquidD.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/index.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/liquidx/importer/importerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/importer/importerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/liquidx/sql/sqlExecuter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/sql/sqlExecuter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/liquidx/project/projectManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/project/projectManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +40,6 @@
     <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.data.extractors.current.export.id" value="SQL Inserts" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/WebRoot" />
@@ -252,7 +250,7 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="56510" />
+        <option name="DEBUG_PORT" value="56511" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -458,7 +456,13 @@
       <workItem from="1647871950320" duration="10172000" />
       <workItem from="1647883395452" duration="1112000" />
       <workItem from="1647947238645" duration="62000" />
-      <workItem from="1653898665662" duration="597000" />
+      <workItem from="1653898665662" duration="845000" />
+      <workItem from="1653900617621" duration="3422000" />
+      <workItem from="1653924440523" duration="551000" />
+      <workItem from="1653926332988" duration="688000" />
+      <workItem from="1654083251567" duration="2535000" />
+      <workItem from="1654245320042" duration="47000" />
+      <workItem from="1654527942969" duration="660000" />
     </task>
     <task id="LOCAL-00001" summary="+">
       <created>1647883495892</created>
@@ -467,7 +471,21 @@
       <option name="project" value="LOCAL" />
       <updated>1647883495892</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="+">
+      <created>1653899274091</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1653899274091</updated>
+    </task>
+    <task id="LOCAL-00003" summary="+">
+      <created>1653899464846</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1653899464847</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

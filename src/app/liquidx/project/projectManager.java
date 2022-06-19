@@ -51,7 +51,7 @@ public class projectManager {
                 long selCount = db.getSelectionCount(tbl_wrk, params);
                 if(selCount == 0) {
                     // all rows
-                    fieldsBean = (ArrayList<Object>) bean.load_beans((HttpServletRequest) requestParam, "fields", null, "*", null, 0);
+                    fieldsBean = (ArrayList<Object>) bean.load_beans((HttpServletRequest) requestParam, "fields", null, "*", "*", 0);
                 } else {
                     // selected rows
                     fieldsBean = (ArrayList<Object>) bean.get_bean((HttpServletRequest)requestParam, db.getSelection(tbl_wrk, params), "bean", "*", 0);
@@ -173,6 +173,7 @@ public class projectManager {
                                                         whCode = "<widthControllo>400px</widthControllo>";
                                                         htCode = "<heightControllo>200px</heightControllo>";
                                                     } else if(ifieldSize == 1) {
+                                                        controlType = "LISTBOX";
                                                         valuesList = "S=Si,N=No";
                                                     }
                                                 }
