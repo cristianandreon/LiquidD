@@ -121,7 +121,7 @@ public class deployManager {
                         
 
                         
-                        // format the mthl fields
+                        // format the html fields
                         sourceFile = utility.decodeHtml(sourceFile);
                         sourceFileAlternative = utility.decodeHtml(sourceFileAlternative);
                         deployFolder = utility.decodeHtml(deployFolder);
@@ -596,8 +596,11 @@ public class deployManager {
                                     //
                                     // Rimozione file produzione
                                     //
+
+
                                     Callback.send("3&deg;/5 - Removing current file from " + deployFolder + "...");
                                     cmd = "rm " + deployFolder + "/" + webAppWAR + " -f";
+                                    ssh.cmd(cmd);
 
                                     
                                     Thread.sleep(1000);
@@ -608,6 +611,7 @@ public class deployManager {
 
                                         Callback.send("3&deg;/5 - Retry to removing current file from " + deployFolder + "...");
                                         cmd = "sudo rm " + deployFolder + "/" + webAppWAR;
+                                        ssh.cmd(cmd);
 
                                         Thread.sleep(1000);
 
@@ -693,6 +697,7 @@ public class deployManager {
                                     }
                                     cmd = "mv " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
                                     // cmd = "sudo cp " + copyFolder + "/" + webAppWAR + " " + deployFolder + "/" + webAppWAR + "";
+                                    ssh.cmd(cmd);
 
                                     //
                                     // Attesa
@@ -704,7 +709,7 @@ public class deployManager {
                                     }
 
                                     long copiedFileSize = getRemoteFileSize(ssh, host, user, password, deployFolder + "/" + webAppWAR, protocol);
-                                    if (copiedFileSize != glFileSize) {
+                                    if (copiedFileSize != glFileSize && copiedFileSize > 0) {
                                         
                                         if("scp".equalsIgnoreCase(protocol)) {
                                             // scp cannot get file size in deploy folder, that is root owned
