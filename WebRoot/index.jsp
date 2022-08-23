@@ -252,8 +252,8 @@
                         if(param.command.response) {
                             if(param.command.response.data) {
                                 var htmlResult = atob(param.command.response.data);
-                                jQ1124( '#htmlResult' ).html(htmlResult);
-                                jQ1124( '#htmlResult' ).slideDown();
+                                jQ1124( '#projectHelperHtmlResult' ).html(htmlResult);
+                                jQ1124( '#projectHelperHtmlResult' ).slideDown();
                             }
                         }
                     }
@@ -874,7 +874,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                 </div>
             </center>
             <br/>
-            <div id="htmlResult2" style="display:none; width:calc(100% - 50px); border:1px solid lightgray"></div>
+            <div id="projectHelperHtmlResult" style="display:none; width:calc(100% - 50px); border:1px solid lightgray"></div>
             <br/>
             <br/>
             <br/>

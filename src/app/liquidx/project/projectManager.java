@@ -69,7 +69,7 @@ public class projectManager {
                     // Lettura del bean macchine
                     if (projectId != null && !projectId.isEmpty()) {
                         
-                        Object projectBean = bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.projects", "*", projectId);
+                        Object projectBean = bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.projects", "*", "WHERE id="+projectId);
                         String folder = (String)utility.get(projectBean, "folder");
                         String project = (String)utility.get(projectBean, "name");
                         if (projectBean != null) {
@@ -80,7 +80,7 @@ public class projectManager {
                                     String machineId = (String)utility.get(mBean, "machine_id");
                                     String schema = (String)utility.get(mBean, "schema");
 
-                                    Object machineBean = (Object)bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.machines", "*", machineId);
+                                    Object machineBean = (Object)bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.machines", "*", "WHERE id="+machineId);
 
                                     String engine = (String)utility.get(machineBean, "engine");
                                     String ip = (String)utility.get(machineBean, "ip");
