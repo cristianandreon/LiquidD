@@ -40,23 +40,14 @@ public class logsManager {
             if (params != null) {
                 // {"params":[{"data":{"1":"38","2":"SIA to site","3":"192.168.0.116","4":"sysadmin","5":"geiadmin01","6":"<p>/Users/administrator/Workspaces/workspacevl/deploy_site_geisoft_org/webapp-zipped/sia.war</p>","7":"/opt/applicativi/jboss-4.0.5.GA/server/all_co-1/deploy","8":"<p>function getFolderDateName() {</p><p>var date = new Date(); var d = date.getDate(); var m = date.getMonth() + 1; var y = date.getFullYear();</p><p>var dateString = String(y) + String(m &lt;= 9 ? '0' + m : m) + String(d &lt;= 9 ? '0' + d : d);</p><p>return dateString;</p><p>}</p><p>\"/home/%user%/rilasci/%webApp%/\"+getFolderDateName()</p>","9":"<p>function getFolderDateName() {</p><p>var date = new Date(); var d = date.getDate(); var m = date.getMonth() + 1; var y = date.getFullYear();</p><p>var dateString = String(y) + String(m &lt;= 9 ? '0' + m : m) + String(d &lt;= 9 ? '0' + d : d);</p><p>return dateString;</p><p>}</p><p>\"/home/%user%/rilasci/%webApp%/\"+getFolderDateName()+\"/BACKUP\"</p>","10":"<p>sia.war</p>","11":"<p>http://site.geisoft.org/sia</p>","12":"10000","13":"10000","14":"''cristian.andreon@geisoft.com,info@cristiannadreon.eu"}},{"name":"doBackup","data":"true"},{"name":"askConfirmation","data":"false"},{"name":"getLogsCfg","sel":["38"]}]}
                 Object nameParam = com.liquid.event.getObject(params, "name");
-                JSONArray rowsData = com.liquid.event.getJSONArray(params, "formX");
+                JSONArray rowsData = com.liquid.event.getJSONArray(params, "data");
                 String cfgId = null, cfgName = null, fileName = null, fileSize = null, file = null;
                 if (rowsData != null) {
                     // Old way ...
                     JSONObject rowData = rowsData.getJSONObject(0);
-                    cfgId = rowData.getString("2");
-                    cfgName = rowData.getString("3");
-                    file = rowData.getString("4");
-                    try {
-                        rowData.getString("file.filesName");
-                    } catch (Exception e) {
-                    }
-                    try {
-                        fileSize = rowData.getString("file.filesSize");
-                    } catch (Exception e) {
-                    }
-                    String controlId = "getLogsCfg";
+                    cfgId = rowData.getString("1");
+                    cfgName = rowData.getString("2");
+                    file = rowData.getString("6");
                 } else {
                     // New way ...
                     // N.B.: We just want the data of the current control (which is empty)
@@ -66,13 +57,11 @@ public class logsManager {
                     
                 JSONObject doBackupJSON = com.liquid.event.getJSONObject(params, "data", "doBackup");
                 JSONObject askConfirmationJSON = com.liquid.event.getJSONObject(params, "data", "askConfirmation");
-                
 
-                    
                 // Lettura del bean di configurazione
                 if (cfgId != null && !cfgId.isEmpty()) {
                     // Object deplpoyBean = db.get_bean(requestParam, controlId, id, null, "*", null, 1);
-                    Object deplpoyBean = bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.getLogsCfg", "*", cfgId);
+                    Object deplpoyBean = bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.deploysCfg", "*", "WHERE Id="+cfgId);
                     if (deplpoyBean != null) {
                         cfgName = (String) utility.get(deplpoyBean, "name");
                         String host = (String) utility.get(deplpoyBean, "host");

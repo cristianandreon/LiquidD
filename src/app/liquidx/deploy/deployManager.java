@@ -92,9 +92,9 @@ public class deployManager {
                     cfgId = rowData.getString("1");
                 }
                     
-                JSONObject doBackupJSON = com.liquid.event.getJSONObject(params, "data", "doBackup");
-                JSONObject askConfirmationJSON = com.liquid.event.getJSONObject(params, "data", "askConfirmation");
-                JSONObject openURLJSON = com.liquid.event.getJSONObject(params, "data", "openURL");
+                JSONObject doBackupJSON = com.liquid.event.getJSONObject(params, "form", "doBackup");
+                JSONObject askConfirmationJSON = com.liquid.event.getJSONObject(params, "form", "askConfirmation");
+                JSONObject openURLJSON = com.liquid.event.getJSONObject(params, "form", "openURL");
                 
 
                     
