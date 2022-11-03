@@ -24,6 +24,7 @@
     ]
 ,"mode":"formX"
 ,"navVisible":false
+,"autoLoad":true
 ,"autoInsert":false
 ,"autoSizeColumns":true
 ,"listTabVisible":false
