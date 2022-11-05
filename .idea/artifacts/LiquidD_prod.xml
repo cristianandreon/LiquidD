@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="LiquidD-prod">
+    <output-path>$PROJECT_DIR$/out/artifacts/LiquidD-prod</output-path>
+    <root id="archive" name="LiquidD.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Liquid" />
+          <element id="module-output" name="LiquidD" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="Liquid" />
+          <element id="library" level="application" name="lib_JAVA_EE6" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="LiquidD/web/Web" />
+      <element id="javaee-facet-resources" facet="Liquid/web/Web" />
+    </root>
+  </artifact>
+</component>
