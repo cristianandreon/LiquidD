@@ -287,6 +287,17 @@
 
 
 
+            function copy_to_clipboard(text) {
+                // copyText.select();
+                // copyText.setSelectionRange(0, 99999); // For mobile devices
+
+                // Copy the text inside the text field
+                navigator.clipboard.writeText(text);
+
+                // Alert the copied text
+                Liquid.showToast("INFO", "Copied the text: " + text);
+            }
+
         </script>
         
         
@@ -302,7 +313,7 @@
         
         <div class="spacer"></div>
         <center>
-        <div class="title0  reflect">LiquidD : Developer utilities</div>
+        <div class="title0  reflect">LiquidD : Developer utilities .. ver.1.08 - <%=workspace.version_string%></div>
         </center>
         <br/>
         <br/>        
@@ -653,7 +664,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <div class="spacer"></div>
             <br/>
             <br/>
-            vpn passw: <b>JH67l%3FFy</b>
+            <div style="float:left; display: block"><a href="javascript:void(0)" onclick='copy_to_clipboard(document.getElementById("vpnPassw").innerText)'>Copy vpn password: </a></div><b><span id="vpnPassw">JH67l%3FFy</span></b>
             <br/>
             <br/>
             <center>

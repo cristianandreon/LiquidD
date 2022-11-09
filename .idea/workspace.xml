@@ -7,11 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/LiquidD_prod.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +24,15 @@
     </colors>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Liquid" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -495,6 +502,9 @@
       <workItem from="1666771931844" duration="4136000" />
       <workItem from="1666885276286" duration="675000" />
       <workItem from="1667476171960" duration="3079000" />
+      <workItem from="1667632333255" duration="42000" />
+      <workItem from="1667984003005" duration="3171000" />
+      <workItem from="1667989206305" duration="890000" />
     </task>
     <task id="LOCAL-00001" summary="+">
       <created>1655409641882</created>
@@ -608,7 +618,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667475525851</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="+">
+      <created>1667632350958</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1667632350958</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
