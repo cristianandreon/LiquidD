@@ -5,14 +5,14 @@
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://192.168.0.90:5432/postgres</jdbc-url>
+      <jdbc-url>jdbc:postgresql://192.168.0.90:5432/LiquidX</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="postgres@localhost" uuid="7efe65a2-4354-4df2-bc9a-4667e9bee89d">
+    <data-source source="LOCAL" name="LiquidX@localhost" uuid="7efe65a2-4354-4df2-bc9a-4667e9bee89d">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/LiquidX</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

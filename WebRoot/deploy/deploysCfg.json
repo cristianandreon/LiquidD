@@ -48,6 +48,7 @@
             ]
         }
     ]
+,"order":"name"
 ,"autoLoad":true
 ,"editable":false
 ,"createTableIfMissing":true
