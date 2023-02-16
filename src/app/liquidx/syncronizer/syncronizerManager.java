@@ -50,11 +50,11 @@ public class syncronizerManager {
                 // JSONObject sSQLSON = com.liquid.event.getJSONObject(params, "data", "sql");
                 // String sSQL = sSQLSON.getString("sql");
 
-                JSONObject previewSyncronizerSON = com.liquid.event.getJSONObject(params, "data", "previewSyncronizer");
+                JSONObject previewSyncronizerSON = com.liquid.event.getJSONObject(params, "form", "previewSyncronizer");
                 boolean bPreviewSyncronizer = "true".equalsIgnoreCase( previewSyncronizerSON.getString("data")) ? true : false;
                 
                 
-                JSONObject deepModeSON = com.liquid.event.getJSONObject(params, "data", "deepMode");
+                JSONObject deepModeSON = com.liquid.event.getJSONObject(params, "form", "deepMode");
                 boolean bDeepMode = "true".equalsIgnoreCase( deepModeSON.getString("data")) ? true : false;
                 
                 {
