@@ -32,6 +32,7 @@
 ,"editable":true
 ,"createTableIfMissing":true
 ,"navVisible":true
+,"autoLoad":true
 ,"autoInsert":false
 ,"listTabVisible":true
 ,"owner--":"app.liquidx.project.event"

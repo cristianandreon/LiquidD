@@ -66,6 +66,7 @@
 ,"editable":true
 ,"createTableIfMissing":true
 ,"navVisible":true
+,"autoLoad":true
 ,"autoInsert":false
 ,"listTabVisible":true
 ,"rowSelection":"multiple"
