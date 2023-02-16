@@ -10,9 +10,9 @@
     ,{"name":"password","visible":false,"size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"name":"ip","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
     ,{"name":"engine","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true, "values":["Oracle","Postgres","MySQL","SQLServer","MariaDB"] }
-    ,{"name":"database","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"name":"database","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":false}
     ,{"name":"port","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"name":"service","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"name":"service","size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":false}
 ]
 ,"grids":[
         {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":5,"nCols":2
