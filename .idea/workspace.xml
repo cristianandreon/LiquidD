@@ -10,11 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/bean.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/bean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/project/machines.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/machines.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/syncronizer/syncronizer_machines.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/syncronizer/syncronizer_machines.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -538,7 +535,8 @@
       <workItem from="1675619178470" duration="4940000" />
       <workItem from="1675862322363" duration="610000" />
       <workItem from="1676364392396" duration="1583000" />
-      <workItem from="1676456054695" duration="4069000" />
+      <workItem from="1676456054695" duration="6121000" />
+      <workItem from="1676559957427" duration="641000" />
     </task>
     <task id="LOCAL-00001" summary="+">
       <created>1655409641882</created>
@@ -708,7 +706,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676553798740</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="+">
+      <created>1676555022670</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1676555022670</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -738,16 +743,10 @@
           <line>63</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java</url>
-          <line>85</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="22" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

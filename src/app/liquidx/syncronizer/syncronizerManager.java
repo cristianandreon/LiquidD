@@ -130,6 +130,7 @@ public class syncronizerManager {
                                         }
                                     } catch (Throwable th) {
                                         String err = "Error:" + th.getLocalizedMessage();
+                                        sReport += "Error connection to source .. " + err;
                                         System.out.println("Error connecting to " + ip + "("+engine+") : "+th.getLocalizedMessage());
                                         Callback.send("<span style=\"color:red\">Error connecting to " + ip + "("+engine+") : "+th.getLocalizedMessage()+"</span>");
                                         Thread.sleep(5000);
@@ -150,6 +151,7 @@ public class syncronizerManager {
                                         }
                                     } catch (Throwable th) {
                                         String err = "Error:" + th.getLocalizedMessage();
+                                        sReport += "Error connection to target .. " + err;
                                         System.out.println("Error connecting to " + targetIp + "("+targetEngine+") : "+th.getLocalizedMessage());
                                         Callback.send("<span style=\"color:red\">Error connecting to " + targetIp + "("+targetEngine+") : "+th.getLocalizedMessage()+"</span>");
                                         Thread.sleep(5000);
@@ -307,6 +309,7 @@ public class syncronizerManager {
                                         }
                                         
                                     } catch (Throwable th) {
+                                        sReport += "internal error:"+th.getMessage();
                                         if(sconn != null) {
                                             sconn.rollback();
                                         }
