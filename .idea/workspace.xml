@@ -10,6 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/db.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/db.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java" afterDir="false" />
@@ -26,7 +28,7 @@
     </colors>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Liquid" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -536,7 +538,8 @@
       <workItem from="1675862322363" duration="610000" />
       <workItem from="1676364392396" duration="1583000" />
       <workItem from="1676456054695" duration="6121000" />
-      <workItem from="1676559957427" duration="641000" />
+      <workItem from="1676559957427" duration="10112000" />
+      <workItem from="1676994667079" duration="594000" />
     </task>
     <task id="LOCAL-00001" summary="+">
       <created>1655409641882</created>
@@ -713,7 +716,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676555022670</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="+">
+      <created>1676623736704</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1676623736704</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -743,7 +753,7 @@
           <line>63</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
-        <breakpoint enabled="true" type="java-exception">
+        <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="22" />
         </breakpoint>

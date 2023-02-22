@@ -78,6 +78,7 @@ public class syncronizerManager {
                             if (syncronizeBeans != null) {
                                 for(int im=0; im<syncronizeBeans.size(); im++) {
                                     Object mBean = syncronizeBeans.get(im);
+                                    int comapreId = utility.getInt(mBean, "id");
                                     String machine = (String)utility.get(mBean, "machine");
                                     String machineId = (String)utility.get(mBean, "machine_id");
                                     String schema = (String)utility.get(mBean, "schema");
@@ -125,8 +126,10 @@ public class syncronizerManager {
                                         if(sconn != null) {
                                             sconn.setAutoCommit(false);
                                         } else {
-                                            System.out.println("Error connecting to " + ip + "("+engine+") : "+connError);
-                                            Callback.send("<span style=\"color:red\">Error connecting to " + ip + "("+engine+") : "+connError+"</span>");                                            
+                                            String err = "Error connecting to " + ip + "("+engine+") : "+connError;
+                                            sReport += "Error connection to target .. " + err;
+                                            System.out.println(err);
+                                            Callback.send("<span style=\"color:red\">Error connecting to " + ip + "("+engine+") : "+connError+"</span>");
                                         }
                                     } catch (Throwable th) {
                                         String err = "Error:" + th.getLocalizedMessage();
@@ -146,7 +149,9 @@ public class syncronizerManager {
                                         if(tconn != null) {
                                             tconn.setAutoCommit(false);
                                         } else {
-                                            System.out.println("Error connecting to " + targetIp + "("+targetEngine+") : "+connError);
+                                            String err = "Error connecting to " + targetIp + "("+targetEngine+") : "+connError;
+                                            sReport += "Error connection to target .. " + err;
+                                            System.out.println(err);
                                             Callback.send("<span style=\"color:red\">Error connecting to " + targetIp + "("+targetEngine+") : "+connError+"</span>");                                            
                                         }
                                     } catch (Throwable th) {
@@ -191,7 +196,7 @@ public class syncronizerManager {
                                                             
                                                             if(table.indexOf("*") != -1) {
                                                                 Callback.send("Reading multiple tables <span style=\"color:darkred\">"+table+"<span>");
-                                                                Object[] result = metadata.getAllTables(database, schema, table, null, sconn, false);
+                                                                Object[] result = metadata.getAllTables(database, schema, table, "*", sconn, false);
                                                                 if(result != null) {
                                                                     if(result[0] != null) {
                                                                         JSONObject tablesJSON = new JSONObject("{\"tables\":"+(String)result[0]+"}");
@@ -246,12 +251,12 @@ public class syncronizerManager {
                                                                         metadata.resetTableMetadata(database, schema, table);
                                                                         metadata.resetTableMetadata(targetDatabase, targetSchema, targetTable);
 
-                                                                        Callback.send("analyzing table " +(iTable+1)+"/"+nTables+" " + table + "...");
+                                                                        Callback.send("Analyzing table " +(iTable+1)+"/"+nTables+" " + table + "...");
 
                                                                         String syncRes = db.syncronizeTableMetadata( 
                                                                                 database+"."+schema+"."+table, targetDatabase+"."+targetSchema+"."+targetTable, 
                                                                                 sconn, tconn, 
-                                                                                (bPreviewSyncronizer ? "preview" : "mirror") + (bDeepMode ? " deepMode" : "") + " callback"
+                                                                                (bPreviewSyncronizer ? "preview" : "mirror") + (bDeepMode ? " deepMode" : "") + " NOcallback"
                                                                         );
 
                                                                         JSONObject syncJSON = new JSONObject(syncRes);
@@ -281,10 +286,10 @@ public class syncronizerManager {
                                                                                 +"</span>"
                                                                                 +"<br/>"
                                                                                 +"<span style=\"font-size:15px\">"
-                                                                                + (syncJSON.getJSONArray("deletingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Deleting columns from "+targetIp+" ("+syncJSON.getJSONArray("deletingColumns").length()+") : "+syncJSON.getJSONArray("deletingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing column in "+ip+"</span>")
+                                                                                + (syncJSON.has("deletingColumns") && syncJSON.getJSONArray("deletingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Deleting columns from "+targetIp+" ("+syncJSON.getJSONArray("deletingColumns").length()+") : "+syncJSON.getJSONArray("deletingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing column in "+ip+"</span>")
                                                                                 +"<br/>"
                                                                                 +"<br/>"
-                                                                                + (syncJSON.getJSONArray("addingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Missing columns in "+targetIp+" ("+syncJSON.getJSONArray("addingColumns").length()+") : "+syncJSON.getJSONArray("addingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing columns in "+targetIp+"</span>")
+                                                                                + (syncJSON.has("addingColumns") && syncJSON.getJSONArray("addingColumns").length() > 0 ? "<span style=\"color:darkRed\">"+"Missing columns in "+targetIp+" ("+syncJSON.getJSONArray("addingColumns").length()+") : "+syncJSON.getJSONArray("addingColumns")+"</span>" : "<span style=\"color:darkGreen\">"+"No missing columns in "+targetIp+"</span>")
                                                                                 +"</span>"
                                                                                 +"<br/>"
                                                                                 +"<br/>"
@@ -299,6 +304,8 @@ public class syncronizerManager {
                                                     }
                                                 }
                                             }
+                                        } else {
+                                            sReport += "Specify schema on comapre id:"+comapreId;
                                         }
                                         
                                         if(sconn != null) {
