@@ -4,14 +4,18 @@
 ,"table":"jobManager"
 ,"primaryKey":"id"
 ,"columns":[
-     { "visible":false,"nullable":false,"typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"JobManager_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"name":"id","width":"50","digits":0}
-    ,{"size":256,"nullable":true,"name":"job","typeName":"varchar","digits":0,"required":true,
+     { "name":"id","visible":false,"nullable":false,"typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"JobManager_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"width":"50","digits":0}
+    ,{ "size":256,"nullable":true,"name":"job","typeName":"varchar","digits":0,"required":true,
     "values": ["","GEDI","AGFA","SIA","PERCORSI-WEB","CO-APPRENDISTI","TELECO-ADMIN","CSM-ADMIN","GOR","MUVE"]}
-    ,{"size":256,"nullable":true,"name":"customer","typeName":"varchar","digits":0,"required":true,
+    ,{ "size":256,"nullable":true,"name":"customer","typeName":"varchar","digits":0,"required":true,
     "values": ["GEISOFT"]}
-    ,{"size":256,"nullable":true,"name":"startTime","typeName":"timestamp","digits":0,"required":true}
-    ,{"size":256,"nullable":true,"name":"endTime","typeName":"timestamp","digits":0,"required":false}
-    ,{"size":4096,"nullable":true,"name":"note","typeName":"varchar","digits":0,"required":true, "editor":{"type":"richEdit","options":"","code":false}}
+    ,{ "size":256,"nullable":true,"name":"startTime","typeName":"timestamp","digits":0,"required":true}
+    ,{ "size":256,"nullable":true,"name":"endTime","typeName":"timestamp","digits":0,"required":false}
+    ,{ "size":4096,"nullable":true,"name":"note","typeName":"varchar","digits":0,"required":true, "editor":{"type":"richEdit","options":"","code":false}}
+    ,{ "name":"time_amount","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
+    ,{ "name":"time_sec_difference","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
+    ,{ "name":"cost","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
+
 ]
 ,"grids":[
         {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":6,"nCols":3
@@ -22,6 +26,9 @@
                 ,{"name":"startTime","tooltip":"","label":"Inizio","row":1,"col":0}
                 ,{"name":"endTime","tooltip":"h","label":"Fine","row":1,"col":1}
                 ,{"name":"note","tooltip":"","label":"Note","row":1,"col":2 }
+                ,{"name":"time_amount","tooltip":"","label":"Inizio","row":2,"col":0}
+                ,{"name":"time_sec_difference","tooltip":"h","label":"Fine","row":2,"col":1}
+                ,{"name":"cost","tooltip":"","label":"Note","row":2,"col":2 }
             ]
         }
     ]
