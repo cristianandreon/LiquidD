@@ -186,7 +186,7 @@ public class deployManager {
                             } else {
                                 String err = "source file / alternative source file not accessible";
                                 Callback.send("1&deg; - Deploy of " + cfgName + "failed, <span style=\"color:red\">" + err + "<span>");
-                                return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode(err) + "\" }";
+                                return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
                             }
                             
                         } else {
