@@ -5,9 +5,12 @@
 ,"primaryKey":"id"
 ,"columns":[
      { "visible":false,"nullable":false,"typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"deploysCfg_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"name":"id","width":"50","digits":0}
-    ,{"size":256,"nullable":true,"name":"name","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":256,"nullable":true,"name":"host","typeName":"varchar","digits":0,"type":"12","required":true}
-    ,{"size":256,"nullable":true,"name":"user","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"width":200,"size":256,"nullable":true,"name":"name","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"width":100,"size":256,"nullable":true,"name":"host","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"width":80,"size":256,"nullable":true,"name":"user","typeName":"varchar","digits":0,"type":"12","required":true}
+    ,{"width":150,"name":"lastUpdate","required":false, "readOnly":true}
+    ,{"width":80,"name":"counter","required":false, "readOnly":true}
+    ,{"width":200,"name":"lastMsg","required":false, "readOnly":true}
     ,{"visible":false,"size":256,"nullable":true,"name":"password","typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"size":512,"nullable":true,"name":"sourceFile","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
     ,{"size":4096,"nullable":true,"name":"deployFolder","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
@@ -41,10 +44,13 @@
                 ,{"name":"webAppWAR","tooltip":"The war file name","label":"webAppWAR","row":3,"col":2}
                 ,{"name":"webAppURL","tooltip":"The URL of the app deployed","label":"web App URL","row":4,"col":0}
                 ,{"name":"sourceFile","tooltip":"Define here local file to deploy","label":"Source File","row":4,"col":1}
+                ,{"name":"sourceFileAlternative","tooltip":"Define alternative local file to deploy","label":"Alternative source file","row":4,"col":2}
                 ,{"name":"logFolder","tooltip":"Where to get the log","label":"log Folder","row":5,"col":0 }
                 ,{"name":"logFile","tooltip":"the log file name","label":"log File","row":5,"col":1 }
                 ,{"name":"protocol","tooltip":"upload/download protocol","label":"upload/download protocol","row":5,"col":2 }
-                ,{"name":"sourceFileAlternative","tooltip":"Define alternative local file to deploy","label":"Alternative source file","row":4,"col":2}
+                ,{"name":"lastUpdate","tooltip":"Last deploy","label":"Last deploy","row":6,"col":0 }
+                ,{"name":"counter","tooltip":"Deploy counter","label":"Deploy counter","row":6,"col":1 }
+                ,{"name":"lastMsg","tooltip":"Last deploy message","label":"Last deploy message","row":6,"col":2}
             ]
         }
     ]

@@ -10,9 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/bean.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/bean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/db.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/db.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,17 +44,17 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManager.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/index.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquidUtility.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/sshManager.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebRoot/project/fields.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/index.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquidUtility.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManager.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
   </component>
   <component name="JRebelWorkspace">
     <option name="jrebelEnabledAutocompile" value="true" />
@@ -552,7 +556,11 @@
       <workItem from="1677503854346" duration="701000" />
       <workItem from="1677589903341" duration="1987000" />
       <workItem from="1678044933473" duration="3345000" />
-      <workItem from="1678706172938" duration="4414000" />
+      <workItem from="1678706172938" duration="5001000" />
+      <workItem from="1678981088494" duration="1183000" />
+      <workItem from="1679405716044" duration="643000" />
+      <workItem from="1679509072278" duration="1080000" />
+      <workItem from="1679591708406" duration="15354000" />
     </task>
     <task id="LOCAL-00001" summary="+">
       <created>1655409641882</created>
@@ -750,7 +758,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677232455126</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="+">
+      <created>1678818100458</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1678818100458</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -779,6 +794,51 @@
           <url>file://$PROJECT_DIR$/src/app/liquidx/getLogs/logsManager.java</url>
           <line>63</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
+          <line>6330</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
+          <line>3016</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
+          <line>1507</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
+          <line>3449</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
+          <line>1984</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
+          <line>1986</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
+          <line>3239</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
+          <line>5297</line>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
+          <line>1669</line>
+          <option name="timeStamp" value="71" />
         </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />

@@ -32,6 +32,7 @@ import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -758,22 +759,42 @@ public class deployManager {
                                                 msg_for_notity = "Deploy of " + cfgName + " done, checked and online";
                                                 msg = "Deploy of " + cfgName + " <span style=\"color:darkGreen\">done, checked and online</span>";
                                                 Callback.send("5&deg; - " + msg);
+                                                utility.set(deplpoyBean, "lastUpdate", new Timestamp(System.currentTimeMillis()));
+                                                utility.set(deplpoyBean, "counter", utility.getInt(deplpoyBean, "counter")+1);
+                                                utility.set(deplpoyBean, "lastMsg", "OK");
+                                                String update_result = db.update(deplpoyBean, "LiquidX.liquidx.deploysCfg", (HttpServletRequest) requestParam);
+                                                retVal = "{ \"client\":\"Liquid.stopWaiting('deploysCfg'); Liquid.loadData('deploysCfg')\" }";
                                             } else {
                                                 if("scp".equalsIgnoreCase(protocol)) {
                                                     // scp cannot get file size in deploy folder, that is root owned
                                                     msg_for_notity = "Deploy of " + cfgName + " done, checked and online ... Note : deployed file's size bot checked (scp doesn't allow to get file size)";
                                                     msg = "Deploy of " + cfgName + " <span style=\"color:darkGreen\">deployed file's size mismath (" + remoteFileSize + "/" + glFileSize + ")<span>";
                                                     Callback.send("5&deg; - " + msg);
+                                                    utility.set(deplpoyBean, "lastUpdate", new Timestamp(System.currentTimeMillis()));
+                                                    utility.set(deplpoyBean, "counter", utility.getInt(deplpoyBean, "counter")+1);
+                                                    utility.set(deplpoyBean, "lastMsg", "OK");
+                                                    String update_result = db.update(deplpoyBean, "LiquidX.liquidx.deploysCfg", (HttpServletRequest) requestParam);
+                                                    retVal = "{ \"client\":\"Liquid.stopWaiting('deploysCfg'); Liquid.loadData('deploysCfg')\" }";
                                                 } else {                                        
                                                     msg_for_notity = "Deploy of " + cfgName + " done, checked and online ... Note : deployed file's size mismath (" + remoteFileSize + "/" + glFileSize+")";
                                                     msg = "Deploy of " + cfgName + " <span style=\"color:red\">deployed file's size mismath (" + remoteFileSize + "/" + glFileSize + ")<span>";
                                                     Callback.send("5&deg; - " + msg);
+                                                    utility.set(deplpoyBean, "lastUpdate", new Timestamp(System.currentTimeMillis()));
+                                                    utility.set(deplpoyBean, "counter", utility.getInt(deplpoyBean, "counter")+1);
+                                                    utility.set(deplpoyBean, "lastMsg", "OK(file size unchecked)");
+                                                    String update_result = db.update(deplpoyBean, "LiquidX.liquidx.deploysCfg", (HttpServletRequest) requestParam);
+                                                    retVal = "{ \"client\":\"Liquid.stopWaiting('deploysCfg'); Liquid.loadData('deploysCfg')\" }";
                                                 }
                                             }
                                         } else {
                                             msg_for_notity = "Deploy of " + cfgName + " done but web app " + webAppWAR + " not running";
                                             msg = "Deploy of " + cfgName + " <span style=\"color:red\">done but web app " + webAppWAR + " not running<span>";
                                             Callback.send("5&deg; - " + msg);
+                                            utility.set(deplpoyBean, "lastUpdate", new Timestamp(System.currentTimeMillis()));
+                                            utility.set(deplpoyBean, "counter", utility.getInt(deplpoyBean, "counter")+1);
+                                            utility.set(deplpoyBean, "lastMsg", "NOT RUNNING");
+                                            String update_result = db.update(deplpoyBean, "LiquidX.liquidx.deploysCfg", (HttpServletRequest) requestParam);
+                                            retVal = "{ \"client\":\"Liquid.stopWaiting('deploysCfg'); Liquid.loadData('deploysCfg')\" }";
                                         }
                                         Thread.sleep(1000);
                                     } else {
@@ -781,11 +802,21 @@ public class deployManager {
                                         msg = "Deploy of " + cfgName + " <span style=\"color:darkGray\">done but not checked<span>";
                                         Callback.send("5&deg; - " + msg);
                                         Thread.sleep(1000);
+                                        utility.set(deplpoyBean, "lastUpdate", new Timestamp(System.currentTimeMillis()));
+                                        utility.set(deplpoyBean, "counter", utility.getInt(deplpoyBean, "counter")+1);
+                                        utility.set(deplpoyBean, "lastMsg", "NOT CHECKED");
+                                        String update_result = db.update(deplpoyBean, "LiquidX.liquidx.deploysCfg", (HttpServletRequest) requestParam);
+                                        retVal = "{ \"client\":\"Liquid.stopWaiting('deploysCfg'); Liquid.loadData('deploysCfg')\" }";
                                     }
                                 } else {
                                     msg_for_notity = "Upload of " + cfgName + " Failed with error:" + uploadFileError;
                                     msg = "Upload of " + cfgName + " <span style=\"color:red\">Failed with error:" + uploadFileError + "<span>";
                                     Callback.send("1&deg; - " + msg);
+                                    utility.set(deplpoyBean, "lastUpdate", new Timestamp(System.currentTimeMillis()));
+                                    utility.set(deplpoyBean, "counter", utility.getInt(deplpoyBean, "counter")+1);
+                                    utility.set(deplpoyBean, "lastMsg", "UPLOAD ERROR:"+uploadFileError);
+                                    String update_result = db.update(deplpoyBean, "LiquidX.liquidx.deploysCfg", (HttpServletRequest) requestParam);
+                                    retVal = "{ \"client\":\"Liquid.stopWaiting('deploysCfg'); Liquid.loadData('deploysCfg')\" }";
                                 }
 
                                 //
