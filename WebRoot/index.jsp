@@ -710,7 +710,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
                     <table border=0 cellspacing=0 cellpadding=0 class="css_transform2" style="width:1024px; height:auto; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363; ">
                         <tr>
                             <td colspan="1">
-                                <div id="deploysCfg" style="height:560px; width:100%; background-color: rgba(213, 225, 232, 0.45)">
+                                <div id="deploysCfg" style="height:660px; width:100%; background-color: rgba(213, 225, 232, 0.45)">
                                 </div>
                              </td>
                         </tr>

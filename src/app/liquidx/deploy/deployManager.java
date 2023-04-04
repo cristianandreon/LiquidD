@@ -36,6 +36,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.servlet.http.HttpServletRequest;
@@ -213,6 +214,8 @@ public class deployManager {
 
                             String desc_file = "" + ver;
                             String desc_content = "" + (String) utility.getArchiveFile(sourceFile, "WEB-INF/product.xml", "product/version");;
+
+                            utility.set(deplpoyBean, "version", ver);
 
                             // Risoluzione backupFolder
                             backupFolder = solve_variable_field(backupFolder, user, webApp);
@@ -862,15 +865,20 @@ public class deployManager {
             String err = "Error:" + th.getLocalizedMessage();
             Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
             retVal = "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+            java.util.logging.Logger.getLogger(deployManager.class.getName()).severe(th.getMessage());
         } finally {
-            if(ssh != null) {
-                String cmd = "history -c";
-                ssh.cmd(cmd);
-                ssh.close();
-            }            
-            if(sftp != null) {
-                sftp.end();
-            }            
+            try {
+                if(ssh != null) {
+                    String cmd = "history -c";
+                    ssh.cmd(cmd);
+                    ssh.close();
+                }
+                if(sftp != null) {
+                    sftp.end();
+                }
+            } catch (Throwable th2){
+                java.util.logging.Logger.getLogger(deployManager.class.getName()).severe(th2.getMessage());
+            }
         }
         
         return (Object)retVal;

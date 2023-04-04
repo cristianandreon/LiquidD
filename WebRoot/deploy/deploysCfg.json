@@ -10,7 +10,8 @@
     ,{"width":80,"size":256,"nullable":true,"name":"user","typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"width":150,"name":"lastUpdate","required":false, "readOnly":true}
     ,{"width":80,"name":"counter","required":false, "readOnly":true}
-    ,{"width":200,"name":"lastMsg","required":false, "readOnly":true}
+    ,{"width":80,"name":"lastMsg","required":false, "readOnly":true}
+    ,{"width":180,"name":"version","required":false, "readOnly":true}
     ,{"visible":false,"size":256,"nullable":true,"name":"password","typeName":"varchar","digits":0,"type":"12","required":true}
     ,{"size":512,"nullable":true,"name":"sourceFile","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
     ,{"size":4096,"nullable":true,"name":"deployFolder","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
@@ -31,7 +32,7 @@
         {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":6,"nCols":3
             ,"columns":[
                 {"name":"id","tooltip":"","label":"id","row":0,"col":0}
-                ,{"name":"name","tooltip":"Configuration name","label":"name","row":0,"col":1}
+                ,{"name":"name","tooltip":"Configuration name","label":"Deploy name","row":0,"col":1}
                 ,{"name":"host","tooltip":"Ip of host where deploy","label":"host","row":0,"col":2}
                 ,{"name":"user","tooltip":"User name for login sftp/ssh","label":"user","row":1,"col":0}
                 ,{"name":"password","tooltip":"password for login sftp/ssh","label":"password","row":1,"col":1}
@@ -54,6 +55,14 @@
             ]
         }
     ]
+,"filters":[
+    {"name":"Main", "filterMode":"client", "nRows":1,"nCols":2
+    ,"columns":[
+        {"name":"name","tooltip":"Deploy name","label":"Deploy name","op":"like","row":0,"col":0}
+        ,{"name":"host","tooltip":"Host","label":"Host","op":"like","row":0,"col":1}
+    ]
+    }
+]
 ,"order":"name"
 ,"autoLoad":true
 ,"editable":false
