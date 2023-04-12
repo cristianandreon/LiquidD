@@ -9,9 +9,9 @@
     "values": ["","GEDI","AGFA","SIA","PERCORSI-WEB","CO-APPRENDISTI","TELECO-ADMIN","CSM-ADMIN","GOR","MUVE"]}
     ,{ "size":256,"nullable":true,"name":"customer","typeName":"varchar","digits":0,"required":true,
     "values": ["GEISOFT"]}
-    ,{ "size":256,"nullable":true,"name":"startTime","typeName":"timestamp","digits":0,"required":true}
+    ,{ "size":256,"nullable":true,"name":"startTime","typeName":"timestamp","digits":0,"required":false}
     ,{ "size":256,"nullable":true,"name":"endTime","typeName":"timestamp","digits":0,"required":false}
-    ,{ "size":4096,"nullable":true,"name":"note","typeName":"varchar","digits":0,"required":true, "editor":{"type":"richEdit","options":"","code":false}}
+    ,{ "size":4096,"nullable":true,"name":"note","typeName":"varchar","digits":0,"required":false, "editor":{"type":"richEdit","options":"","code":false}}
     ,{ "name":"time_amount","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
     ,{ "name":"time_sec_difference","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
     ,{ "name":"cost","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
