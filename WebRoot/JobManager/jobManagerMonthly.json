@@ -1,0 +1,24 @@
+{ 
+ "database":"LiquidX"
+,"schema":"liquidx"
+,"table":"vJobManagerMonthly"
+,"columns":[
+    { "size":256,"nullable":true,"name":"year_month","typeName":"varchar","digits":0}
+    ,{ "nullable":true,"name":"cost","typeName":"double","digits":0,"astype":"currency.it-IT.EUR"}
+]
+,"grids":[]
+,"order":"year_month,desc"
+,"autoLoad":true
+,"editable":true
+,"createTableIfMissing":true
+,"navVisible":true
+,"autoInsert":false
+,"listTabVisible":true
+,"owner":"app.liquidx.deploy.event"
+,"events":[ ]
+,"commands":[
+	 { "name":"copy"}
+	,{ "name":"next"}
+	,{ "name":"previous"}
+]
+}

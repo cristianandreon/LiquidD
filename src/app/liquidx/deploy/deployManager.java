@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
@@ -82,7 +83,6 @@ public class deployManager {
                 JSONObject doBackupJSON = com.liquid.event.getJSONObject(params, "form", "doBackup");
                 JSONObject askConfirmationJSON = com.liquid.event.getJSONObject(params, "form", "askConfirmation");
                 JSONObject openURLJSON = com.liquid.event.getJSONObject(params, "form", "openURL");
-                
 
                     
                 // Lettura del bean di configurazione
@@ -96,6 +96,8 @@ public class deployManager {
                         boolean openURL = "true".equalsIgnoreCase( openURLJSON.getString("data")) ? true : false;
 
                         retVal = (String)do_deploy(deplpoyBean, cfgName, fileName, doBackup, askConfirmation, openURL, false, (HttpServletRequest) requestParam);
+
+
 
                     } else {
                         Callback.send("Deploy of " + cfgName + "failed, <span style=\"color:red\">read bean error<span>");
@@ -119,6 +121,120 @@ public class deployManager {
         
         return (Object)retVal;
     }
+
+
+    static public Object openTerminal(Object tbl_wrk, Object params, Object clientData, Object requestParam) throws JSONException, InterruptedException, Exception {
+        return doCommand(tbl_wrk, params, clientData, requestParam, "openTerminal");
+    }
+    static public Object openURL(Object tbl_wrk, Object params, Object clientData, Object requestParam) throws JSONException, InterruptedException, Exception {
+        return doCommand(tbl_wrk, params, clientData, requestParam, "openURL");
+    }
+
+    static public Object doCommand(Object tbl_wrk, Object params, Object clientData, Object requestParam, String cmd) throws JSONException, InterruptedException, Exception {
+        String retVal = "{ \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+
+        try {
+            if (params != null) {
+                Object nameParam = com.liquid.event.getObject(params, "name");
+                JSONArray rowsData = com.liquid.event.getJSONArray(params, "formX");
+                String cfgId = null, cfgName = null, fileName = null, sFileSize = null, file = null;
+                if (rowsData != null) {
+                    // Old way ...
+                    JSONObject rowData = rowsData.getJSONObject(0);
+                    cfgId = rowData.getString("2");
+                    cfgName = rowData.getString("3");
+                    file = rowData.getString("4");
+                    try {
+                        rowData.getString("file.filesName");
+                    } catch (Exception e) {
+                    }
+                    try {
+                        sFileSize = rowData.getString("file.filesSize");
+                    } catch (Exception e) {
+                    }
+                    String controlId = "deploysCfg";
+                } else {
+                    // New way ...
+                    // N.B.: We just want the data of the current control (which is empty)
+                    cfgId = com.liquid.db.getSelection(tbl_wrk, params);
+                }
+
+                // Lettura del bean di configurazione
+                if (cfgId != null && !cfgId.isEmpty()) {
+                    // Object deplpoyBean = db.get_bean(requestParam, controlId, id, null, "*", null, 1);
+                    Object deplpoyBean = bean.load_bean((HttpServletRequest) requestParam, "LiquidX.liquidx.deploysCfg", "*", "id="+cfgId);
+                    if (deplpoyBean != null) {
+
+                        if("openTerminal".equalsIgnoreCase(cmd)) {
+
+                            String ssh_cmd = "ssh " + utility.getString(deplpoyBean, "user") + "@" + utility.getString(deplpoyBean, "host");
+                            utility.create_file(
+                                    "/tmp/pass.txt",
+                                    utility.getString(deplpoyBean, "password")
+                            );
+
+                            utility.create_file(
+                                    "/tmp/tmp.sh",
+                                    "cat /tmp/pass.txt|pbcopy\n"
+                                            + "echo \"*** LIQUID : Paste your password to ssh ***\"\n"
+                                            + "" + ssh_cmd + "\n"
+                                    // + "pbpaste > "+ssh_cmd + ""
+                                    // + "echo \""+utility.getString(deplpoyBean, "password")+"\" | tee | " + ssh_cmd + " pbcopy"
+                            );
+
+                            // /usr/bin/open -a /Applications/Utilities/Terminal.app /bin/bash
+                            // String script = "/usr/bin/open -a /Applications/Utilities/Terminal.app /bin/bash";
+                            // osascript -e 'tell application \"Terminal\" to do script "sh /tmp/tmp.sh"'
+                            // String script = "osascript -e 'tell application \"Terminal\" to do script \"sh /tmp/tmp.sh\"'";
+                            // Process r = Runtime.getRuntime().exec(script);
+
+                            final ProcessBuilder processBuilder = new ProcessBuilder("/usr/bin/osascript",
+                                    "-e", "tell app \"Terminal\"",
+                                    "-e", "set currentTab to do script (\"sh /tmp/tmp.sh\")"
+                                    ,"-e", "end tell"
+                                    ,"-e", "tell application \"Terminal\" to activate"
+                                    // ,"-e", "tell application \"Terminal\" keystroke \""+utility.getString(deplpoyBean, "password")+"\" using command down"
+                            );
+                            final Process r = processBuilder.start();
+
+                            boolean a = r.isAlive();
+                            int ev = r.exitValue();
+
+                            try {
+                                r.getOutputStream().write("\\x16\n".getBytes(StandardCharsets.UTF_8));
+                                r.getOutputStream().write(16);
+                                r.getOutputStream().flush();
+                            }catch (Exception e) {}
+
+                        } else if ("openURL".equalsIgnoreCase(cmd)) {
+                            String webAppURL = utility.decodeHtml((String) utility.get(deplpoyBean, "webAppURL"));
+                            String openScript = "window.open(\"" + webAppURL + "\")";
+                            JSScript.script(openScript);
+                        }
+
+                    } else {
+                        Callback.send("Deploy of " + cfgName + "failed, <span style=\"color:red\">read bean error<span>");
+                        retVal = "{ \"result\":-2, \"error\":\"" + utility.base64Encode("read bean error") + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                    }
+                } else {
+                    Callback.send("Deploy of " + cfgName + " failed, <span style=\"color:red\">primaryKey not found<span>");
+                    retVal = "{ \"result\":-1, \"error\":\"" + utility.base64Encode("primaryKey not found") + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                }
+            } else {
+                Callback.send("Deploy failed, <span style=\"color:red\">params not defined<span>");
+                retVal = "{ \"result\":-1, \"error\":\"" + utility.base64Encode("primaryKey not found") + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+            }
+        } catch (Throwable th) {
+            String err = "Error:" + th.getLocalizedMessage();
+            Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+            retVal = "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+            java.util.logging.Logger.getLogger(deployManager.class.getName()).severe(th.getMessage());
+        } finally {
+        }
+
+        return (Object)retVal;
+    }
+
 
 
     /**
@@ -181,7 +297,7 @@ public class deployManager {
             // Adattamento webAppName
             webAppWAR = webApp + ".war";
 
-            Callback.send("Processing " + cfgName + " ...");
+            Callback.send("<h2>Processing <b>" + cfgName + "</b> ...</h2>");
 
             //
             // put file to server via SFTP

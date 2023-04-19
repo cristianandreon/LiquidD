@@ -4,11 +4,15 @@
 <%@ page import="java.util.Arrays" %>
 <%@ page import="app.liquidx.deploy.deployManager" %>
 <%@ page import="com.liquid.ThreadSession" %>
+<%@ page import="static com.liquid.ThreadSession.removeThreadSessionInfo" %>
+<%@ page import="com.liquid.utility" %>
+<%@ page import="com.liquid.Callback" %>
 <%!
 
 %>
 <%@include file="../connection_setup.jsp"%>
 <%
+    String openScript = "";
     String deployFile = "";
     String deployName = request.getParameter("deployName");
     String deployBackup = request.getParameter("deployBackup");
@@ -47,6 +51,9 @@
 
                     deployFile = com.liquid.utility.getString(deplpoyBean, "sourceFile");
 
+                    String webAppURL = utility.decodeHtml((String) utility.get(deplpoyBean, "webAppURL"));
+                    openScript = "window.open(\"" + webAppURL + "\")";
+
                     String retVal = (String) deployManager.do_deploy(
                             deplpoyBean,
                             deployName,
@@ -57,10 +64,12 @@
                             true,
                             request
                     );
-                    // Esecuzione dello script in uscita...
-                    if (retVal != null) {
 
+                    if (retVal != null) {
                     }
+
+                    Callback.send("<br/><br/><a href='javascript:void(0)' onclick='"+openScript+"' style=\"font-size:140%; color:navy\">"+webAppURL+"</a><br/>");
+                    removeThreadSessionInfo();
                 }
             } else {
                 out.println("Internal error: configurazionr '"+deployName+"' NOT found");
@@ -75,6 +84,8 @@
     <script>
         function setup() {
             <%
+                // Esecuzione dello script in uscita...
+                out.println(openScript);
             %>
         }
     </script>
@@ -163,7 +174,7 @@
         </tr>
         <tr>
             <td>
-                <div class="leftDiv">War to deploy</div>
+                <div class="leftDiv">War just deployed</div>
             </td>
             <td>
                 <div class="rightDiv">
@@ -179,15 +190,6 @@
                 <div class="rightDiv"></div>
             </td>
         </tr>
-        <tr>
-            <td>
-                <div class="leftDiv">Backup</div>
-            </td>
-            <td>
-                <div class="rightDiv">
-                    <input class="myCheck" type="checkbox" id="backup" value="<%=deployBackup%>" />
-                </div>
-            </td>
     </table>
 </center>
 </body>

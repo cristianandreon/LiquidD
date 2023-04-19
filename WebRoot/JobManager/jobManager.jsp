@@ -14,7 +14,6 @@
             height:30px;
             background-color: rgba(250, 250, 210, 0.17);
             border: 1px solid burlywood;
-            text-shadow: 1px;
             -webkit-box-shadow: 3px 4px 7px #636363;
         }
         .myCheck { width:30px; height:30px; }
@@ -38,7 +37,7 @@
                 </tr><tr>
                     <td><div class="leftDiv">Seelcted</div></td><td><div class="rightDiv"><input class="myFileInput" type="file" accept=".war" id="@{file}" /></div></td>
                 </tr><tr>
-                    <td><div class="leftDiv"></td><td></div><div class="rightDiv"></div></td>
+                <td><div class="leftDiv"></div></td><td></div><div class="rightDiv"></div></td>
                 </tr><tr>
                     <td><div class="leftDiv">Notify</div></td><td><div class="rightDiv"><input class="myCheck" type="checkbox" id="@{notify}" /></div></td>
             </table>

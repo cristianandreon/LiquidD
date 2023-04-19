@@ -58,7 +58,7 @@
 ,"filters":[
     {"name":"Main", "filterMode":"client", "nRows":1,"nCols":2
     ,"columns":[
-        {"name":"name","tooltip":"Deploy name","label":"Deploy name","op":"like","row":0,"col":0}
+        {"name":"name","tooltip":"Deploy name","label":"Deploy name","value":"IJ","op":"like","row":0,"col":0}
         ,{"name":"host","tooltip":"Host","label":"Host","op":"like","row":0,"col":1}
     ]
     }
@@ -83,5 +83,7 @@
 	,{ "name":"paste"}
 	,{ "name":"next"}
 	,{ "name":"previous"}
+    ,{ "name":"terminal", "text":"SSH", "title":"Open ssh terminal", "server":"app.liquidx.deploy.deployManager.openTerminal" }
+    ,{ "name":"url", "text":"URL","title":"Open URL", "server":"app.liquidx.deploy.deployManager.openURL" }
 ]
 }

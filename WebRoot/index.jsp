@@ -130,6 +130,9 @@
 
             function startJobManager() {
                 Liquid.startControl('jobManager', '<%=workspace.get_file_content(request, "/JobManager/jobManager.json")%>');
+                Liquid.startControl('jobManagerOverviewAll', '<%=workspace.get_file_content(request, "/JobManager/jobManagerOverviewAll.json")%>');
+                Liquid.startControl('jobManagerOverview', '<%=workspace.get_file_content(request, "/JobManager/jobManagerOverview.json")%>');
+                Liquid.startControl('jobManagerMonthly', '<%=workspace.get_file_content(request, "/JobManager/jobManagerMonthly.json")%>');
             }
 
 
@@ -1209,14 +1212,14 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             <br/>
             <br/>
-            <div class="title1">Projects</div>
+            <div class="title1">Overview All</div>
             <div class="spacer"></div>
             <br/>
             <br/>
             <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
                 <tr>
                     <td colspan="1" style="">
-                        <div id="jobMamnagerCustomer" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
+                        <div id="jobManagerOverviewAll" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
                         </div>
                     </td>
                 </tr>
@@ -1225,6 +1228,34 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             <br/>
             <br/>
+            <div class="title1">Overview</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="jobManagerOverview" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div class="title1">Monthly</div>
+            <div class="spacer"></div>
+            <br/>
+            <br/>
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="jobManagerMonthly" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
+                        </div>
+                    </td>
+                </tr>
+            </table>
             <br/>
             <br/>
             <br/>

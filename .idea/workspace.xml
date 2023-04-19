@@ -10,7 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
+      <change afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManagerMonthly.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManagerOverview.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManagerOverviewAll.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/Callback.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/Callback.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/Messagebox.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/Messagebox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/ThreadSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/ThreadSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/JobManager/jobManager.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManager.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/deploy/doDeploy.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/deploy/doDeploy.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +45,7 @@
     </colors>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Liquid" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -79,7 +94,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.data.extractors.current.export.id" value="Pretty-Groovy.txt.groovy" />
     <property name="database.data.extractors.current.id" value="Pretty-Groovy.txt.groovy" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/WebRoot" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/WebRoot/JobManager" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -92,9 +107,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/WebRoot/JobManager" />
       <recent name="$PROJECT_DIR$/WebRoot" />
       <recent name="$PROJECT_DIR$/WebRoot/deploy" />
-      <recent name="$PROJECT_DIR$/WebRoot/JobManager" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -564,7 +579,10 @@
       <workItem from="1680343430674" duration="10566000" />
       <workItem from="1680636949196" duration="5800000" />
       <workItem from="1681221305095" duration="10046000" />
-      <workItem from="1681297606828" duration="6479000" />
+      <workItem from="1681297606828" duration="16648000" />
+      <workItem from="1681804535230" duration="19028000" />
+      <workItem from="1681900366146" duration="919000" />
+      <workItem from="1681903204326" duration="2522000" />
     </task>
     <task id="LOCAL-00001" summary="+">
       <created>1655409641882</created>
@@ -818,7 +836,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681300691267</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="+">
+      <created>1681483462680</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1681483462680</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -860,38 +885,48 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>1507</line>
-          <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>1984</line>
+          <line>1988</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>1986</line>
+          <line>1990</line>
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>3239</line>
+          <line>3243</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>5297</line>
+          <line>5301</line>
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>1669</line>
+          <line>1673</line>
           <option name="timeStamp" value="71" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java</url>
           <line>311</line>
-          <option name="timeStamp" value="72" />
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java</url>
+          <line>97</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java</url>
+          <line>114</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java</url>
+          <line>88</line>
+          <option name="timeStamp" value="107" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang">

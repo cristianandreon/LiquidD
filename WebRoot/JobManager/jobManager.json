@@ -5,16 +5,14 @@
 ,"primaryKey":"id"
 ,"columns":[
      { "name":"id","visible":false,"nullable":false,"typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"JobManager_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"width":"50","digits":0}
-    ,{ "size":256,"nullable":true,"name":"job","typeName":"varchar","digits":0,"required":true,
-    "values": ["","GEDI","AGFA","SIA","PERCORSI-WEB","CO-APPRENDISTI","TELECO-ADMIN","CSM-ADMIN","GOR","MUVE"]}
-    ,{ "size":256,"nullable":true,"name":"customer","typeName":"varchar","digits":0,"required":true,
-    "values": ["GEISOFT"]}
-    ,{ "size":256,"nullable":true,"name":"startTime","typeName":"timestamp","digits":0,"required":false}
-    ,{ "size":256,"nullable":true,"name":"endTime","typeName":"timestamp","digits":0,"required":false}
-    ,{ "size":4096,"nullable":true,"name":"note","typeName":"varchar","digits":0,"required":false, "editor":{"type":"richEdit","options":"","code":false}}
-    ,{ "name":"time_amount","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
-    ,{ "name":"time_sec_difference","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
-    ,{ "name":"cost","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
+    ,{ "width":"100","size":256,"nullable":true,"name":"job","typeName":"varchar","digits":0,"required":true,"values": ["","GEDI","AGFA","SIA","PERCORSI-WEB","CO-APPRENDISTI","TELECO-ADMIN","CSM-ADMIN","GOR","MUVE"]}
+    ,{ "width":"100","size":256,"nullable":true,"name":"customer","typeName":"varchar","digits":0,"required":true,"values": ["GEISOFT"]}
+    ,{ "size":256,"nullable":true,"name":"startTime","typeName":"timestamp","digits":0}
+    ,{ "size":256,"nullable":true,"name":"endTime","typeName":"timestamp","digits":0}
+    ,{ "width":"200","size":4096,"nullable":true,"name":"note","typeName":"varchar","digits":0, "editor":{"type":"richEdit","options":"","code":false}}
+    ,{ "width":"100","name":"cost","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true,"astype":"currency.it-IT.EUR"}
+    ,{ "width":"100","name":"time_amount","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
+    ,{ "width":"100","name":"time_sec_difference","foreignTable": "vJobManager", "foreignColumn": "id", "column": "id", "readonly": true}
 
 ]
 ,"grids":[
@@ -41,8 +39,7 @@
 ,"listTabVisible":true
 ,"owner":"app.liquidx.deploy.event"
 ,"events":[
-      { "name":"onInserting", "server":"onInserting", "params":[], "client":""}
-     ,{ "name":"onRowDoubleClicked---",
+    { "name":"onRowDoubleClicked---",
     "server":"app.liquidx.JobManager.jobManager.onClick",
     "params":["doBackup","askConfirmation","openURL"],
     "client":"Liquid.startWaiting('jobManager')",
@@ -56,5 +53,6 @@
 	,{ "name":"paste"}
 	,{ "name":"next"}
 	,{ "name":"previous"}
+    ,{ "name":"refresh", "text":"refresh","server":"", "params":[], "client":"Liquid.reloadAll('jobManagerMonthly'); Liquid.reloadAll('jobManagerOverview'); Liquid.reloadAll('jobManagerOverviewAll')"}
 ]
 }
