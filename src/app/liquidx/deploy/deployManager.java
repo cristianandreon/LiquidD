@@ -257,21 +257,22 @@ public class deployManager {
         sftpManager sftp = null;
 
         try {
-            cfgName = (String) utility.get(deplpoyBean, "name");
-            String host = (String) utility.get(deplpoyBean, "host");
-            String user = (String) utility.get(deplpoyBean, "user");
-            String password = (String) utility.get(deplpoyBean, "password");
-            String sourceFile = (String) utility.get(deplpoyBean, "sourceFile");
-            String sourceFileAlternative = (String) utility.get(deplpoyBean, "sourceFileAlternative");
-            String deployFolder = (String) utility.get(deplpoyBean, "deployFolder");
-            String copyFolder = (String) utility.get(deplpoyBean, "copyFolder");
-            String backupFolder = (String) utility.get(deplpoyBean, "backupFolder");
-            String webAppWAR = (String) utility.get(deplpoyBean, "webAppWAR");
-            String webAppURL = (String) utility.get(deplpoyBean, "webAppURL");
+            cfgName = utility.getString(deplpoyBean, "name");
+            String host = utility.getString(deplpoyBean, "host");
+            String user = utility.getString(deplpoyBean, "user");
+            String password = utility.getString(deplpoyBean, "password");
+            String sourceFile = utility.getString(deplpoyBean, "sourceFile");
+            String sourceFileAlternative = utility.getString(deplpoyBean, "sourceFileAlternative");
+            String deployFolder = utility.getString(deplpoyBean, "deployFolder");
+            String copyFolder = utility.getString(deplpoyBean, "copyFolder");
+            String backupFolder = utility.getString(deplpoyBean, "backupFolder");
+            String webAppWAR = utility.getString(deplpoyBean, "webAppWAR");
+            String webAppURL = utility.getString(deplpoyBean, "webAppURL");
+            String notifyEmails = utility.getString(deplpoyBean, "notifyEmails");
+            String protocol = utility.getString(deplpoyBean, "protocol");
             int undeployWaitTime = (int) utility.get(deplpoyBean, "undeployWaitTime");
             int checkWaitTime = (int) utility.get(deplpoyBean, "checkWaitTime");
-            String notifyEmails = (String) utility.get(deplpoyBean, "notifyEmails");
-            String protocol = (String) utility.get(deplpoyBean, "protocol");
+            boolean enabled = utility.getBoolean(deplpoyBean, "enabled");
 
 
             String sFileSize = "[N/D]";
@@ -308,44 +309,47 @@ public class deployManager {
             boolean bDataDecoded = false;
             InputStream sourceFileIS = null;
 
-            if (
-                    (sourceFile != null && !sourceFile.isEmpty())
-                            || (sourceFileAlternative != null && !sourceFileAlternative.isEmpty())
-            ) {
-
-                File f = null;
-                if (utility.fileExist(sourceFile)) {
-                    f = new File(sourceFile);
-                } else if (utility.fileExist(sourceFileAlternative)) {
-                    sourceFile = sourceFileAlternative;
-                    f = new File(sourceFile);
-                }
-
-                if (f != null) {
-
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm:ss");
-                    sourceFileLDate = dateFormat.format(f.lastModified());
-                    BasicFileAttributes attrs = Files.readAttributes(f.toPath(), BasicFileAttributes.class);
-                    FileTime time = attrs.creationTime();
-                    sourceFileCDate = dateFormat.format(new Date(time.toMillis()));
-
-                    sourceFileIS = new FileInputStream(new File(sourceFile));
-                    if (sourceFileIS != null) {
-                        bDataDecoded = true;
-                        sFileSize = String.valueOf(f.length());
+            if (enabled) {
+                if (
+                        (sourceFile != null && !sourceFile.isEmpty())
+                                || (sourceFileAlternative != null && !sourceFileAlternative.isEmpty())
+                ) {
+                    File f = null;
+                    if (utility.fileExist(sourceFile)) {
+                        f = new File(sourceFile);
+                    } else if (utility.fileExist(sourceFileAlternative)) {
+                        sourceFile = sourceFileAlternative;
+                        f = new File(sourceFile);
                     }
-                    Callback.send("1&deg; - Uploading " + sourceFile + " " + (f.length() / 1024 / 1024) + "MB...");
-                    glSourceFile = sourceFile;
-                    glFileSize = f.length();
+
+                    if (f != null) {
+
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - hh:mm:ss");
+                        sourceFileLDate = dateFormat.format(f.lastModified());
+                        BasicFileAttributes attrs = Files.readAttributes(f.toPath(), BasicFileAttributes.class);
+                        FileTime time = attrs.creationTime();
+                        sourceFileCDate = dateFormat.format(new Date(time.toMillis()));
+
+                        sourceFileIS = new FileInputStream(new File(sourceFile));
+                        if (sourceFileIS != null) {
+                            bDataDecoded = true;
+                            sFileSize = String.valueOf(f.length());
+                        }
+                        Callback.send("1&deg; - Uploading " + sourceFile + " " + (f.length() / 1024 / 1024) + "MB...");
+                        glSourceFile = sourceFile;
+                        glFileSize = f.length();
+
+                    } else {
+                        String err = "source file / alternative source file not accessible";
+                        Callback.send("1&deg; - Deploy of " + cfgName + "failed, <span style=\"color:red\">" + err + "<span>");
+                        return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                    }
 
                 } else {
-                    String err = "source file / alternative source file not accessible";
-                    Callback.send("1&deg; - Deploy of " + cfgName + "failed, <span style=\"color:red\">" + err + "<span>");
-                    return (Object) "{ \"result\":-2, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                    Messagebox.show("Missing sourc file", "LiquidD", Messagebox.WARNING + Messagebox.OK);
                 }
-
             } else {
-                Messagebox.show("Missing sourc file", "LiquidD", Messagebox.WARNING + Messagebox.OK);
+                Messagebox.show("This deploy was disabled", "LiquidD", Messagebox.WARNING + Messagebox.OK);
             }
 
             if (bDataDecoded) {
