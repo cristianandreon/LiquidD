@@ -597,6 +597,12 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             <br/>
             <br/>
+            <br/>
+            <br/>
+            <div style="float:left; display: block">
+                <a href="javascript:void(0)" onclick='window.open("/LiquidD/liquid.index.jsp")'>Surf insider Liquid projecting page</a>
+            </div>
+            <br/>
 
         </div>   
 
