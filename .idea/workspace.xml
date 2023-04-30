@@ -10,7 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -575,6 +575,7 @@
       <workItem from="1681982128496" duration="14969000" />
       <workItem from="1682336228462" duration="1208000" />
       <workItem from="1682509996094" duration="3034000" />
+      <workItem from="1682584255085" duration="2633000" />
     </task>
     <task id="LOCAL-00001" summary="+">
       <created>1655409641882</created>
