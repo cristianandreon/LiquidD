@@ -84,7 +84,7 @@
 	,{ "name":"paste"}
 	,{ "name":"next"}
 	,{ "name":"previous"}
-    ,{ "name":"terminal", "text":"SSH", "title":"Open ssh terminal", "server":"app.liquidx.deploy.deployManager.openTerminal" }
-    ,{ "name":"url", "text":"URL","title":"Open URL", "server":"app.liquidx.deploy.deployManager.openURL" }
+    ,{ "name":"terminal","image":"ssh.png","width":"26px","text":"SSH", "title":"Open ssh terminal", "server":"app.liquidx.deploy.deployManager.openTerminal" }
+    ,{ "name":"url","image":"url.png","width":"26px","text":"URL","title":"Open URL", "server":"app.liquidx.deploy.deployManager.openURL" }
 ]
 }
