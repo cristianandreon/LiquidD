@@ -1,0 +1,36 @@
+{ 
+ "database":"LiquidX"
+,"schema":"liquidx"
+,"table":"jobManagerCfg"
+,"primaryKey":"code"
+,"columns":[
+     { "width":"150","name":"code","size":256,"nullable":false,"label":"CODE","required":true}
+    ,{ "width":"200","name":"value","size":256,"nullable":true,"label":"VALUE","required":true}
+
+]
+,"grids":[
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":6,"nCols":3
+            ,"columns":[
+                {"name":"code","tooltip":"","label":"id","row":0,"col":0}
+                ,{"name":"value","tooltip":"","label":"Job name","row":0,"col":1}
+            ]
+        }
+    ]
+,"autoLoad":true
+,"editable":true
+,"createTableIfMissing":true
+,"navVisible":true
+,"autoInsert":false
+,"listTabVisible":true
+,"owner":"app.liquidx.deploy.event"
+,"events":[ ]
+,"commands":[
+ 	 { "name":"insert"}
+	,{ "name":"update"}
+	,{ "name":"delete"}
+	,{ "name":"copy"}
+	,{ "name":"paste"}
+	,{ "name":"next"}
+	,{ "name":"previous"}
+]
+}

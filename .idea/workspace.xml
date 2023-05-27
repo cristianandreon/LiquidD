@@ -10,9 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManagerCfg.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +41,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Liquid" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -89,7 +91,7 @@
     <property name="database.data.extractors.current.export.id" value="Pretty-Groovy.txt.groovy" />
     <property name="database.data.extractors.current.id" value="Pretty-Groovy.txt.groovy" />
     <property name="import_schema_mapping" value="&lt;schema-mapping&gt;&lt;databases&gt;&lt;list&gt;&lt;schema-mapping-item&gt;&lt;source-data-source-id&gt;2e1fc6df-04a0-45cd-b1c4-8dc6546abd7d&lt;/source-data-source-id&gt;&lt;source-path&gt;database/&quot;LiquidX&quot;/schema/&quot;liquidx&quot;&lt;/source-path&gt;&lt;target-data-source-id&gt;7efe65a2-4354-4df2-bc9a-4667e9bee89d&lt;/target-data-source-id&gt;&lt;target-path&gt;database/&quot;LiquidX&quot;/schema/&quot;liquidx&quot;&lt;/target-path&gt;&lt;/schema-mapping-item&gt;&lt;/list&gt;&lt;/databases&gt;&lt;/schema-mapping&gt;" />
-    <property name="last_opened_file_path" value="$USER_HOME$/IntelliJProjects" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/WebRoot/JobManager" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -586,14 +588,13 @@
       <workItem from="1682584255085" duration="6944000" />
       <workItem from="1683044292699" duration="2927000" />
       <workItem from="1683048727529" duration="9162000" />
-      <workItem from="1683672266668" duration="2721000" />
-    </task>
-    <task id="LOCAL-00001" summary="+">
-      <created>1655409641882</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1655409641882</updated>
+      <workItem from="1683672266668" duration="9597000" />
+      <workItem from="1684748425706" duration="838000" />
+      <workItem from="1684756751222" duration="3748000" />
+      <workItem from="1684827592570" duration="282000" />
+      <workItem from="1684845792618" duration="16000" />
+      <workItem from="1684877982186" duration="1324000" />
+      <workItem from="1684999240378" duration="2882000" />
     </task>
     <task id="LOCAL-00004" summary="+">
       <created>1655660677471</created>
@@ -931,7 +932,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683640309806</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="+">
+      <created>1683897997382</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1683897997383</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -963,37 +971,37 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
-          <line>6489</line>
+          <line>6491</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
-          <line>3031</line>
+          <line>3033</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>1994</line>
+          <line>2005</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>1996</line>
+          <line>2007</line>
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>3262</line>
+          <line>3288</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>5328</line>
+          <line>5358</line>
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>1679</line>
+          <line>1690</line>
           <option name="timeStamp" value="71" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1008,43 +1016,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
-          <line>4337</line>
+          <line>4339</line>
           <option name="timeStamp" value="111" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
-          <line>4534</line>
+          <line>4536</line>
           <option name="timeStamp" value="112" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/WebRoot/deploy/doDeploy.jsp</url>
-          <line>56</line>
-          <option name="timeStamp" value="115" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java</url>
-          <line>901</line>
-          <option name="timeStamp" value="123" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
-          <line>6506</line>
-          <option name="timeStamp" value="124" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/WebRoot/deploy/doDeploy.jsp</url>
-          <line>70</line>
-          <option name="timeStamp" value="125" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java</url>
-          <line>2388</line>
+          <line>2408</line>
           <option name="timeStamp" value="127" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
-          <line>5273</line>
-          <option name="timeStamp" value="129" />
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/liquidize.java</url>
+          <line>193</line>
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
+          <line>2678</line>
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java</url>
+          <line>171</line>
+          <option name="timeStamp" value="133" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang">
