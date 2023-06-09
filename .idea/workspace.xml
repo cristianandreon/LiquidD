@@ -10,6 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
+      <change beforePath="$PROJECT_DIR$/../Liquid/Liquid.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/Liquid.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,6 +75,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="ProjectId" id="1ZxTorPWHjHaSnW1vkAB2Lu8D5g" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -592,14 +595,9 @@
       <workItem from="1684877982186" duration="1324000" />
       <workItem from="1684999240378" duration="5971000" />
       <workItem from="1685477440487" duration="535000" />
-      <workItem from="1685520138352" duration="3808000" />
-    </task>
-    <task id="LOCAL-00006" summary="+">
-      <created>1656936113133</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1656936113133</updated>
+      <workItem from="1685520138352" duration="3857000" />
+      <workItem from="1685655573737" duration="1459000" />
+      <workItem from="1686057268931" duration="595000" />
     </task>
     <task id="LOCAL-00007" summary="+">
       <created>1656952064661</created>
@@ -937,7 +935,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685557561244</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="+">
+      <created>1685655505661</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1685655505661</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
