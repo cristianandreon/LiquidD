@@ -23,6 +23,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.ScriptEngine;
@@ -454,14 +455,25 @@ public class deployManager {
 
                         // impersona solamente l'utente root senza altre azioni di login
                         String cmd = " sudo su -";
-                        ssh.cmd(cmd, password);
+                        ArrayList<String> ssh_errs = ssh.cmd(cmd, password);
+                        if(ssh_errs == null) {
+                            String err = "Error: ssh root session failed (check for wrong password or account expired)";
+                            Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+                            return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                        } else if (ssh_errs.size() > 0) {
+                            if(utility.contains(ssh_errs, "expired") || utility.contains(ssh_errs, "error")) {
+                                String err = com.liquid.utility.arrayToString(ssh_errs, null, null, ",");
+                                Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
+                                return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
+                            }
+                        }
 
 
                         ssh.removeLastCommand();
 
 
                         //
-                        // Verifica apszio disco
+                        // Verifica spazio disco
                         //
                         String[] disk_info = ssh.getRemoteDiskInfo();
 
