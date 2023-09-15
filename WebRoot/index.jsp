@@ -228,7 +228,7 @@
         
         <div class="spacer"></div>
         <center>
-        <div class="title0  reflect">LiquidD : Developer utilities .. ver.1.08 - <%=workspace.version_string%></div>
+        <div class="title0  reflect">LiquidD : Developer utilities .. ver.1.09 - <%=workspace.version_string%></div>
         </center>
         <br/>
         <br/>        

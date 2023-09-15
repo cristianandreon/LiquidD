@@ -127,7 +127,7 @@ public class syncronizerManager {
                                             sconn.setAutoCommit(false);
                                         } else {
                                             String err = "Error connecting to " + ip + "("+engine+") : "+connError;
-                                            sReport += "Error connection to target .. " + err;
+                                            sReport += "Error connection to source .. " + err;
                                             System.out.println(err);
                                             Callback.send("<span style=\"color:red\">Error connecting to " + ip + "("+engine+") : "+connError+"</span>");
                                         }
