@@ -15,6 +15,7 @@
       </element>
       <element id="javaee-facet-resources" facet="LiquidD/web/Web" />
       <element id="javaee-facet-resources" facet="Liquid/web/Web" />
+      <element id="javaee-facet-resources" facet="Liquid/web/Web2" />
     </root>
   </artifact>
 </component>
