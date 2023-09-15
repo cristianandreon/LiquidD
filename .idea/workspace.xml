@@ -10,10 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiquidD.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LiquidD.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +39,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Liquid" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -603,14 +602,8 @@
       <workItem from="1690991559133" duration="1638000" />
       <workItem from="1692439685653" duration="4013000" />
       <workItem from="1694445530878" duration="601000" />
-      <workItem from="1694784822432" duration="2070000" />
-    </task>
-    <task id="LOCAL-00013" summary="+">
-      <created>1666270831425</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1666270831425</updated>
+      <workItem from="1694784822432" duration="4374000" />
+      <workItem from="1694792250637" duration="449000" />
     </task>
     <task id="LOCAL-00014" summary="+">
       <created>1666270887411</created>
@@ -948,7 +941,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694785311701</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="+">
+      <created>1694787225429</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1694787225429</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1069,9 +1069,29 @@
           <option name="timeStamp" value="144" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java</url>
-          <line>101</line>
-          <option name="timeStamp" value="149" />
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
+          <line>2125</line>
+          <option name="timeStamp" value="153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
+          <line>7773</line>
+          <option name="timeStamp" value="154" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
+          <line>7775</line>
+          <option name="timeStamp" value="155" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java</url>
+          <line>7769</line>
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java</url>
+          <line>503</line>
+          <option name="timeStamp" value="157" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang">
