@@ -58,7 +58,7 @@ public class projectManager {
                 }
                 
                 JSONObject executeSQLSON = com.liquid.event.getJSONObject(params, "data", "executeSQL");
-                boolean bExecuteSQL = "true".equalsIgnoreCase( executeSQLSON.getString("data")) ? true : false;
+                boolean bExecuteSQL = "true".equalsIgnoreCase( String.valueOf(executeSQLSON.get("fieldValue"))) ? true : false;
                 ArrayList<String> projectsProcessed = new ArrayList<String>();
                 
                 if (fieldsBean != null) {
