@@ -5,7 +5,7 @@
 ,"primaryKey":"id"
 ,"columns":[
      { "name":"id","visible":false,"nullable":false,"typeName":"serial","label":"ID","type":"4","default":"nextval(`liquidx.\\\"JobManager_seq\\\"`::regclass)","readonly":true,"size":10,"autoIncString":true,"width":"50","digits":0}
-    ,{ "width":"100","size":256,"nullable":true,"name":"job","typeName":"varchar","digits":0,"required":true,"values": ["","GEDI","AGFA","SIA","PERCORSI-WEB","CO-APPRENDISTI","TELECO-ADMIN","CSM-ADMIN","GOR","MUVE","PAR-ADMIN","VL-MSG-ADMIN"]}
+    ,{ "width":"100","size":256,"nullable":true,"name":"job","typeName":"varchar","digits":0,"required":true,"values": ["","GEDI","AGFA","SIA","PERCORSI-WEB","CO-APPRENDISTI","TELECO-ADMIN","CSM-ADMIN","GOR","MUVE","PAR-ADMIN","VL-MSG-ADMIN","AROF-ADMIN"]}
     ,{ "width":"100","size":256,"nullable":true,"name":"customer","typeName":"varchar","digits":0,"required":true,"values": ["GEISOFT"]}
     ,{ "size":256,"nullable":true,"name":"startTime","typeName":"timestamp","digits":0}
     ,{ "size":256,"nullable":true,"name":"endTime","typeName":"timestamp","digits":0}

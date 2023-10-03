@@ -199,7 +199,7 @@ public class deployManager {
 
                                     final ProcessBuilder processBuilder = new ProcessBuilder("/usr/bin/osascript",
                                             "-e", "tell app \"Terminal\"",
-                                            "-e", "set currentTab to do script (\"sh /tmp/tmp.sh\")"
+                                            "-e", "set currentTab to do script (\"sudo sh /tmp/tmp.sh\")"
                                             ,"-e", "end tell"
                                             ,"-e", "tell application \"Terminal\" to activate"
                                             // ,"-e", "tell application \"Terminal\" keystroke \""+utility.getString(deplpoyBean, "password")+"\" using command down"
