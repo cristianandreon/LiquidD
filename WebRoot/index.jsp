@@ -281,6 +281,7 @@
                     document.getElementById('sqlExecuterFrameTab').className = "";
                     document.getElementById('deployFrameTab').className = "liquidTabSel";
                     document.getElementById('jobManagerFrameTab').className = "";
+                    Liquid.onResize('deploysCfg');
                 } else if(obj.parentNode.id === 'projectFrameTab') {
                     jQ1124('#welcomeFrame').slideUp("fast");
                     jQ1124('#logFrame').slideUp("fast");
