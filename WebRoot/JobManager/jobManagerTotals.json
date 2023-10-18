@@ -1,0 +1,23 @@
+{ 
+ "database":"LiquidX"
+,"schema":"liquidx"
+,"table":"vJobManagerTotals"
+,"columns":[
+     { "size":256,"nullable":true,"name":"time_amount","typeName":"varchar","digits":0}
+    ,{ "nullable":true,"name":"cost","typeName":"double","digits":0,"astype":"currency.it-IT.EUR"}
+]
+,"grids":[]
+,"autoLoad":true
+,"editable":true
+,"createTableIfMissing":true
+,"navVisible":true
+,"autoInsert":false
+,"listTabVisible":true
+,"owner":"app.liquidx.deploy.event"
+,"events":[ ]
+,"commands":[
+	 { "name":"copy"}
+	,{ "name":"next"}
+	,{ "name":"previous"}
+]
+}

@@ -131,6 +131,7 @@
             function startJobManager() {
                 Liquid.startControl('jobManager', '<%=workspace.get_file_content(request, "/JobManager/jobManager.json")%>');
                 Liquid.startControl('jobManagerCfg', '<%=workspace.get_file_content(request, "/JobManager/jobManagerCfg.json")%>');
+                Liquid.startControl('jobManagerTotals', '<%=workspace.get_file_content(request, "/JobManager/jobManagerTotals.json")%>');
                 Liquid.startControl('jobManagerOverviewAll', '<%=workspace.get_file_content(request, "/JobManager/jobManagerOverviewAll.json")%>');
                 Liquid.startControl('jobManagerOverview', '<%=workspace.get_file_content(request, "/JobManager/jobManagerOverview.json")%>');
                 Liquid.startControl('jobManagerMonthly', '<%=workspace.get_file_content(request, "/JobManager/jobManagerMonthly.json")%>');
@@ -1285,8 +1286,21 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <br/>
             <br/>
             <br/>
-            <div id="spacer" style="height:200px; width:100%; ">
+            <div class="title1">Totals</div>
+            <div class="spacer" style="height:200px; width:100%; ">
             </div>
+            <table border=0 cellspacing=0 cellpadding=0 style="margin-left:75px; width:600px; font-size:9pt; table-layout:auto; -webkit-box-shadow: 4px 4px 8px 1px #636363;">
+                <tr>
+                    <td colspan="1" style="">
+                        <div id="jobManagerTotals" style="height:100%; width:100%; height:360px; background-color: rgba(213, 225, 232, 0.45)">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
         </div>
 
 
