@@ -75,18 +75,21 @@
         if(session.getAttribute("service") != null) 
             service = (String)session.getAttribute("service");
     }
-
+    if(port != null && !port.isEmpty()) {
+    } else {
+        port = "5432";
+    }
  
     if(host != null && !host.isEmpty()) {
         try {
             InetAddress address = InetAddress.getByName(host);
-            boolean reachable = address.isReachable(3000);
+            boolean reachable = address.isReachable(Integer.parseInt(port)) || address.isReachable(3000) || address.isReachable(10000);
             if(!reachable) {
-                setupMessage = "host "+host+" : cannot reach";
+                setupMessage = "host "+host+" : cannot reach at port " + port;
                 host = "localhost";
             }
         } catch (Exception e){
-            setupMessage = "error in host "+host+" : "+e.getMessage();
+            setupMessage = "error reaching host "+host+" at port "+port+" : "+e;
             host = "localhost";
         }
     }

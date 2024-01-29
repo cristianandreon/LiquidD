@@ -289,6 +289,7 @@ public class deployManager {
             int undeployWaitTime = (int) utility.get(deplpoyBean, "undeployWaitTime");
             int checkWaitTime = (int) utility.get(deplpoyBean, "checkWaitTime");
             boolean enabled = utility.getBoolean(deplpoyBean, "enabled");
+            String tagChecksJSON = utility.getString(deplpoyBean, "tagChecksJSON");
 
 
             String sFileSize = "[N/D]";
@@ -385,7 +386,78 @@ public class deployManager {
 
                     String desc_file = "" + ver;
                     String desc_content = "" + (String) utility.getArchiveFile(sourceFile, "WEB-INF/product.xml", "product/version");
-                    ;
+
+                    // ES :
+                    /*
+                    [
+                    {"file":"WEB-INF/classes/com/geisoft/agfa/controller/datiDocumentoTipizzatoErogazione.incxml","value":"Prod VL","op":"contains","error":"AGFA.WAR non corretto per la produzione (datiDocumentoTipizzatoErogazione)"}
+                    ,{"file":"WEB-INF/classes/com/geisoft/agfa/controller/datiDocumentoTipizzatoErogazioneAppuntamento.incxml","value":"Prod VL","op":"contains","error":"AGFA.WAR non corretto per la produzione (datiDocumentoTipizzatoErogazioneAppuntamento)"}
+                    ,{"file":"WEB-INF/classes/com/geisoft/agfa/controller/datiDocumentoTipizzatoPartenariatiOperatori.incxml","value":"Prod VL","op":"contains","error":"AGFA.WAR non corretto per la produzione (datiDocumentoTipizzatoPartenariatiOperatori)"}
+                    ,{"file":"WEB-INF/classes/com/geisoft/agfa/controller/datiDocumentoTipizzatoPrefattura.incxml","value":"Prod VL","op":"contains","error":"AGFA.WAR non corretto per la produzione (datiDocumentoTipizzatoPrefattura)"}
+                    ,{"file":"WEB-INF/classes/com/geisoft/agfa/controller/datiDocumentoTipizzatoRegFogliMobili.incxml","value":"Prod VL","op":"contains","error":"AGFA.WAR non corretto per la produzione (datiDocumentoTipizzatoRegFogliMobili)"}
+                    ,{"file":"WEB-INF/classes/com/geisoft/agfa/controller/datiDocumentoTipizzatoRegistroCorso.incxml","value":"Prod VL","op":"contains","error":"AGFA.WAR non corretto per la produzione (datiDocumentoTipizzatoVisiteIspettive)"}
+                    ,{"file":"WEB-INF/classes/com/geisoft/agfa/controller/datiDocumentoTipizzatoVisiteIspettive.incxml","value":"Prod VL","op":"contains","error":"AGFA.WAR non corretto per la produzione (datiDocumentoTipizzatoErogazione)"}
+                    ,{"file":"WEB-INF/classes/Reference.xml","value":"PROD VL","op":"contains","error":"AGFA.WAR non corretto per la produzione (Reference.xml)"}
+                    ,{"file":"WEB-INF/cas-definitions.properties","value":"PROD VL","op":"contains","error":"AGFA.WAR non corretto per la produzione (cas-definitions.properties)"}
+                    ]
+                    */
+
+
+                    if(tagChecksJSON != null && !tagChecksJSON.isEmpty()) {
+                        String errs = "";
+                        JSONArray ja = new JSONArray(tagChecksJSON);
+                        for (int ic = 0; ic < ja.length(); ic++) {
+                            JSONObject jao = ja.getJSONObject(ic);
+                            if(jao.has("file") && jao.has("value") && jao.has("op")) {
+                                String value_to_check = "" + (String) utility.getArchiveFile(sourceFile, jao.getString("file"), jao.has("attribute") ? jao.getString("attribute") : null);
+                                if("null".equalsIgnoreCase(value_to_check) || value_to_check == null || value_to_check.isEmpty()) {
+                                    errs += jao.has("error") ? jao.getString("error") : "Cannot get content of file " + jao.getString("file") + "<<br/>";
+                                } else {
+                                    if ("contains".equalsIgnoreCase(jao.getString("op"))) {
+                                        if (value_to_check.contains(jao.getString("value"))) {
+                                        } else {
+                                            errs += jao.has("error") ? jao.getString("error")+"<br/>" : "Tag " + jao.getString("value") + " non contenuto nel file " + jao.getString("file") + "<br/>";
+                                        }
+                                    } else if ("not contains".equalsIgnoreCase(jao.getString("op"))) {
+                                        if (value_to_check.contains(jao.getString("value"))) {
+                                        } else {
+                                            errs += jao.has("error") ? jao.getString("error")+"<br/>" : "Tag " + jao.getString("value") + " contenuto nel file " + jao.getString("file") + "<br/>";
+                                        }
+
+                                    } else if ("equals".equalsIgnoreCase(jao.getString("op")) || "eq".equalsIgnoreCase(jao.getString("op")) || "=".equalsIgnoreCase(jao.getString("op")) || "==".equalsIgnoreCase(jao.getString("op"))) {
+                                        if (value_to_check.compareTo(jao.getString("value")) == 0) {
+                                        } else {
+                                            errs += jao.has("error") ? jao.getString("error")+"<br/>" : "Tag " + jao.getString("value") + " non uguale nel file " + jao.getString("file") + "<br/>";
+                                        }
+
+                                    } else if ("no equals".equalsIgnoreCase(jao.getString("op")) || "not eq".equalsIgnoreCase(jao.getString("op")) || "!=".equalsIgnoreCase(jao.getString("op")) || "<>".equalsIgnoreCase(jao.getString("op"))) {
+                                        if (value_to_check.compareTo(jao.getString("value")) != 0) {
+                                        } else {
+                                            errs += jao.has("error") ? jao.getString("error")+"<br/>" : "Tag " + jao.getString("value") + " uguale nel file " + jao.getString("file") + "<br/>";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(!errs.isEmpty()) {
+                            String message = " Processing <b>" + cfgName + "</b></br>"
+                                    + "</br>"
+                                    + "<span style=\"font-size:130%\">"
+                                    + "<b> TAG CHECK ERROR :</b></br>"
+                                    + "</span>"
+                                    + "</br>"
+                                    + "</br>"
+                                    + "<span style=\"font-size:110%; left:50px; position: relative;\">"
+                                    + "Cannot deploy app <b>" + webAppWAR + "</b>"
+                                    + "</span>"
+                                    + "</br>"
+                                    + "</br>" + errs + "</b></br>"
+                                    + "</span>";
+                            Messagebox.show(message, "LiquidD", Messagebox.ERROR + Messagebox.OK);
+                            // Stop here
+                            return retVal;
+                        }
+                    }
 
                     utility.set(deplpoyBean, "version", ver);
 
