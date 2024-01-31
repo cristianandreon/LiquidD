@@ -382,7 +382,8 @@ public class deployManager {
                     //
                     // version of the web app
                     //
-                    String ver = (String) utility.getArchiveXMLTag(sourceFile, "WEB-INF/product.xml", "product/version");
+                    String ver = (String) utility.getArchiveXMLVersionTag(sourceFile, "WEB-INF/product.xml", "product/version");
+                    String deployDate = (String) utility.getArchiveXMLTag(sourceFile, "WEB-INF/product.xml", "product/version", "deployDate");
 
                     String desc_file = "" + ver;
                     String desc_content = "" + (String) utility.getArchiveFile(sourceFile, "WEB-INF/product.xml", "product/version");
@@ -439,6 +440,7 @@ public class deployManager {
                                 }
                             }
                         }
+
                         if(!errs.isEmpty()) {
                             String message = " Processing <b>" + cfgName + "</b></br>"
                                     + "</br>"
@@ -458,6 +460,19 @@ public class deployManager {
                             return retVal;
                         }
                     }
+
+
+                    //
+                    // Aggiornamento data ultimo deploy
+                    //
+                    try {
+                        if(!utility.setArchiveXMLTag(sourceFile, "WEB-INF/product.xml", "product/version", "deployDate", utility.dateToString(System.currentTimeMillis(), "dd/MM/yyyy hh:mm:ss"))) {
+                            Callback.send("Failed to update deploy date inside "+webAppWAR);
+                        }
+                    } catch (Exception e) {
+                        Callback.send("Error updating last deploy date inside war "+webAppWAR+" : "+e);
+                    }
+
 
                     utility.set(deplpoyBean, "version", ver);
 
