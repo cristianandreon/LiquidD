@@ -5,13 +5,13 @@
   </component>
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="LiquidD" />
+      <artifact name="LiquidD-prod" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +64,9 @@
     <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManagerCfg.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/scpManager.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManagerOverviewAll.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManagerTotals.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/app/liquidx/deploy/event.java" root0="FORCE_HIGHLIGHTING" />
@@ -635,21 +637,9 @@
       <workItem from="1703272688936" duration="1310000" />
       <workItem from="1704365405329" duration="632000" />
       <workItem from="1706348713708" duration="8363000" />
-      <workItem from="1706697462388" duration="7633000" />
-    </task>
-    <task id="LOCAL-00025" summary="+">
-      <created>1676555022670</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1676555022670</updated>
-    </task>
-    <task id="LOCAL-00026" summary="+">
-      <created>1676623736704</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1676623736704</updated>
+      <workItem from="1706697462388" duration="7964000" />
+      <workItem from="1707386803410" duration="3033000" />
+      <workItem from="1708433049455" duration="273000" />
     </task>
     <task id="LOCAL-00027" summary="+">
       <created>1677049605148</created>
@@ -980,7 +970,21 @@
       <option name="project" value="LOCAL" />
       <updated>1706697477776</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="+">
+      <created>1706707915825</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1706707915834</updated>
+    </task>
+    <task id="LOCAL-00075" summary="+">
+      <created>1706708111898</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1706708111899</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

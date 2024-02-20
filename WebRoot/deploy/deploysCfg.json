@@ -27,6 +27,7 @@
     ,{"size":2147483647,"nullable":true,"name":"notifyEmails","typeName":"text","digits":0,"type":"12"}
     ,{"size":256,"nullable":true,"name":"protocol","typeName":"varchar","digits":0,"type":"12","required":false, "values":["sftp","scp"]}
     ,{"size":512,"nullable":true,"name":"sourceFileAlternative","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":2147483647,"nullable":true,"name":"tagChecksJSON","typeName":"text","digits":0,"type":"12", "editor":{"type":"richEdit","options":"","code":true}}
 ]
 ,"grids":[
         {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":8,"nCols":3
@@ -53,6 +54,7 @@
                 ,{"name":"counter","tooltip":"Deploy counter","label":"Deploy counter","row":6,"col":1 }
                 ,{"name":"lastMsg","tooltip":"Last deploy message","label":"Last deploy message","row":6,"col":2}
                 ,{"name":"enabled","tooltip":"Enabled","label":"Enabled","row":7,"col":0}
+                ,{"name":"tagChecksJSON","tooltip":"tagChecksJSON","label":"tag Checks JSON","row":7,"col":1}
             ]
         }
     ]

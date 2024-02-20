@@ -406,7 +406,7 @@ public class deployManager {
 
                     if(tagChecksJSON != null && !tagChecksJSON.isEmpty()) {
                         String errs = "";
-                        JSONArray ja = new JSONArray(tagChecksJSON);
+                        JSONArray ja = new JSONArray(tagChecksJSON.replace("<pre>", "").replace("</pre>", "").replace("<br>", "").replace("<br/>", ""));
                         for (int ic = 0; ic < ja.length(); ic++) {
                             JSONObject jao = ja.getJSONObject(ic);
                             if(jao.has("file") && jao.has("value") && jao.has("op")) {
@@ -416,23 +416,27 @@ public class deployManager {
                                 } else {
                                     if ("contains".equalsIgnoreCase(jao.getString("op"))) {
                                         if (value_to_check.contains(jao.getString("value"))) {
+                                            Callback.send("TAG CHECK: File "+jao.getString("file")+" tag "+jao.getString("value")+" OK "+webAppWAR);
                                         } else {
                                             errs += jao.has("error") ? jao.getString("error")+"<br/>" : "Tag " + jao.getString("value") + " non contenuto nel file " + jao.getString("file") + "<br/>";
                                         }
                                     } else if ("not contains".equalsIgnoreCase(jao.getString("op"))) {
                                         if (value_to_check.contains(jao.getString("value"))) {
+                                            Callback.send("TAG CHECK: File "+jao.getString("file")+" tag "+jao.getString("value")+" OK "+webAppWAR);
                                         } else {
                                             errs += jao.has("error") ? jao.getString("error")+"<br/>" : "Tag " + jao.getString("value") + " contenuto nel file " + jao.getString("file") + "<br/>";
                                         }
 
                                     } else if ("equals".equalsIgnoreCase(jao.getString("op")) || "eq".equalsIgnoreCase(jao.getString("op")) || "=".equalsIgnoreCase(jao.getString("op")) || "==".equalsIgnoreCase(jao.getString("op"))) {
                                         if (value_to_check.compareTo(jao.getString("value")) == 0) {
+                                            Callback.send("TAG CHECK: File "+jao.getString("file")+" tag "+jao.getString("value")+" OK "+webAppWAR);
                                         } else {
                                             errs += jao.has("error") ? jao.getString("error")+"<br/>" : "Tag " + jao.getString("value") + " non uguale nel file " + jao.getString("file") + "<br/>";
                                         }
 
                                     } else if ("no equals".equalsIgnoreCase(jao.getString("op")) || "not eq".equalsIgnoreCase(jao.getString("op")) || "!=".equalsIgnoreCase(jao.getString("op")) || "<>".equalsIgnoreCase(jao.getString("op"))) {
                                         if (value_to_check.compareTo(jao.getString("value")) != 0) {
+                                            Callback.send("TAG CHECK: File "+jao.getString("file")+" tag "+jao.getString("value")+" OK "+webAppWAR);
                                         } else {
                                             errs += jao.has("error") ? jao.getString("error")+"<br/>" : "Tag " + jao.getString("value") + " uguale nel file " + jao.getString("file") + "<br/>";
                                         }
@@ -454,10 +458,13 @@ public class deployManager {
                                     + "</span>"
                                     + "</br>"
                                     + "</br>" + errs + "</b></br>"
+                                    + " Source war file : <b>" + sourceFile + "</b>"
                                     + "</span>";
                             Messagebox.show(message, "LiquidD", Messagebox.ERROR + Messagebox.OK);
                             // Stop here
                             return retVal;
+                        } else {
+                            Callback.send("All tags are OK "+webAppWAR);
                         }
                     }
 
