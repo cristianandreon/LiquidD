@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../Liquid" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../LiquidHB" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../LiquidZK" vcs="Git" />
   </component>
 </project>

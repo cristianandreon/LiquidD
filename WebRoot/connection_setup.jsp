@@ -2,7 +2,20 @@
     language="java" 
     import="java.net.InetAddress"
     errorPage=""
-%><%!
+%>
+<%@ page import="java.net.Socket" %>
+<%@ page import="java.net.InetSocketAddress" %>
+<%@ page import="java.io.IOException" %><%!
+
+    private static boolean isReachable(String addr, int openPort, int timeOutMillis) {
+        try (Socket soc = new Socket()) {
+            soc.connect(new InetSocketAddress(addr, openPort), timeOutMillis);
+            return true;
+        } catch (IOException ex) {
+            System.out.println(ex);
+            return false;
+        }
+    }
 
 %><%
 
@@ -82,15 +95,19 @@
  
     if(host != null && !host.isEmpty()) {
         try {
-            InetAddress address = InetAddress.getByName(host);
-            boolean reachable = address.isReachable(Integer.parseInt(port)) || address.isReachable(3000) || address.isReachable(10000);
-            if(!reachable) {
-                setupMessage = "host "+host+" : cannot reach at port " + port;
-                host = "localhost";
+            InetAddress addr = InetAddress.getByName(host);
+            // for(InetAddress addr: address) {
+            boolean reachable = addr.isReachable(Integer.parseInt(port)) ;
+            if (!reachable) {
+                if(!isReachable(addr.getHostAddress(), Integer.parseInt(port), 3000)) {
+                    setupMessage = "host " + host + " : cannot reach at port " + port;
+                } else {
+                    setupMessage = "";
+                    // break;
+                }
             }
         } catch (Exception e){
             setupMessage = "error reaching host "+host+" at port "+port+" : "+e;
-            host = "localhost";
         }
     }
     

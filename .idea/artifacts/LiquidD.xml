@@ -9,13 +9,11 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="lib" />
-          <element id="library" level="project" name="Liquid" />
           <element id="library" level="application" name="lib_JAVA_EE6" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="LiquidD/web/Web" />
       <element id="javaee-facet-resources" facet="Liquid/web/Web" />
-      <element id="javaee-facet-resources" facet="Liquid/web/Web2" />
     </root>
   </artifact>
 </component>
