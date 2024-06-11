@@ -96,7 +96,7 @@ public class deployManager {
                         boolean askConfirmation = "true".equalsIgnoreCase( askConfirmationJSON.getString("data")) ? true : false;
                         boolean openURL = "true".equalsIgnoreCase( openURLJSON.getString("data")) ? true : false;
 
-                        retVal = (String)do_deploy(deplpoyBean, cfgName, fileName, doBackup, askConfirmation, openURL, false, (HttpServletRequest) requestParam);
+                        retVal = (String)do_deploy(deplpoyBean, cfgName, fileName, doBackup, askConfirmation, openURL, false, null, (HttpServletRequest) requestParam);
 
 
 
@@ -254,7 +254,6 @@ public class deployManager {
 
 
     /**
-     *
      * @param deplpoyBean
      * @param cfgName
      * @param fileName
@@ -262,11 +261,12 @@ public class deployManager {
      * @param askConfirmation
      * @param openURL
      * @param batchMode
+     * @param freeParam
      * @param request
      * @return
      * @throws Exception
      */
-    public static Object do_deploy(Object deplpoyBean, String cfgName, String fileName, boolean doBackup, boolean askConfirmation, boolean openURL, boolean batchMode, HttpServletRequest request) throws Exception {
+    public static Object do_deploy(Object deplpoyBean, String cfgName, String fileName, boolean doBackup, boolean askConfirmation, boolean openURL, boolean batchMode, String freeParam, HttpServletRequest request) throws Exception {
 
         String retVal = "{ \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
         sshManager ssh = null;
@@ -286,6 +286,7 @@ public class deployManager {
             String webAppURL = utility.getString(deplpoyBean, "webAppURL");
             String notifyEmails = utility.getString(deplpoyBean, "notifyEmails");
             String protocol = utility.getString(deplpoyBean, "protocol");
+            String sh_user_name = utility.getString(deplpoyBean, "sh_user_name");
             int undeployWaitTime = (int) utility.get(deplpoyBean, "undeployWaitTime");
             int checkWaitTime = (int) utility.get(deplpoyBean, "checkWaitTime");
             boolean enabled = utility.getBoolean(deplpoyBean, "enabled");
@@ -544,14 +545,21 @@ public class deployManager {
                             return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
                         }
 
-                        Callback.send("1&deg;/5 - Logging as root...");
+
+                        if(sh_user_name != null && !sh_user_name.isEmpty()) {
+                            // ok
+                        } else {
+                            sh_user_name = "root";
+                        }
+
+                        Callback.send("1&deg;/5 - Logging as "+sh_user_name+"...");
 
 
                         // impersona solamente l'utente root senza altre azioni di login
-                        String cmd = " sudo su -";
+                        String cmd = " sudo su -"+sh_user_name;
                         ArrayList<String> ssh_errs = ssh.cmd(cmd, password);
                         if(ssh_errs == null) {
-                            String err = "Error: ssh root session failed (check for wrong password or account expired)";
+                            String err = "Error: ssh session failed (check for wrong password or account expired)";
                             Callback.send("Deploy failed, <span style=\"color:red\">" + err + "<span>");
                             return (Object) "{ \"result\":-1, \"error\":\"" + utility.base64Encode(err) + "\", \"client\":\"Liquid.stopWaiting('deploysCfg')\" }";
                         } else if (ssh_errs.size() > 0) {
@@ -801,7 +809,7 @@ public class deployManager {
                                 if (remoteFileSize != 0 && remoteFileSize < 0xFFFFFFFF - 0xFF) {
 
                                     if ("scp".equalsIgnoreCase(protocol)) {
-                                        // scp cannot get file size in deploy folder, that is root owned
+                                        // scp cannot get file size in deploy folder, that is sh_user_name owned
                                     } else {
 
                                         Thread.sleep(1000);
@@ -994,8 +1002,8 @@ public class deployManager {
                             }
 
 
-                            cmd = "chown root " + deployFolder + "/" + webAppWAR + "";
-                            cmd = "chgrp root " + deployFolder + "/" + webAppWAR + "";
+                            cmd = "chown "+sh_user_name+" " + deployFolder + "/" + webAppWAR + "";
+                            cmd = "chgrp "+sh_user_name+" " + deployFolder + "/" + webAppWAR + "";
                             cmd = "chmod 771 " + deployFolder + "/" + webAppWAR + "";
 
 

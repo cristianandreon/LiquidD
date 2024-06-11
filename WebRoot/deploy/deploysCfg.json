@@ -28,9 +28,11 @@
     ,{"size":256,"nullable":true,"name":"protocol","typeName":"varchar","digits":0,"type":"12","required":false, "values":["sftp","scp"]}
     ,{"size":512,"nullable":true,"name":"sourceFileAlternative","typeName":"varchar","digits":0,"type":"12","required":true, "editor":{"type":"richEdit","options":"","code":true}}
     ,{"size":2147483647,"nullable":true,"name":"tagChecksJSON","typeName":"text","digits":0,"type":"12", "editor":{"type":"richEdit","options":"","code":true}}
+    ,{"size":256,"nullable":true,"name":"sh_user_name","typeName":"varchar","digits":0,"type":"12","required":false, "values":["root","tomcat"]}
+
 ]
 ,"grids":[
-        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":8,"nCols":3
+        {"name":"Detail","title":"Detail","tooltip":"","icon":"","nRows":9,"nCols":3
             ,"columns":[
                 {"name":"id","tooltip":"","label":"id","row":0,"col":0}
                 ,{"name":"name","tooltip":"Configuration name","label":"Deploy name","row":0,"col":1}
@@ -53,8 +55,9 @@
                 ,{"name":"lastUpdate","tooltip":"Last deploy","label":"Last deploy","row":6,"col":0 }
                 ,{"name":"counter","tooltip":"Deploy counter","label":"Deploy counter","row":6,"col":1 }
                 ,{"name":"lastMsg","tooltip":"Last deploy message","label":"Last deploy message","row":6,"col":2}
-                ,{"name":"enabled","tooltip":"Enabled","label":"Enabled","row":7,"col":0}
+                ,{"name":"sh_user_name","tooltip":"SH user name","label":"sh user name","row":7,"col":0}
                 ,{"name":"tagChecksJSON","tooltip":"tagChecksJSON","label":"tag Checks JSON","row":7,"col":1}
+                ,{"name":"enabled","tooltip":"Enabled","label":"Enabled","row":8,"col":0}
             ]
         }
     ]

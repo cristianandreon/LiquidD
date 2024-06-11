@@ -11,7 +11,7 @@
     <server-settings>
       <option name="BASE_DIRECTORY_NAME" value="4175caee-1fcf-44bb-b2c6-fc765b99f043" />
       <option name="DEPLOY_TOMCAT_APPS" value="true" />
-      <option name="JNDI_PORT" value="10999" />
+      <option name="JNDI_PORT" value="10990" />
       <option name="PRESERVE_SESSIONS" value="true" />
     </server-settings>
     <predefined_log_file enabled="true" id="Tomcat" />

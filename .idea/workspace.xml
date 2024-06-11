@@ -5,18 +5,26 @@
   </component>
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="LiquidD-prod" />
+      <artifact name="LiquidD" />
     </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/Tomcat_8_5_43.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/LiquidD.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/LiquidD.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/LiquidD_prod.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/LiquidD_prod.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Liquid.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquidEditing.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquidEditing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Tomcat_8_5_43.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Tomcat_8_5_43.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LiquidD.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LiquidD.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/deploy/doDeploy.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/deploy/doDeploy.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LiquidHB/src/liquidHB/HibernateRevEng.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LiquidHB/src/liquidHB/HibernateRevEng.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LiquidZK/LiquidZK.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../LiquidZK/LiquidZK.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LiquidZK/src/liquidZK/ZKpanels.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LiquidZK/src/liquidZK/ZKpanels.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +51,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Liquid" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -54,36 +62,37 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/WebRoot/project/fields.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/TransactionList.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$PROJECT_DIR$/../Liquid/WEB-INF/lib/commons-dbcp2-2.9.0.jar!/org/apache/commons/dbcp2/BasicDataSource.class" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/bean.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/app/liquidx/project/projectManager.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManager.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/index.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/ftp.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/sshManager.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManagerCfg.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/scpManager.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManagerOverviewAll.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManagerTotals.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/app/liquidx/deploy/event.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/event.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/deploy/deploy.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/project/projects.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/WebRoot/connection_setup.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquidUtility.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Liquid/src/META-INF/resources/web.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/TransactionList.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/bean.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/connection.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/db.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/event.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/ftp.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/scpManager.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/sshManager.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManager.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManagerCfg.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManagerOverviewAll.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/JobManager/jobManagerTotals.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/connection_setup.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/deploy/deploy.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/deploy/deploysCfg.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/WebRoot/deploy/doDeploy.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/index.jsp" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/project/fields.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/WebRoot/project/projects.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/app/liquidx/deploy/event.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/app/liquidx/project/projectManager.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/app/liquidx/syncronizer/syncronizerManager.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="JRebelWorkspace">
     <option name="jrebelEnabledAutocompile" value="true" />
@@ -99,28 +108,32 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="1ZxTorPWHjHaSnW1vkAB2Lu8D5g" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DatabaseDriversLRU" value="postgresql" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="database.data.extractors.current.export.id" value="Pretty-Groovy.txt.groovy" />
-    <property name="database.data.extractors.current.id" value="Pretty-Groovy.txt.groovy" />
-    <property name="import_schema_mapping" value="&lt;schema-mapping&gt;&lt;databases&gt;&lt;list&gt;&lt;schema-mapping-item&gt;&lt;source-data-source-id&gt;2e1fc6df-04a0-45cd-b1c4-8dc6546abd7d&lt;/source-data-source-id&gt;&lt;source-path&gt;database/&quot;LiquidX&quot;/schema/&quot;liquidx&quot;&lt;/source-path&gt;&lt;target-data-source-id&gt;7efe65a2-4354-4df2-bc9a-4667e9bee89d&lt;/target-data-source-id&gt;&lt;target-path&gt;database/&quot;LiquidX&quot;/schema/&quot;liquidx&quot;&lt;/target-path&gt;&lt;/schema-mapping-item&gt;&lt;/list&gt;&lt;/databases&gt;&lt;/schema-mapping&gt;" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/WebRoot/JobManager" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
-    <property name="two.files.diff.last.used.file" value="$USER_HOME$/NetBeansProjects/LiquidD/WebRoot/index.jsp" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "Tomcat Server.Tomcat 8.5.43.executor": "Debug",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Global Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RebelAgentSelection">
     <selection>jr</selection>
   </component>
@@ -420,6 +433,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-1.8.0_402-corretto-1.8.0_402-4caba194b151-995e55e7" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration>$USER_HOME$/.subversion</configuration>
@@ -555,6 +575,10 @@
       <workItem from="1707386803410" duration="3033000" />
       <workItem from="1708433049455" duration="1528000" />
       <workItem from="1708980660901" duration="3837000" />
+      <workItem from="1712059716653" duration="1046000" />
+      <workItem from="1712159313076" duration="6961000" />
+      <workItem from="1713213921060" duration="1080000" />
+      <workItem from="1714160858523" duration="15898000" />
     </task>
     <task id="LOCAL-00028" summary="+">
       <created>1677232455126</created>
@@ -981,7 +1005,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/utility.java</url>
-          <line>2456</line>
+          <line>2458</line>
           <option name="timeStamp" value="127" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1043,6 +1067,11 @@
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/metadata.java</url>
           <line>507</line>
           <option name="timeStamp" value="157" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java</url>
+          <line>541</line>
+          <option name="timeStamp" value="159" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang">
