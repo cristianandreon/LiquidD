@@ -13,13 +13,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquidEditing.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/META-INF/resources/liquid/liquidEditing.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LiquidHB/src/liquidHB/HibernateRevEng.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LiquidHB/src/liquidHB/HibernateRevEng.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LiquidZK/LiquidZK.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../LiquidZK/LiquidZK.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LiquidZK/src/META-INF/resources/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LiquidZK/web/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/JobManager/jobManagerOverviewAll.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManagerOverviewAll.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/project/fields.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/fields.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/project/projects.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/projects.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,6 +116,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;Tomcat Server.Tomcat 8.5.43.executor&quot;: &quot;Debug&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;Pretty-Groovy.txt.groovy&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -574,7 +574,10 @@
       <workItem from="1712159313076" duration="6961000" />
       <workItem from="1713213921060" duration="1080000" />
       <workItem from="1714160858523" duration="19742000" />
-      <workItem from="1718924617305" duration="598000" />
+      <workItem from="1718924617305" duration="13638000" />
+      <workItem from="1720543366816" duration="7630000" />
+      <workItem from="1723025886601" duration="598000" />
+      <workItem from="1725263182766" duration="1238000" />
     </task>
     <task id="LOCAL-00028" summary="+">
       <created>1677232455126</created>
@@ -919,7 +922,7 @@
       <option name="project" value="LOCAL" />
       <updated>1708433576369</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -966,12 +969,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>3406</line>
+          <line>3422</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>5564</line>
+          <line>5580</line>
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -986,7 +989,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java</url>
-          <line>115</line>
+          <line>117</line>
           <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1065,11 +1068,6 @@
           <option name="timeStamp" value="157" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java</url>
-          <line>541</line>
-          <option name="timeStamp" value="159" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/ftp.java</url>
           <line>92</line>
           <option name="timeStamp" value="160" />
@@ -1089,11 +1087,22 @@
           <line>332</line>
           <option name="timeStamp" value="163" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
+          <line>4480</line>
+          <option name="timeStamp" value="173" />
+        </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang">
             <option name="NOTIFY_CAUGHT" value="false" />
           </properties>
           <option name="timeStamp" value="22" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ClassNotFoundException" package="java.lang">
+            <option name="NOTIFY_CAUGHT" value="false" />
+          </properties>
+          <option name="timeStamp" value="164" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>

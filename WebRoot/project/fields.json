@@ -14,7 +14,7 @@
     ,{ "name":"table", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
     ,{ "name":"field", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
     ,{ "name":"type", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true, 
-        "editor":{ "type":"values", "values":["VARCHAR2", "DATE", "TIMESTAMP", "NUMBER", "BLOB" ] }
+        "editor":{ "type":"values", "values":["VARCHAR", "VAWRCHAR2", "DATE", "TIMESTAMP", "NUMBER", "BLOB" ] }
     }
     ,{ "name":"size", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }
     ,{ "name":"scale", "size":256,"nullable":true,"typeName":"varchar","digits":0,"type":"12","required":true }

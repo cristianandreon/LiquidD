@@ -6,7 +6,7 @@
     { "size":256,"nullable":true,"name":"job","typeName":"varchar","digits":0}
     ,{ "size":256,"nullable":true,"name":"time_amount","typeName":"varchar","digits":0}
     ,{ "nullable":true,"name":"cost","typeName":"double","digits":0,"astype":"currency.it-IT.EUR"}
-    ,{ "nullable":true,"name":"year_month","typeName":"double","digits":0}
+    ,{ "nullable":true,"name":"year","typeName":"double","digits":0}
 
 ]
 ,"grids":[]

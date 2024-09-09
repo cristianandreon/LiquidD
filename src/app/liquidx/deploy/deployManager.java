@@ -34,6 +34,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 
+// /Users/administrator/Workspaces/workspacevl/MUSEO-ADMIN
+
 /*
 faillock --reset --user sergio-xxx
 */
@@ -556,7 +558,7 @@ public class deployManager {
 
 
                         // impersona solamente l'utente root senza altre azioni di login
-                        String cmd = " sudo su -"+sh_user_name;
+                        String cmd = " sudo su - "+sh_user_name;
                         ArrayList<String> ssh_errs = ssh.cmd(cmd, password);
                         if(ssh_errs == null) {
                             String err = "Error: ssh session failed (check for wrong password or account expired)";
@@ -1002,9 +1004,9 @@ public class deployManager {
                             }
 
 
-                            cmd = "chown "+sh_user_name+" " + deployFolder + "/" + webAppWAR + "";
-                            cmd = "chgrp "+sh_user_name+" " + deployFolder + "/" + webAppWAR + "";
-                            cmd = "chmod 771 " + deployFolder + "/" + webAppWAR + "";
+                            cmd = "sudo chown "+sh_user_name+" " + deployFolder + "/" + webAppWAR + "";
+                            cmd = "sudo chgrp "+sh_user_name+" " + deployFolder + "/" + webAppWAR + "";
+                            cmd = "sudo chmod 771 " + deployFolder + "/" + webAppWAR + "";
 
 
                             //
