@@ -13,12 +13,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="726506df-244f-4c47-98c4-7c8e29fe7b0b" name="Default Changelist" comment="+">
+      <change beforePath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManager.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/JobManager/jobManagerOverviewAll.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/JobManager/jobManagerOverviewAll.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/project/fields.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/fields.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/project/projects.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/project/projects.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/liquidx/deploy/deployManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/getLog/getLogsCfg.json" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/getLog/getLogsCfg.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +42,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Liquid" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -123,7 +120,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -577,7 +574,9 @@
       <workItem from="1718924617305" duration="13638000" />
       <workItem from="1720543366816" duration="7630000" />
       <workItem from="1723025886601" duration="598000" />
-      <workItem from="1725263182766" duration="1238000" />
+      <workItem from="1725263182766" duration="2989000" />
+      <workItem from="1726128636737" duration="30383000" />
+      <workItem from="1727430447712" duration="3398000" />
     </task>
     <task id="LOCAL-00028" summary="+">
       <created>1677232455126</created>
@@ -922,7 +921,7 @@
       <option name="project" value="LOCAL" />
       <updated>1708433576369</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -959,27 +958,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>2113</line>
+          <line>2115</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>2115</line>
+          <line>2117</line>
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>3422</line>
+          <line>3424</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>5580</line>
+          <line>5582</line>
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>1743</line>
+          <line>1745</line>
           <option name="timeStamp" value="71" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1014,7 +1013,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>2796</line>
+          <line>2798</line>
           <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1044,7 +1043,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>2200</line>
+          <line>2202</line>
           <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1089,13 +1088,11 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../Liquid/src/com/liquid/workspace.java</url>
-          <line>4480</line>
+          <line>4482</line>
           <option name="timeStamp" value="173" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.NullPointerException" package="java.lang">
-            <option name="NOTIFY_CAUGHT" value="false" />
-          </properties>
+          <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="22" />
         </breakpoint>
         <breakpoint enabled="true" type="java-exception">
