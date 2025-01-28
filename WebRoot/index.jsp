@@ -620,7 +620,7 @@ localhost:90/LiquidD<b>?diver=oracle&host=172.1.2.110&port=1521&database=myLiqui
             <div class="spacer"></div>
             <br/>
             <br/>
-            <div style="float:left; display: block"><a href="javascript:void(0)" onclick='copy_to_clipboard(document.getElementById("vpnPassw").innerText)'>Copy vpn password: </a></div><b><span id="vpnPassw">JH67l%3FFy</span></b>
+            <div style="float:left; display: block"><a href="javascript:void(0)" onclick='copy_to_clipboard(document.getElementById("vpnPassw").dataset.rel)'>Copy vpn password to clipboard</a></div><b><span data-rel="JH67l%3FFy###@@@" id="vpnPassw"></span></b>
             <br/>
             <br/>
             <center>
