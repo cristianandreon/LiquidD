@@ -211,7 +211,7 @@
                 navigator.clipboard.writeText(text);
 
                 // Alert the copied text
-                Liquid.showToast("INFO", "Copied the text: " + text);
+                Liquid.showToast("INFO", "Pasword copied into clipboard");
             }
 
         </script>
